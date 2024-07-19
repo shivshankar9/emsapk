@@ -1,0 +1,4 @@
+
+### ./gradlew assembleDebug
+
+### ./gradlew assembleRelease
