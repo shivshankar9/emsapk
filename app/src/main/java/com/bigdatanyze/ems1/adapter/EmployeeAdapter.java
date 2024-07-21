@@ -6,19 +6,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.bigdatanyze.ems1.R;
 import com.bigdatanyze.ems1.model.Employee;
+import com.bigdatanyze.ems1.R;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder> {
+
 	private List<Employee> employeeList = new ArrayList<>();
 
 	@NonNull
 	@Override
 	public EmployeeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		View itemView = LayoutInflater.from(parent.getContext())
-				.inflate(R.layout.item_employee, parent, false);
+				.inflate(R.layout.employee_item, parent, false);
 		return new EmployeeViewHolder(itemView);
 	}
 
@@ -34,16 +36,16 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
 		return employeeList.size();
 	}
 
-	public void setEmployeeList(List<Employee> employeeList) {
-		this.employeeList = employeeList;
+	public void setEmployeeList(List<Employee> employees) {
+		this.employeeList = employees;
 		notifyDataSetChanged();
 	}
 
 	class EmployeeViewHolder extends RecyclerView.ViewHolder {
-		private TextView textViewName;
-		private TextView textViewPosition;
+		private final TextView textViewName;
+		private final TextView textViewPosition;
 
-		public EmployeeViewHolder(@NonNull View itemView) {
+		private EmployeeViewHolder(View itemView) {
 			super(itemView);
 			textViewName = itemView.findViewById(R.id.text_view_name);
 			textViewPosition = itemView.findViewById(R.id.text_view_position);

@@ -24,6 +24,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+                android:name=".AddEmployeeActivity"
+                android:label="Add Employee"
+                android:theme="@style/Theme.Ems1"/>
+
     </application>
 
 </manifest>

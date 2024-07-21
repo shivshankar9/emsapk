@@ -1,33 +1,38 @@
+package com.bigdatanyze.ems1;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import com.bigdatanyze.ems1.adapter.EmployeeAdapter;
+import com.bigdatanyze.ems1.databinding.ActivityMainBinding;
 import com.bigdatanyze.ems1.model.Employee;
 import com.bigdatanyze.ems1.viewmodel.EmployeeViewModel;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+	private ActivityMainBinding binding;
 	private EmployeeViewModel employeeViewModel;
-	private RecyclerView recyclerView;
 	private EmployeeAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		binding = ActivityMainBinding.inflate(getLayoutInflater());
+		setContentView(binding.getRoot());
 
-		recyclerView = findViewById(R.id.recyclerView);
-		recyclerView.setLayoutManager(new LinearLayoutManager(this));
+		binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		adapter = new EmployeeAdapter();
-		recyclerView.setAdapter(adapter);
+		binding.recyclerView.setAdapter(adapter);
 
-		employeeViewModel = new ViewModelProvider(this).get(EmployeeViewModel.class);
+		// Use the factory to create an instance of EmployeeViewModel
+		EmployeeViewModel.Factory factory = new EmployeeViewModel.Factory(getApplication());
+		employeeViewModel = new ViewModelProvider(this, factory).get(EmployeeViewModel.class);
+
 		employeeViewModel.getAllEmployees().observe(this, new Observer<List<Employee>>() {
 			@Override
 			public void onChanged(List<Employee> employees) {
@@ -35,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 
-		Button buttonAddEmployee = findViewById(R.id.button_add_employee);
-		buttonAddEmployee.setOnClickListener(new View.OnClickListener() {
+		binding.buttonAddEmployee.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(MainActivity.this, AddEmployeeActivity.class);
