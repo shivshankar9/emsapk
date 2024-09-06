@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:padding="16dp">
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -11,8 +12,24 @@
             android:layout_weight="1" />
 
     <Button
+            android:id="@+id/button_addExpense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Expense"
+            android:layout_marginTop="8dp" />
+
+    <Button
+            android:id="@+id/button_add_invoice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Invoice"
+            android:layout_marginTop="8dp" />
+
+    <Button
             android:id="@+id/button_add_employee"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Employee" />
+            android:text="Add Employee"
+            android:layout_marginTop="8dp" />
+
 </LinearLayout>
