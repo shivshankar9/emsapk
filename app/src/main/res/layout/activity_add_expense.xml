@@ -6,70 +6,49 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp"
-        tools:context=".AddEmployeeActivity">
+        tools:context=".AddExpenseActivity">
 
     <TextView
             android:id="@+id/text_view_heading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Employee Details"
+            android:text="Add Expense Details"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginBottom="16dp"
             android:gravity="center"/>
 
     <EditText
-            android:id="@+id/edit_text_name"
+            android:id="@+id/edit_text_expense_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Full Name"
-            android:inputType="textPersonName"/>
-
-    <EditText
-            android:id="@+id/edit_text_position"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Position"
+            android:hint="Expense Name"
             android:inputType="text"/>
 
     <EditText
-            android:id="@+id/edit_text_department"
+            android:id="@+id/edit_text_expense_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Department"
+            android:hint="Amount"
+            android:inputType="numberDecimal"/>
+
+    <EditText
+            android:id="@+id/edit_text_expense_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Category"
             android:inputType="text"/>
 
     <EditText
-            android:id="@+id/edit_text_phone_number"
+            android:id="@+id/edit_text_expense_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Phone Number"
-            android:inputType="phone"/>
-
-    <EditText
-            android:id="@+id/edit_text_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email Address"
-            android:inputType="textEmailAddress"/>
-
-    <EditText
-            android:id="@+id/edit_text_joining_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Joining Date"
+            android:hint="Date"
             android:inputType="date"
             android:focusable="false"/>
 
-    <EditText
-            android:id="@+id/edit_text_salary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Salary"
-            android:inputType="numberDecimal"/>
-
     <Button
-            android:id="@+id/button_save"
+            android:id="@+id/button_save_expense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Save"
