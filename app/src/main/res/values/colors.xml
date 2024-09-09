@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="premium_color">#FFD700</color> <!-- Example: Gold color for premium -->
+    <color name="background_color">#FFFFFF</color> <!-- Example: white background -->
+
+
 </resources>

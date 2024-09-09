@@ -28,6 +28,10 @@
                 android:name=".AddEmployeeActivity"
                 android:label="Add Employee"
                 android:theme="@style/Theme.Ems1"/>
+        <activity
+                android:name=".AddExpenseActivity"
+                android:label="Add Expense"
+                android:theme="@style/Theme.Ems1"/>
 
     </application>
 
