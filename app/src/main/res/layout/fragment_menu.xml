@@ -1,0 +1,22 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+        <Button
+                android:id="@+id/buttonAddEmployee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Employee" />
+
+        <Button
+                android:id="@+id/buttonAddExpense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Expense" />
+
+    </LinearLayout>
+</layout>

@@ -1,28 +1,13 @@
 package com.bigdatanyze.ems1;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import com.bigdatanyze.ems1.adapter.EmployeeAdapter;
-import com.bigdatanyze.ems1.adapter.ExpenseAdapter;
+import androidx.fragment.app.Fragment;
 import com.bigdatanyze.ems1.databinding.ActivityMainBinding;
-import com.bigdatanyze.ems1.model.Employee;
-import com.bigdatanyze.ems1.model.Expense;
-import com.bigdatanyze.ems1.viewmodel.EmployeeViewModel;
-import com.bigdatanyze.ems1.viewmodel.ExpenseViewModel;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
 	private ActivityMainBinding binding;
-	private EmployeeViewModel employeeViewModel;
-	private EmployeeAdapter employeeAdapter;
-	private ExpenseViewModel expenseViewModel;
-	private ExpenseAdapter expenseAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,54 +15,32 @@ public class MainActivity extends AppCompatActivity {
 		binding = ActivityMainBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
-		// Employee RecyclerView setup
-		binding.recyclerViewEmployee.setLayoutManager(new LinearLayoutManager(this));
-		employeeAdapter = new EmployeeAdapter();
-		binding.recyclerViewEmployee.setAdapter(employeeAdapter);
+		setupBottomNavigation();
+	}
 
-		// Expense RecyclerView setup
-		binding.recyclerViewExpense.setLayoutManager(new LinearLayoutManager(this));
-		expenseAdapter = new ExpenseAdapter();
-		binding.recyclerViewExpense.setAdapter(expenseAdapter);
+	private void setupBottomNavigation() {
+		binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+			Fragment selectedFragment = null;
+			int itemId = item.getItemId();
 
-		// Employee ViewModel
-		EmployeeViewModel.Factory employeeFactory = new EmployeeViewModel.Factory(getApplication());
-		employeeViewModel = new ViewModelProvider(this, employeeFactory).get(EmployeeViewModel.class);
-
-		employeeViewModel.getAllEmployees().observe(this, new Observer<List<Employee>>() {
-			@Override
-			public void onChanged(List<Employee> employees) {
-				employeeAdapter.setEmployeeList(employees);
+			if (itemId == R.id.nav_home) {
+				selectedFragment = new HomeFragment();
+			} else if (itemId == R.id.nav_dashboard) {
+				selectedFragment = new DashboardFragment();
+			} else if (itemId == R.id.nav_menu) {
+				selectedFragment = new MenuFragment();
 			}
+
+			if (selectedFragment != null) {
+				getSupportFragmentManager().beginTransaction()
+						.replace(R.id.fragment_container, selectedFragment)
+						.commit();
+			}
+
+			return true;
 		});
 
-		// Expense ViewModel
-		ExpenseViewModel.Factory expenseFactory = new ExpenseViewModel.Factory(getApplication());
-		expenseViewModel = new ViewModelProvider(this, expenseFactory).get(ExpenseViewModel.class);
-
-		expenseViewModel.getAllExpenses().observe(this, new Observer<List<Expense>>() {
-			@Override
-			public void onChanged(List<Expense> expenses) {
-				expenseAdapter.setExpenseList(expenses);
-			}
-		});
-
-		// Add Employee Button
-		binding.buttonAddEmployee.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this, AddEmployeeActivity.class);
-				startActivity(intent);
-			}
-		});
-
-		// Add Expense Button
-		binding.buttonAddExpense.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this, AddExpenseActivity.class);
-				startActivity(intent);
-			}
-		});
+		// Set default selection and load the default fragment
+		binding.bottomNavigationView.setSelectedItemId(R.id.nav_home);
 	}
 }
