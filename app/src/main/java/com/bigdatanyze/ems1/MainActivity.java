@@ -1,8 +1,9 @@
 package com.bigdatanyze.ems1;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -27,6 +28,35 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		// Check if user is logged in or first-time user
+		SharedPreferences preferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+		boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
+
+		if (!isLoggedIn) {
+			// Check if it's the first time the app is launched
+			boolean isFirstTime = preferences.getBoolean("isFirstTime", true);
+
+			if (isFirstTime) {
+				// Mark that the user has launched the app
+				SharedPreferences.Editor editor = preferences.edit();
+				editor.putBoolean("isFirstTime", false);
+				editor.apply();
+
+				// Redirect to GetStartedActivity
+				Intent intent = new Intent(MainActivity.this, GetStartedActivity.class);
+				startActivity(intent);
+				finish();
+				return;
+			} else {
+				// Redirect to LoginActivity
+				Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+				startActivity(intent);
+				finish();
+				return;
+			}
+		}
+
 		binding = ActivityMainBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 

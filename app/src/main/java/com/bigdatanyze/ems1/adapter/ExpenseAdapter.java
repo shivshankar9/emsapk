@@ -11,7 +11,6 @@ import com.bigdatanyze.ems1.R;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder> {
 
 	private List<Expense> expenseList = new ArrayList<>();
@@ -27,8 +26,10 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
 	@Override
 	public void onBindViewHolder(@NonNull ExpenseViewHolder holder, int position) {
 		Expense currentExpense = expenseList.get(position);
-		holder.textViewName.setText(currentExpense.getName());
-		holder.textViewPosition.setText(currentExpense.getPosition());
+		holder.textViewAmount.setText(currentExpense.getAmount());
+		holder.textViewCategory.setText(currentExpense.getCategory());
+		holder.textViewDate.setText(currentExpense.getDate());
+		holder.textViewDescription.setText(currentExpense.getDescription());
 	}
 
 	@Override
@@ -42,13 +43,17 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
 	}
 
 	class ExpenseViewHolder extends RecyclerView.ViewHolder {
-		private final TextView textViewName;
-		private final TextView textViewPosition;
+		private final TextView textViewAmount;
+		private final TextView textViewCategory;
+		private final TextView textViewDate;
+		private final TextView textViewDescription;
 
 		private ExpenseViewHolder(View itemView) {
 			super(itemView);
-			textViewName = itemView.findViewById(R.id.text_view_name);
-			textViewPosition = itemView.findViewById(R.id.text_view_position);
+			textViewAmount = itemView.findViewById(R.id.text_view_amount);
+			textViewCategory = itemView.findViewById(R.id.text_view_category);
+			textViewDate = itemView.findViewById(R.id.text_view_date);
+			textViewDescription = itemView.findViewById(R.id.text_view_description);
 		}
 	}
 }
