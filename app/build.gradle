@@ -37,8 +37,10 @@ android {
         }
     }
 
+    // Enable both ViewBinding and DataBinding
     buildFeatures {
         viewBinding true
+        dataBinding true  // Enable DataBinding
     }
 }
 
