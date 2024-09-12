@@ -18,5 +18,11 @@
                 android:layout_height="wrap_content"
                 android:text="Add Expense" />
 
+        <Button
+                android:id="@+id/buttonAddInvoice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Invoice" />
+
     </LinearLayout>
 </layout>

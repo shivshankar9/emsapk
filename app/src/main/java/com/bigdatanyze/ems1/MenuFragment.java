@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
-import com.bigdatanyze.ems1.AddEmployeeActivity;
-import com.bigdatanyze.ems1.AddExpenseActivity;
 import com.bigdatanyze.ems1.databinding.FragmentMenuBinding;
 
 public class MenuFragment extends Fragment {
@@ -30,6 +28,17 @@ public class MenuFragment extends Fragment {
 			startActivity(intent);
 		});
 
+		binding.buttonAddInvoice.setOnClickListener(v -> {
+			Intent intent = new Intent(getActivity(), AddInvoiceActivity.class);  // Ensure AddInvoiceActivity exists
+			startActivity(intent);
+		});
+
 		return view;
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		binding = null;  // Prevent memory leaks
 	}
 }
