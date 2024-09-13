@@ -1,5 +1,6 @@
 package com.bigdatanyze.ems1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -42,9 +43,6 @@ public class AddInvoiceActivity extends AppCompatActivity {
 		setupClickListeners();
 	}
 
-	/**
-	 * Initialize UI components and RecyclerView.
-	 */
 	private void initializeUIComponents() {
 		invoiceNumberEditText = findViewById(R.id.invoice_number_edit_text);
 		customerNameEditText = findViewById(R.id.customer_name_edit_text);
@@ -58,52 +56,34 @@ public class AddInvoiceActivity extends AppCompatActivity {
 		Button saveInvoiceButton = findViewById(R.id.save_invoice_button);
 		itemsRecyclerView = findViewById(R.id.items_recycler_view);
 
-		// Initialize the list and adapter for invoice items
 		invoiceItemList = new ArrayList<>();
 		itemAdapter = new InvoiceItemAdapter(invoiceItemList);
 		itemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 		itemsRecyclerView.setAdapter(itemAdapter);
 	}
 
-	/**
-	 * Set up click listeners for the "Add Item" and "Save Invoice" buttons.
-	 */
 	private void setupClickListeners() {
 		findViewById(R.id.add_item_button).setOnClickListener(v -> addItemToInvoice());
 		findViewById(R.id.save_invoice_button).setOnClickListener(v -> saveInvoice());
 	}
 
-	/**
-	 * Adds an item to the invoice item list.
-	 */
 	private void addItemToInvoice() {
 		String itemName = itemNameEditText.getText().toString().trim();
 		String quantityStr = quantityEditText.getText().toString().trim();
 		String unitPriceStr = unitPriceEditText.getText().toString().trim();
 
-		// Validate input fields
 		if (validateItemInputs(itemName, quantityStr, unitPriceStr)) {
 			int quantity = Integer.parseInt(quantityStr);
 			double unitPrice = Double.parseDouble(unitPriceStr);
 			InvoiceItem item = new InvoiceItem(itemName, quantity, unitPrice);
 
-			// Add item to list and update RecyclerView
 			invoiceItemList.add(item);
 			itemAdapter.notifyDataSetChanged();
 
-			// Clear input fields after adding the item
 			clearItemInputFields();
 		}
 	}
 
-	/**
-	 * Validate item inputs.
-	 *
-	 * @param itemName Item name
-	 * @param quantityStr Quantity as string
-	 * @param unitPriceStr Unit price as string
-	 * @return true if valid, false otherwise
-	 */
 	private boolean validateItemInputs(String itemName, String quantityStr, String unitPriceStr) {
 		if (TextUtils.isEmpty(itemName) || TextUtils.isEmpty(quantityStr) || TextUtils.isEmpty(unitPriceStr)) {
 			Toast.makeText(this, "Please fill out all item details", Toast.LENGTH_SHORT).show();
@@ -112,18 +92,12 @@ public class AddInvoiceActivity extends AppCompatActivity {
 		return true;
 	}
 
-	/**
-	 * Clears the input fields for adding an item.
-	 */
 	private void clearItemInputFields() {
 		itemNameEditText.setText("");
 		quantityEditText.setText("");
 		unitPriceEditText.setText("");
 	}
 
-	/**
-	 * Saves the invoice.
-	 */
 	private void saveInvoice() {
 		String invoiceNumber = invoiceNumberEditText.getText().toString().trim();
 		String customerName = customerNameEditText.getText().toString().trim();
@@ -131,7 +105,6 @@ public class AddInvoiceActivity extends AppCompatActivity {
 		String date = dateEditText.getText().toString().trim();
 		String notes = notesEditText.getText().toString().trim();
 
-		// Validate input fields
 		if (validateInvoiceInputs(invoiceNumber, customerName, customerContact, date)) {
 			double totalAmount = calculateTotalAmount();
 
@@ -139,20 +112,39 @@ public class AddInvoiceActivity extends AppCompatActivity {
 
 			// Save the invoice using ViewModel
 			invoiceViewModel.insert(invoice);
+
+			// Pass the Invoice using Bundle
+			Intent intent = new Intent(this, InvoicePreviewActivity.class);
+			Bundle bundle = new Bundle();
+			bundle.putInt("id", invoice.getId());
+			bundle.putString("invoiceNumber", invoice.getInvoiceNumber());
+			bundle.putString("customerName", invoice.getCustomerName());
+			bundle.putString("customerContact", invoice.getCustomerContact());
+			bundle.putString("date", invoice.getDate());
+			bundle.putDouble("totalAmount", invoice.getTotalAmount());
+			bundle.putString("notes", invoice.getNotes());
+
+			// Serialize the list of items into an ArrayList of Bundles
+			ArrayList<Bundle> itemBundles = new ArrayList<>();
+			for (InvoiceItem item : invoice.getItems()) {
+				Bundle itemBundle = new Bundle();
+				itemBundle.putInt("id", item.getId());
+				itemBundle.putString("itemName", item.getItemName());
+				itemBundle.putInt("quantity", item.getQuantity());
+				itemBundle.putDouble("unitPrice", item.getUnitPrice());
+				itemBundle.putDouble("totalPrice", item.getTotalPrice());
+				itemBundles.add(itemBundle);
+			}
+			bundle.putParcelableArrayList("items", itemBundles);
+
+			intent.putExtras(bundle);
+			startActivity(intent);
+
 			Toast.makeText(this, "Invoice saved successfully", Toast.LENGTH_SHORT).show();
 			finish();
 		}
 	}
 
-	/**
-	 * Validate invoice inputs.
-	 *
-	 * @param invoiceNumber Invoice number
-	 * @param customerName Customer name
-	 * @param customerContact Customer contact
-	 * @param date Date
-	 * @return true if valid, false otherwise
-	 */
 	private boolean validateInvoiceInputs(String invoiceNumber, String customerName, String customerContact, String date) {
 		if (TextUtils.isEmpty(invoiceNumber) || TextUtils.isEmpty(customerName) || TextUtils.isEmpty(customerContact) || TextUtils.isEmpty(date)) {
 			Toast.makeText(this, "Please fill out all invoice details", Toast.LENGTH_SHORT).show();
@@ -161,11 +153,6 @@ public class AddInvoiceActivity extends AppCompatActivity {
 		return true;
 	}
 
-	/**
-	 * Calculates the total amount for the invoice.
-	 *
-	 * @return Total amount
-	 */
 	private double calculateTotalAmount() {
 		double totalAmount = 0.0;
 		for (InvoiceItem item : invoiceItemList) {

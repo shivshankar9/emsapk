@@ -5,6 +5,10 @@
     <!-- Internet permission is required for Google Sign-In -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- STORAGE permission is required  -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+
     <application
             android:allowBackup="true"
             android:dataExtractionRules="@xml/data_extraction_rules"
@@ -62,6 +66,13 @@
                 android:exported="true"
                 android:label="View Invoices"
                 android:theme="@style/Theme.Ems1" />
+
+        <activity
+                android:name=".InvoicePreviewActivity"
+                android:exported="true"
+                android:label="Preview Invoices"
+                android:theme="@style/Theme.Ems1" />
+
 
     </application>
 </manifest>
