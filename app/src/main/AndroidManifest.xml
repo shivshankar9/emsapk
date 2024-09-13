@@ -49,11 +49,18 @@
                 android:label="Add Expense"
                 android:theme="@style/Theme.Ems1" />
 
-        <!-- AddInvoiceActivity -->
+        <!-- AddInvoiceActivity remains unchanged -->
         <activity
                 android:name=".AddInvoiceActivity"
                 android:exported="true"
                 android:label="Add Invoice"
+                android:theme="@style/Theme.Ems1" />
+
+        <!-- Add the missing ViewInvoicesActivity declaration -->
+        <activity
+                android:name=".ViewInvoicesActivity"
+                android:exported="true"
+                android:label="View Invoices"
                 android:theme="@style/Theme.Ems1" />
 
     </application>
