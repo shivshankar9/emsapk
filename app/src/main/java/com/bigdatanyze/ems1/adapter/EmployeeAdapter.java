@@ -8,13 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bigdatanyze.ems1.model.Employee;
 import com.bigdatanyze.ems1.R;
+
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder> {
 
 	private List<Employee> employeeList = new ArrayList<>();
+	private List<Employee> fullEmployeeList = new ArrayList<>(); // Backup list for filtering
 
 	@NonNull
 	@Override
@@ -38,7 +39,25 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
 
 	public void setEmployeeList(List<Employee> employees) {
 		this.employeeList = employees;
+		this.fullEmployeeList = new ArrayList<>(employees); // Create backup list
 		notifyDataSetChanged();
+	}
+
+	// Filter logic for search functionality
+	public void filter(String query) {
+		if (query == null || query.isEmpty()) {
+			employeeList = new ArrayList<>(fullEmployeeList); // Reset to full list if query is empty
+		} else {
+			List<Employee> filteredList = new ArrayList<>();
+			for (Employee employee : fullEmployeeList) {
+				if (employee.getName().toLowerCase().contains(query.toLowerCase()) ||
+						employee.getPosition().toLowerCase().contains(query.toLowerCase())) {
+					filteredList.add(employee);
+				}
+			}
+			employeeList = filteredList;
+		}
+		notifyDataSetChanged(); // Notify adapter to refresh data
 	}
 
 	class EmployeeViewHolder extends RecyclerView.ViewHolder {

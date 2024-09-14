@@ -36,15 +36,25 @@
                 android:textColor="@android:color/primary_text_dark" />
     </LinearLayout>
 
+    <!-- Single Search Bar with default query hint -->
+    <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search Expenses"
+            android:iconifiedByDefault="true" />
+
     <!-- RecyclerView for displaying Expenses -->
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewExpense"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
     <!-- RecyclerView for displaying Employees -->
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewEmployee"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 </LinearLayout>
