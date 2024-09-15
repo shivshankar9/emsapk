@@ -3,14 +3,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
     <!-- Buttons for switching between views -->
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp"
             android:gravity="center"
             tools:ignore="ExtraText">
 
@@ -20,10 +20,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Expense View"
+                android:text="Expense"
+                android:textSize="14sp"
                 android:layout_marginEnd="8dp"
-                android:backgroundTint="@color/purple_500"
-                android:textColor="@android:color/white" />
+                android:background="@drawable/smaller_rounded_button"
+                android:textColor="@android:color/black" />
 
         <!-- Employee View Button -->
         <Button
@@ -31,9 +32,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Employee View"
-                android:backgroundTint="@color/purple_500"
-                android:textColor="@android:color/primary_text_dark" />
+                android:text="Employee"
+                android:textSize="14sp"
+                android:background="@drawable/smaller_rounded_button"
+                android:textColor="@android:color/black" />
     </LinearLayout>
 
     <!-- Single Search Bar with default query hint -->
@@ -42,19 +44,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:queryHint="Search Expenses"
-            android:iconifiedByDefault="true" />
+            android:iconifiedByDefault="true"
+            android:background="@drawable/rounded_search_bar"
+            android:layout_marginBottom="16dp" />
 
     <!-- RecyclerView for displaying Expenses -->
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewExpense"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:divider="@drawable/recycler_divider"
+            android:dividerHeight="1dp" />
 
     <!-- RecyclerView for displaying Employees -->
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewEmployee"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:divider="@drawable/recycler_divider"
+            android:dividerHeight="1dp" />
 </LinearLayout>
