@@ -20,6 +20,15 @@ public class InvoiceItem {
 
 	// Constructor with parameters
 	@Ignore
+	public InvoiceItem(String itemName, int quantity, double unitPrice, double totalPrice) {
+		this.itemName = itemName;
+		this.quantity = quantity;
+		this.unitPrice = unitPrice;
+		this.totalPrice = totalPrice;
+	}
+
+	// Constructor with parameters (without total price calculation)
+	@Ignore
 	public InvoiceItem(String itemName, int quantity, double unitPrice) {
 		this.itemName = itemName;
 		this.quantity = quantity;

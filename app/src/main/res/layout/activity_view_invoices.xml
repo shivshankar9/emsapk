@@ -1,9 +1,59 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:background="@color/background_color"
+                                                   tools:context=".ViewInvoicesActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/invoices_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-</RelativeLayout>
+        <!-- Toolbar for the activity -->
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/toolbar_background"
+                android:title="Invoices"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- PDF icon positioned to the right -->
+        <ImageView
+                android:id="@+id/pdf_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_pdf_icon"
+                android:contentDescription="@string/pdf_icon_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp" />
+
+        <!-- RecyclerView to display the list of invoices -->
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/invoices_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="72dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintEnd_toStartOf="@id/pdf_icon"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Floating Action Button for adding new invoices -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_add_invoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_add"
+                android:contentDescription="@string/add_invoice"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

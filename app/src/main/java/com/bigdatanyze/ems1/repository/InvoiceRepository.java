@@ -38,4 +38,8 @@ public class InvoiceRepository {
 	public void delete(Invoice invoice) {
 		executorService.execute(() -> invoiceDao.delete(invoice));
 	}
+
+	public LiveData<String> getLastInvoiceNumber() {
+		return invoiceDao.getLastInvoiceNumber();
+	}
 }
