@@ -107,4 +107,12 @@ public class Invoice {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+
+	/**
+	 * Returns the total amount formatted as a string with currency symbol.
+	 * Example: "$123.45"
+	 */
+	public String getFormattedAmount() {
+		return String.format("$%.2f", totalAmount);
+	}
 }
