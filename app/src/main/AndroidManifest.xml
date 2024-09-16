@@ -5,9 +5,8 @@
     <!-- Internet permission is required for Google Sign-In -->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- STORAGE permission is required  -->
+    <!-- STORAGE permission is required for saving files -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
 
     <application
             android:allowBackup="true"
@@ -39,40 +38,54 @@
                 android:label="@string/app_name"
                 android:theme="@style/Theme.Ems1" />
 
-        <!-- AddEmployeeActivity remains unchanged -->
+        <!-- AddEmployeeActivity for adding employees -->
         <activity
                 android:name=".AddEmployeeActivity"
                 android:exported="true"
                 android:label="Add Employee"
                 android:theme="@style/Theme.Ems1" />
 
-        <!-- AddExpenseActivity remains unchanged -->
+        <!-- AddExpenseActivity for adding expenses -->
         <activity
                 android:name=".AddExpenseActivity"
                 android:exported="true"
                 android:label="Add Expense"
                 android:theme="@style/Theme.Ems1" />
 
-        <!-- AddInvoiceActivity remains unchanged -->
+        <!-- AddInvoiceActivity for creating invoices -->
         <activity
                 android:name=".AddInvoiceActivity"
                 android:exported="true"
                 android:label="Add Invoice"
                 android:theme="@style/Theme.Ems1" />
 
-        <!-- Add the missing ViewInvoicesActivity declaration -->
+        <!-- ViewInvoicesActivity for viewing invoices -->
         <activity
                 android:name=".ViewInvoicesActivity"
                 android:exported="true"
                 android:label="View Invoices"
                 android:theme="@style/Theme.Ems1" />
 
+        <!-- InvoicePreviewActivity for previewing invoices -->
         <activity
                 android:name=".InvoicePreviewActivity"
                 android:exported="true"
                 android:label="Preview Invoices"
                 android:theme="@style/Theme.Ems1" />
 
+        <!-- SettingsActivity for the app settings (add this if needed) -->
+        <activity
+                android:name=".SettingsActivity"
+                android:exported="true"
+                android:label="Settings"
+                android:theme="@style/Theme.Ems1" />
+
+        <!-- NotificationsActivity for notifications -->
+        <activity
+                android:name=".NotificationsActivity"
+                android:exported="true"
+                android:label="Notifications"
+                android:theme="@style/Theme.Ems1" />
 
     </application>
 </manifest>

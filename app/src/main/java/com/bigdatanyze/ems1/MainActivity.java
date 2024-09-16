@@ -1,5 +1,6 @@
 package com.bigdatanyze.ems1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(binding.getRoot());
 
 		setupBottomNavigation();
+		setupHeaderIcons();  // Setup click listeners for icons
 	}
 
 	private void setupBottomNavigation() {
@@ -42,5 +44,25 @@ public class MainActivity extends AppCompatActivity {
 
 		// Set default selection and load the default fragment
 		binding.bottomNavigationView.setSelectedItemId(R.id.nav_home);
+	}
+
+	private void setupHeaderIcons() {
+		// Settings icon click listener
+		binding.ivSettings.setOnClickListener(v -> {
+			Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+			startActivity(intent);  // Redirect to SettingsActivity
+		});
+
+		// Notifications icon click listener
+		binding.ivNotifications.setOnClickListener(v -> {
+			Intent intent = new Intent(MainActivity.this, NotificationsActivity.class);
+			startActivity(intent);  // Redirect to NotificationsActivity
+		});
+
+		// Profile icon click listener (if needed)
+		binding.ivProfile.setOnClickListener(v -> {
+			Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+			startActivity(intent);  // Redirect to ProfileActivity
+		});
 	}
 }
