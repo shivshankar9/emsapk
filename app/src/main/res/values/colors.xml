@@ -12,5 +12,8 @@
     <!-- Define additional colors if needed -->
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
+    <color name="hint_color">#888888</color>
+    <color name="button_background">#009688</color>
+    <color name="gray">#D3D3D3</color>
 
 </resources>

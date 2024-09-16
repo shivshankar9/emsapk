@@ -16,8 +16,11 @@ import com.bigdatanyze.ems1.model.Invoice;
 import com.bigdatanyze.ems1.model.InvoiceItem;
 import com.bigdatanyze.ems1.viewmodel.InvoiceViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AddInvoiceActivity extends AppCompatActivity {
 
@@ -38,6 +41,10 @@ public class AddInvoiceActivity extends AppCompatActivity {
 
 		// Initialize ViewModel
 		invoiceViewModel = new ViewModelProvider(this).get(InvoiceViewModel.class);
+
+		// Generate default invoice number and date
+		generateDefaultInvoiceNumber();
+		generateCurrentDate();
 
 		// Set up click listeners for buttons
 		setupClickListeners();
@@ -62,6 +69,32 @@ public class AddInvoiceActivity extends AppCompatActivity {
 		itemsRecyclerView.setAdapter(itemAdapter);
 	}
 
+	private void generateDefaultInvoiceNumber() {
+		// Logic to fetch the last invoice number and increment it
+		invoiceViewModel.getLastInvoiceNumber().observe(this, lastInvoiceNumber -> {
+			try {
+				if (lastInvoiceNumber != null) {
+					// Remove non-numeric characters from the lastInvoiceNumber
+					String cleanedNumber = lastInvoiceNumber.replaceAll("[^0-9]", "");
+					int nextNumber = cleanedNumber.isEmpty() ? 1001 : Integer.parseInt(cleanedNumber) + 1;
+					invoiceNumberEditText.setText(String.format(Locale.getDefault(), "%d", nextNumber));
+				} else {
+					// Set a default value if no previous invoice number exists
+					invoiceNumberEditText.setText("1001");
+				}
+			} catch (NumberFormatException e) {
+				// Handle the case where the cleaned number is still not valid
+				invoiceNumberEditText.setText("1001");
+				Toast.makeText(this, "Error generating invoice number, defaulting to 1001", Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
+
+	private void generateCurrentDate() {
+		String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+		dateEditText.setText(currentDate);
+	}
+
 	private void setupClickListeners() {
 		findViewById(R.id.add_item_button).setOnClickListener(v -> addItemToInvoice());
 		findViewById(R.id.save_invoice_button).setOnClickListener(v -> saveInvoice());
@@ -73,14 +106,19 @@ public class AddInvoiceActivity extends AppCompatActivity {
 		String unitPriceStr = unitPriceEditText.getText().toString().trim();
 
 		if (validateItemInputs(itemName, quantityStr, unitPriceStr)) {
-			int quantity = Integer.parseInt(quantityStr);
-			double unitPrice = Double.parseDouble(unitPriceStr);
-			InvoiceItem item = new InvoiceItem(itemName, quantity, unitPrice);
+			try {
+				int quantity = Integer.parseInt(quantityStr);
+				double unitPrice = Double.parseDouble(unitPriceStr);
+				double totalPrice = quantity * unitPrice;
+				InvoiceItem item = new InvoiceItem(itemName, quantity, unitPrice, totalPrice);
 
-			invoiceItemList.add(item);
-			itemAdapter.notifyDataSetChanged();
+				invoiceItemList.add(item);
+				itemAdapter.notifyDataSetChanged();
 
-			clearItemInputFields();
+				clearItemInputFields();
+			} catch (NumberFormatException e) {
+				Toast.makeText(this, "Invalid quantity or unit price format", Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 

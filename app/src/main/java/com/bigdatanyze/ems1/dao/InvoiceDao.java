@@ -25,4 +25,7 @@ public interface InvoiceDao {
 
 	@Query("SELECT * FROM invoice ORDER BY date DESC")
 	LiveData<List<Invoice>> getAllInvoices();
+
+	@Query("SELECT invoiceNumber FROM invoice ORDER BY id DESC LIMIT 1")
+	LiveData<String> getLastInvoiceNumber();
 }

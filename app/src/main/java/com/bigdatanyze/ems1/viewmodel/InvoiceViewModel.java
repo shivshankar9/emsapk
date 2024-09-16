@@ -35,4 +35,8 @@ public class InvoiceViewModel extends AndroidViewModel {
 	public void delete(Invoice invoice) {
 		repository.delete(invoice);
 	}
+
+	public LiveData<String> getLastInvoiceNumber() {
+		return repository.getLastInvoiceNumber();
+	}
 }
