@@ -84,16 +84,5 @@
                 tools:listitem="@layout/invoice_item" />
 
         <!-- PDF icon ImageView -->
-        <ImageView
-                android:id="@+id/pdf_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_pdf_icon"
-                android:contentDescription="@string/pdf_icon_description"
-                app:layout_constraintBottom_toBottomOf="@id/invoices_recycler_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="16dp"
-                android:layout_gravity="end"
-                app:layout_constraintTop_toTopOf="@id/invoices_recycler_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

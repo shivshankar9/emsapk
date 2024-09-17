@@ -42,6 +42,7 @@
 
         </LinearLayout>
 
+        <!-- PDF icon ImageView -->
         <ImageView
                 android:id="@+id/pdf_icon"
                 android:layout_width="wrap_content"
@@ -50,6 +51,16 @@
                 android:contentDescription="@string/pdf_icon_description"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="16dp" />
+
+        <!-- Three-dot options menu -->
+        <ImageView
+                android:id="@+id/overflow_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_more_vert"
+        android:contentDescription="@string/overflow_menu_description"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="16dp" />
 
     </LinearLayout>
 

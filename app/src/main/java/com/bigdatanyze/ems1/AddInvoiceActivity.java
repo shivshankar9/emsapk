@@ -36,17 +36,13 @@ public class AddInvoiceActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_invoice);
 
-		// Initialize UI components
 		initializeUIComponents();
 
-		// Initialize ViewModel
 		invoiceViewModel = new ViewModelProvider(this).get(InvoiceViewModel.class);
 
-		// Generate default invoice number and date
 		generateDefaultInvoiceNumber();
 		generateCurrentDate();
 
-		// Set up click listeners for buttons
 		setupClickListeners();
 	}
 
@@ -70,20 +66,16 @@ public class AddInvoiceActivity extends AppCompatActivity {
 	}
 
 	private void generateDefaultInvoiceNumber() {
-		// Logic to fetch the last invoice number and increment it
 		invoiceViewModel.getLastInvoiceNumber().observe(this, lastInvoiceNumber -> {
 			try {
 				if (lastInvoiceNumber != null) {
-					// Remove non-numeric characters from the lastInvoiceNumber
 					String cleanedNumber = lastInvoiceNumber.replaceAll("[^0-9]", "");
 					int nextNumber = cleanedNumber.isEmpty() ? 1001 : Integer.parseInt(cleanedNumber) + 1;
 					invoiceNumberEditText.setText(String.format(Locale.getDefault(), "%d", nextNumber));
 				} else {
-					// Set a default value if no previous invoice number exists
 					invoiceNumberEditText.setText("1001");
 				}
 			} catch (NumberFormatException e) {
-				// Handle the case where the cleaned number is still not valid
 				invoiceNumberEditText.setText("1001");
 				Toast.makeText(this, "Error generating invoice number, defaulting to 1001", Toast.LENGTH_SHORT).show();
 			}
@@ -114,7 +106,6 @@ public class AddInvoiceActivity extends AppCompatActivity {
 
 				invoiceItemList.add(item);
 				itemAdapter.notifyDataSetChanged();
-
 				clearItemInputFields();
 			} catch (NumberFormatException e) {
 				Toast.makeText(this, "Invalid quantity or unit price format", Toast.LENGTH_SHORT).show();
@@ -147,11 +138,8 @@ public class AddInvoiceActivity extends AppCompatActivity {
 			double totalAmount = calculateTotalAmount();
 
 			Invoice invoice = new Invoice(invoiceNumber, customerName, customerContact, date, totalAmount, invoiceItemList, notes);
-
-			// Save the invoice using ViewModel
 			invoiceViewModel.insert(invoice);
 
-			// Pass the Invoice using Bundle
 			Intent intent = new Intent(this, InvoicePreviewActivity.class);
 			Bundle bundle = new Bundle();
 			bundle.putInt("id", invoice.getId());
@@ -162,7 +150,6 @@ public class AddInvoiceActivity extends AppCompatActivity {
 			bundle.putDouble("totalAmount", invoice.getTotalAmount());
 			bundle.putString("notes", invoice.getNotes());
 
-			// Serialize the list of items into an ArrayList of Bundles
 			ArrayList<Bundle> itemBundles = new ArrayList<>();
 			for (InvoiceItem item : invoice.getItems()) {
 				Bundle itemBundle = new Bundle();
