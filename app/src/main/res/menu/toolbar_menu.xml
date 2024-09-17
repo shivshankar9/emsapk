@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Three-dot menu item -->
+    <item
+            android:id="@+id/action_more"
+            android:title="More"
+            android:icon="@drawable/ic_more_vert"
+            android:orderInCategory="100"
+            android:showAsAction="always"/>
+</menu>

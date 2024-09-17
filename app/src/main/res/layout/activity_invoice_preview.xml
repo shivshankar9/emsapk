@@ -1,20 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="16dp">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
 
-    <TextView
-            android:id="@+id/invoice_preview_text_view"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Invoice Preview"
-            android:textSize="18sp" />
+            android:orientation="vertical">
 
-    <Button
-            android:id="@+id/download_pdf_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Download Invoice PDF" />
-</LinearLayout>
+        <TextView
+                android:id="@+id/invoice_preview_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Invoice Preview"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:paddingBottom="16dp"
+                android:textColor="@color/black" />
+
+        <!-- Download button -->
+        <Button
+                android:id="@+id/download_pdf_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Download Invoice PDF"
+                android:layout_marginTop="16dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/colorPrimary" />
+
+        <TextView
+                android:id="@+id/invoice_details_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:paddingTop="24dp"
+                android:lineSpacingExtra="4dp" />
+    </LinearLayout>
+
+</ScrollView>
