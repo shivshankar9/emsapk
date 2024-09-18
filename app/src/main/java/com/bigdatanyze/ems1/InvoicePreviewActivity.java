@@ -1,11 +1,15 @@
 package com.bigdatanyze.ems1;
 
 import android.Manifest;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.pm.PackageManager;
 import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,9 +20,8 @@ import androidx.core.content.ContextCompat;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class InvoicePreviewActivity extends AppCompatActivity {
 
@@ -85,6 +88,10 @@ public class InvoicePreviewActivity extends AppCompatActivity {
 	}
 
 	private boolean checkStoragePermission() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+			// Android 10 and above do not need WRITE_EXTERNAL_STORAGE permission
+			return true;
+		}
 		return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
 	}
 
@@ -103,11 +110,42 @@ public class InvoicePreviewActivity extends AppCompatActivity {
 		page.getCanvas().drawText(invoiceDetails, 80, 100, paint);
 		pdfDocument.finishPage(page);
 
-		// Save PDF to file
-		File file = new File(Environment.getExternalStorageDirectory(), "InvoicePreview.pdf");
+		// Save PDF based on Android version
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+			// For Android 10 and above (Scoped Storage)
+			savePDFInScopedStorage(pdfDocument);
+		} else {
+			// For Android 9 and below
+			File file = new File(Environment.getExternalStorageDirectory(), "InvoicePreview.pdf");
+			try {
+				pdfDocument.writeTo(new FileOutputStream(file));
+				Toast.makeText(this, "PDF downloaded successfully: " + file.getPath(), Toast.LENGTH_SHORT).show();
+			} catch (IOException e) {
+				e.printStackTrace();
+				Toast.makeText(this, "Error saving PDF: " + e.getMessage(), Toast.LENGTH_LONG).show();
+			} finally {
+				pdfDocument.close();
+			}
+		}
+	}
+
+	// Save the PDF using Scoped Storage (for Android 10 and above)
+	private void savePDFInScopedStorage(PdfDocument pdfDocument) {
+		ContentResolver resolver = getContentResolver();
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "InvoicePreview.pdf");
+		contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf");
+		contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS + "/Finverge");
+
+		Uri uri = resolver.insert(MediaStore.Files.getContentUri("external"), contentValues);
+
 		try {
-			pdfDocument.writeTo(new FileOutputStream(file));
-			Toast.makeText(this, "PDF downloaded successfully: " + file.getPath(), Toast.LENGTH_SHORT).show();
+			OutputStream outputStream = resolver.openOutputStream(uri);
+			if (outputStream != null) {
+				pdfDocument.writeTo(outputStream);
+				outputStream.close();
+				Toast.makeText(this, "PDF saved in Documents/YourAppFolder", Toast.LENGTH_SHORT).show();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			Toast.makeText(this, "Error saving PDF: " + e.getMessage(), Toast.LENGTH_LONG).show();

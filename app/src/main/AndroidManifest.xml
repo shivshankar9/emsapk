@@ -5,11 +5,14 @@
     <!-- Internet permission is required for Google Sign-In -->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- STORAGE permission is required for saving files -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- Storage permission is required for Android 9 and below -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+                     android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
+    <!-- Permission to manage external storage for Android 11 and above if necessary -->
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+                     tools:ignore="ScopedStorage" />
 
     <application
             android:allowBackup="true"
@@ -21,6 +24,8 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.Ems1"
             tools:targetApi="31">
+
+        <!-- Define your activities here -->
 
         <!-- LoginActivity is the launcher activity -->
         <activity
@@ -76,7 +81,7 @@
                 android:label="Preview Invoices"
                 android:theme="@style/Theme.Ems1" />
 
-        <!-- SettingsActivity for the app settings (add this if needed) -->
+        <!-- SettingsActivity for app settings -->
         <activity
                 android:name=".SettingsActivity"
                 android:exported="true"
