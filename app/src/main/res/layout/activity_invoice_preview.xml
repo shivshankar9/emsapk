@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="16dp">
@@ -7,37 +8,50 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/background_invoice">
 
+        <!-- Invoice Preview Header -->
         <TextView
                 android:id="@+id/invoice_preview_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Invoice Preview"
-                android:textSize="22sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:paddingBottom="16dp"
-                android:textColor="@color/black" />
+                android:padding="16dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:background="@drawable/header_background" />
 
         <!-- Download button -->
-        <Button
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/download_pdf_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Download Invoice PDF"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/colorPrimary" />
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/colorPrimary"
+                app:cornerRadius="8dp"
+        app:icon="@drawable/ic_download"
+        app:iconPadding="8dp"
+        app:iconGravity="textStart"
+        android:padding="12dp"
+        android:textSize="16sp" />
 
+        <!-- Invoice Details -->
         <TextView
                 android:id="@+id/invoice_details_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:paddingTop="24dp"
-                android:lineSpacingExtra="4dp" />
-    </LinearLayout>
+                android:lineSpacingExtra="8dp"
+                android:textColor="@color/black"
+                android:padding="8dp"
+                android:background="@drawable/details_background" />
 
+    </LinearLayout>
 </ScrollView>

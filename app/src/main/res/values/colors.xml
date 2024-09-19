@@ -8,6 +8,7 @@
 
     <!-- Define the accent color -->
     <color name="colorAccent">#03DAC5</color> <!-- Replace with your desired color hex code -->
+    <color name="colorPrimaryDark">#FF5722</color>
 
     <!-- Define additional colors if needed -->
     <color name="colorWhite">#FFFFFF</color>

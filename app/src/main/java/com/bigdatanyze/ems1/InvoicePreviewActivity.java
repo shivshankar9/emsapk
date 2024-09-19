@@ -105,17 +105,27 @@ public class InvoicePreviewActivity extends AppCompatActivity {
 		PdfDocument.Page page = pdfDocument.startPage(pageInfo);
 
 		// Drawing content on the PDF
+		android.graphics.Canvas canvas = page.getCanvas();
 		android.graphics.Paint paint = new android.graphics.Paint();
+		paint.setTextSize(12f);
+		paint.setColor(android.graphics.Color.BLACK);
+
 		String invoiceDetails = invoicePreviewTextView.getText().toString();
-		page.getCanvas().drawText(invoiceDetails, 80, 100, paint);
+		String[] lines = invoiceDetails.split("\n");
+		float y = 100; // Starting Y coordinate
+		float lineHeight = paint.getTextSize() + 10; // Line height
+
+		for (String line : lines) {
+			canvas.drawText(line, 80, y, paint);
+			y += lineHeight;
+		}
+
 		pdfDocument.finishPage(page);
 
 		// Save PDF based on Android version
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-			// For Android 10 and above (Scoped Storage)
 			savePDFInScopedStorage(pdfDocument);
 		} else {
-			// For Android 9 and below
 			File file = new File(Environment.getExternalStorageDirectory(), "InvoicePreview.pdf");
 			try {
 				pdfDocument.writeTo(new FileOutputStream(file));
