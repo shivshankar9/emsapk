@@ -1,22 +1,20 @@
 package com.bigdatanyze.ems1;
 
 import android.Manifest;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,7 +24,9 @@ import java.util.ArrayList;
 public class InvoicePreviewActivity extends AppCompatActivity {
 
 	private static final int STORAGE_PERMISSION_CODE = 100;
-	private TextView invoicePreviewTextView;
+	private TextView invoiceNumberTextView, invoiceDateTextView, customerNameTextView, customerContactTextView;
+	private TextView totalAmountTextView, additionalNotesTextView;
+	private LinearLayout itemListLayout;
 	private Button downloadPdfButton;
 
 	@Override
@@ -34,144 +34,147 @@ public class InvoicePreviewActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_invoice_preview);
 
-		invoicePreviewTextView = findViewById(R.id.invoice_preview_text_view);
+		// Initialize views
+		invoiceNumberTextView = findViewById(R.id.invoice_number);
+		invoiceDateTextView = findViewById(R.id.invoice_date);
+		customerNameTextView = findViewById(R.id.customer_name);
+		customerContactTextView = findViewById(R.id.customer_contact);
+		totalAmountTextView = findViewById(R.id.total_amount);
+		additionalNotesTextView = findViewById(R.id.additional_notes);
+		itemListLayout = findViewById(R.id.item_list);
 		downloadPdfButton = findViewById(R.id.download_pdf_button);
 
-		// Display invoice details
-		displayInvoiceDetails();
+		// Check for storage permissions
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+		}
 
-		// Check for storage permission and set button listener
-		downloadPdfButton.setOnClickListener(v -> {
-			if (checkStoragePermission()) {
-				downloadPDF();
-			} else {
-				requestStoragePermission();
-			}
-		});
-	}
-
-	private void displayInvoiceDetails() {
-		// Get data from the intent
+		// Retrieve and display invoice data
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			String invoiceNumber = extras.getString("invoiceNumber");
-			String customerName = extras.getString("customerName");
-			String customerContact = extras.getString("customerContact");
-			String date = extras.getString("date");
-			double totalAmount = extras.getDouble("totalAmount");
-			String notes = extras.getString("notes");
+			invoiceNumberTextView.setText(extras.getString("invoiceNumber"));
+			invoiceDateTextView.setText(extras.getString("date"));
+			customerNameTextView.setText(extras.getString("customerName"));
+			customerContactTextView.setText(extras.getString("customerContact"));
+			totalAmountTextView.setText(String.format("Total Amount: %.2f", extras.getDouble("totalAmount")));
+			additionalNotesTextView.setText(extras.getString("notes"));
+
 			ArrayList<Bundle> itemBundles = extras.getParcelableArrayList("items");
-
-			// Build invoice details string
-			StringBuilder invoiceDetails = new StringBuilder();
-			invoiceDetails.append("Invoice Number: ").append(invoiceNumber).append("\n");
-			invoiceDetails.append("Customer Name: ").append(customerName).append("\n");
-			invoiceDetails.append("Customer Contact: ").append(customerContact).append("\n");
-			invoiceDetails.append("Date: ").append(date).append("\n");
-			invoiceDetails.append("Total Amount: $").append(totalAmount).append("\n");
-			invoiceDetails.append("Notes: ").append(notes).append("\n\n");
-
-			invoiceDetails.append("Items:\n");
 			if (itemBundles != null) {
 				for (Bundle itemBundle : itemBundles) {
-					String itemName = itemBundle.getString("itemName");
-					int quantity = itemBundle.getInt("quantity");
-					double unitPrice = itemBundle.getDouble("unitPrice");
-					double totalPrice = itemBundle.getDouble("totalPrice");
-					invoiceDetails.append(String.format("%s - Quantity: %d, Unit Price: $%.2f, Total Price: $%.2f\n",
-							itemName, quantity, unitPrice, totalPrice));
+					TextView itemView = new TextView(this);
+					itemView.setText(String.format("%s - Quantity: %d, Unit Price: %.2f, Total Price: %.2f",
+							itemBundle.getString("itemName"),
+							itemBundle.getInt("quantity"),
+							itemBundle.getDouble("unitPrice"),
+							itemBundle.getDouble("totalPrice")));
+					itemListLayout.addView(itemView);
 				}
 			}
-
-			invoicePreviewTextView.setText(invoiceDetails.toString());
 		}
+
+		// Set up PDF generation button
+		downloadPdfButton.setOnClickListener(v -> generatePdf());
 	}
 
-	private boolean checkStoragePermission() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-			// Android 10 and above do not need WRITE_EXTERNAL_STORAGE permission
-			return true;
-		}
-		return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-	}
-
-	private void requestStoragePermission() {
-		ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
-	}
-
-	private void downloadPDF() {
+	// Method to generate the PDF of the invoice
+	private void generatePdf() {
+		// Set up the PDF document and page
 		PdfDocument pdfDocument = new PdfDocument();
-		PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(595, 842, 1).create();
+		PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(600, 900, 1).create();
 		PdfDocument.Page page = pdfDocument.startPage(pageInfo);
 
-		// Drawing content on the PDF
-		android.graphics.Canvas canvas = page.getCanvas();
-		android.graphics.Paint paint = new android.graphics.Paint();
-		paint.setTextSize(12f);
-		paint.setColor(android.graphics.Color.BLACK);
+		// Set up the paint styles
+		Paint paint = new Paint();
+		paint.setTextSize(12);
+		Paint titlePaint = new Paint();
+		titlePaint.setTextSize(16);
+		titlePaint.setFakeBoldText(true);
 
-		String invoiceDetails = invoicePreviewTextView.getText().toString();
-		String[] lines = invoiceDetails.split("\n");
-		float y = 100; // Starting Y coordinate
-		float lineHeight = paint.getTextSize() + 10; // Line height
+		// Draw the company header
+		page.getCanvas().drawText("Finverge Pvt Ltd", 10, 25, titlePaint);
+		page.getCanvas().drawText("Company Address", 10, 45, paint);
+		page.getCanvas().drawText("City, State, ZIP", 10, 65, paint);
+		page.getCanvas().drawText("Email: example@company.com", 10, 85, paint);
+		page.getCanvas().drawText("Phone: (123) 456-7890", 10, 105, paint);
 
-		for (String line : lines) {
-			canvas.drawText(line, 80, y, paint);
-			y += lineHeight;
+		// Draw invoice details
+		page.getCanvas().drawText("Invoice Number: " + invoiceNumberTextView.getText().toString(), 10, 145, paint);
+		page.getCanvas().drawText("Date: " + invoiceDateTextView.getText().toString(), 10, 165, paint);
+		page.getCanvas().drawText("Customer: " + customerNameTextView.getText().toString(), 10, 185, paint);
+		page.getCanvas().drawText("Contact: " + customerContactTextView.getText().toString(), 10, 205, paint);
+
+		// Draw the item list header
+		int yPosition = 245;
+		titlePaint.setTextSize(14);
+		page.getCanvas().drawText("Item Name", 10, yPosition, titlePaint);
+		page.getCanvas().drawText("Quantity", 150, yPosition, titlePaint);
+		page.getCanvas().drawText("Unit Price", 250, yPosition, titlePaint);
+		page.getCanvas().drawText("Total Price", 350, yPosition, titlePaint);
+
+		// Draw the items
+		yPosition += 20;
+		for (int i = 0; i < itemListLayout.getChildCount(); i++) {
+			TextView itemView = (TextView) itemListLayout.getChildAt(i);
+			String[] itemDetails = itemView.getText().toString().split(", ");
+
+			// Split item details into appropriate fields
+			String itemName = itemDetails[0];
+			String quantity = itemDetails[1].replace("Quantity: ", "");
+			String unitPrice = itemDetails[2].replace("Unit Price: ", "");
+			String totalPrice = itemDetails[3].replace("Total Price: ", "");
+
+			page.getCanvas().drawText(itemName, 10, yPosition, paint);
+			page.getCanvas().drawText(quantity, 150, yPosition, paint);
+			page.getCanvas().drawText(unitPrice, 250, yPosition, paint);
+			page.getCanvas().drawText(totalPrice, 350, yPosition, paint);
+
+			yPosition += 20;
 		}
+
+		// Draw the total amount and notes
+		yPosition += 30;
+		page.getCanvas().drawText("Total Amount: " + totalAmountTextView.getText().toString(), 10, yPosition, titlePaint);
+		yPosition += 20;
+		page.getCanvas().drawText("Notes: " + additionalNotesTextView.getText().toString(), 10, yPosition, paint);
 
 		pdfDocument.finishPage(page);
 
-		// Save PDF based on Android version
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-			savePDFInScopedStorage(pdfDocument);
-		} else {
-			File file = new File(Environment.getExternalStorageDirectory(), "InvoicePreview.pdf");
-			try {
-				pdfDocument.writeTo(new FileOutputStream(file));
-				Toast.makeText(this, "PDF downloaded successfully: " + file.getPath(), Toast.LENGTH_SHORT).show();
-			} catch (IOException e) {
-				e.printStackTrace();
-				Toast.makeText(this, "Error saving PDF: " + e.getMessage(), Toast.LENGTH_LONG).show();
-			} finally {
-				pdfDocument.close();
+		// Save the PDF in the Finverge folder in Documents
+		File directory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Finverge");
+		if (!directory.exists()) {
+			boolean mkdirs = directory.mkdirs(); // Create the directory if it doesn't exist
+			if (!mkdirs) {
+				Toast.makeText(this, "Failed to create directory", Toast.LENGTH_SHORT).show();
+				return;
 			}
 		}
-	}
 
-	// Save the PDF using Scoped Storage (for Android 10 and above)
-	private void savePDFInScopedStorage(PdfDocument pdfDocument) {
-		ContentResolver resolver = getContentResolver();
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "InvoicePreview.pdf");
-		contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf");
-		contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS + "/Finverge");
+		// Define the file path inside the Finverge folder
+		String filePath = directory.getAbsolutePath() + "/Invoice_" + invoiceNumberTextView.getText().toString() + ".pdf";
 
-		Uri uri = resolver.insert(MediaStore.Files.getContentUri("external"), contentValues);
-
-		try {
-			OutputStream outputStream = resolver.openOutputStream(uri);
-			if (outputStream != null) {
-				pdfDocument.writeTo(outputStream);
-				outputStream.close();
-				Toast.makeText(this, "PDF saved in Documents/YourAppFolder", Toast.LENGTH_SHORT).show();
-			}
+		try (OutputStream outputStream = new FileOutputStream(filePath)) {
+			// Write PDF content to file
+			pdfDocument.writeTo(outputStream);
+			Toast.makeText(this, "PDF saved to: " + filePath, Toast.LENGTH_LONG).show();
 		} catch (IOException e) {
+			// Handle exception
+			Toast.makeText(this, "Error saving PDF: " + e.getMessage(), Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
-			Toast.makeText(this, "Error saving PDF: " + e.getMessage(), Toast.LENGTH_LONG).show();
 		} finally {
-			pdfDocument.close();
+			pdfDocument.close(); // Close the PDF document
 		}
 	}
 
+	// Handle permission request result
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		if (requestCode == STORAGE_PERMISSION_CODE) {
 			if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-				downloadPDF();
+				Toast.makeText(this, "Storage permission granted", Toast.LENGTH_SHORT).show();
 			} else {
-				Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Storage permission denied", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

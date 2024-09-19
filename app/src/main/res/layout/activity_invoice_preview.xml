@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp">
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="@color/background_color">
 
     <LinearLayout
+            android:id="@+id/invoice_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="16dp"
+            android:elevation="4dp"
             android:background="@drawable/background_invoice">
 
         <!-- Invoice Preview Header -->
         <TextView
-                android:id="@+id/invoice_preview_text_view"
+                android:id="@+id/invoice_preview_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Invoice Preview"
@@ -24,34 +29,166 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:background="@drawable/header_background" />
 
-        <!-- Download button -->
+        <!-- Invoice Details Card -->
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                <!-- Company Header -->
+                <TextView
+                        android:id="@+id/company_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Finverge pvt ltd"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:paddingBottom="8dp" />
+
+                <TextView
+                        android:id="@+id/company_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Company Address\nCity, State, ZIP\nEmail: example@company.com\nPhone: (123) 456-7890"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:paddingBottom="16dp" />
+
+                <!-- Invoice Information -->
+                <TextView
+                        android:id="@+id/invoice_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Invoice Number: [Invoice Number]"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:paddingBottom="16dp" />
+
+                <TextView
+                        android:id="@+id/invoice_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Date: [Date]"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:paddingBottom="16dp" />
+
+                <TextView
+                        android:id="@+id/customer_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Customer: [Customer Name]"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:paddingBottom="16dp" />
+
+                <TextView
+                        android:id="@+id/customer_contact"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Contact: [Customer Contact]"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:paddingBottom="16dp" />
+
+                <!-- Item Details Table Header -->
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="8dp"
+                        android:background="@drawable/item_background">
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Item Name"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondary" />
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Quantity"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondary" />
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Unit Price"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondary" />
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Total Price"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondary" />
+                </LinearLayout>
+
+                <!-- Item List -->
+                <LinearLayout
+                        android:id="@+id/item_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="8dp" />
+
+                <!-- Total Amount -->
+                <TextView
+                        android:id="@+id/total_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Total Amount: $[Total Amount]"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:paddingTop="16dp" />
+
+                <!-- Additional Notes -->
+                <TextView
+                        android:id="@+id/additional_notes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Notes: [Additional Notes]"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:paddingTop="8dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Download PDF Button -->
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/download_pdf_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Download Invoice PDF"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:backgroundTint="@color/colorPrimary"
-                app:cornerRadius="8dp"
-        app:icon="@drawable/ic_download"
-        app:iconPadding="8dp"
-        app:iconGravity="textStart"
-        android:padding="12dp"
-        android:textSize="16sp" />
-
-        <!-- Invoice Details -->
-        <TextView
-                android:id="@+id/invoice_details_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:paddingTop="24dp"
-                android:lineSpacingExtra="8dp"
-                android:textColor="@color/black"
-                android:padding="8dp"
-                android:background="@drawable/details_background" />
-
+                app:cornerRadius="12dp"
+                app:icon="@drawable/ic_download"
+                app:iconPadding="8dp"
+                app:iconGravity="textStart"
+                android:padding="12dp"
+                android:textSize="16sp" />
     </LinearLayout>
 </ScrollView>
