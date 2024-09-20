@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+    <!-- Toolbar with Theme Selection and Print Icon -->
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="Invoice Preview"
+            app:titleTextColor="@android:color/white" />
+
+    <!-- Spinner for Theme Selection -->
+    <Spinner
+            android:id="@+id/theme_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:layout_margin="16dp"
+             />
+
     <!-- ScrollView containing the invoice details and items -->
     <ScrollView
+            android:id="@+id/invoice_scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_below="@id/theme_spinner"
             android:layout_above="@id/pdf_action_buttons"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:fillViewport="true">
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -49,7 +73,7 @@
                     android:textSize="16sp"
                     android:paddingBottom="8dp" />
 
-            <!-- RecyclerView for Invoice Items -->
+            <!-- Items Heading -->
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -123,6 +147,7 @@
                     android:text="Notes: Thank you for your business!"
                     android:textSize="16sp"
                     android:paddingBottom="16dp" />
+
         </LinearLayout>
     </ScrollView>
 
@@ -133,8 +158,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_alignParentBottom="true"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:layout_alignParentBottom="true">
 
         <Button
                 android:id="@+id/download_pdf_button"

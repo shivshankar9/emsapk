@@ -118,7 +118,7 @@ public class InvoicePreviewActivity extends AppCompatActivity {
 	}
 
 	/**
-	 * Generates the PDF of the invoice with "Tax Invoice" heading.
+	 * Generates the PDF of the invoice with improved layout and design.
 	 */
 	private void generatePdf() {
 		// Initialize PDF document
@@ -134,54 +134,107 @@ public class InvoicePreviewActivity extends AppCompatActivity {
 
 		Canvas canvas = page.getCanvas();
 
-		// Draw company header
-		canvas.drawText("Finverge Pvt Ltd", 10, 25, titlePaint);
-		canvas.drawText("Company Address", 10, 45, paint);
-		canvas.drawText("City, State, ZIP", 10, 65, paint);
-		canvas.drawText("Email: example@company.com", 10, 85, paint);
-		canvas.drawText("Phone: (123) 456-7890", 10, 105, paint);
+		// Set margins
+		int marginLeft = 20;
+		int marginRight = 580;
+		int yPosition = 25; // Top margin
 
-		// Draw "Tax Invoice" heading
+		// Draw "Tax Invoice" heading, centered
 		Paint taxInvoicePaint = new Paint();
 		taxInvoicePaint.setTextSize(18);
 		taxInvoicePaint.setFakeBoldText(true);
-		canvas.drawText("Tax Invoice", 10, 125, taxInvoicePaint);
+		taxInvoicePaint.setTextAlign(Paint.Align.CENTER);
+
+		// Center the text
+		float canvasWidth = canvas.getWidth();
+		canvas.drawText("Tax Invoice", canvasWidth / 2, yPosition, taxInvoicePaint);
+		yPosition += 30;
+
+		// Draw company header
+		canvas.drawText("Finverge Pvt Ltd", marginLeft, yPosition, titlePaint);
+		yPosition += 20;
+		canvas.drawText("Company Address", marginLeft, yPosition, paint);
+		yPosition += 20;
+		canvas.drawText("City, State, ZIP", marginLeft, yPosition, paint);
+		yPosition += 20;
+		canvas.drawText("Email: example@company.com", marginLeft, yPosition, paint);
+		yPosition += 20;
+		canvas.drawText("Phone: (123) 456-7890", marginLeft, yPosition, paint);
+		yPosition += 25;
+
+		// Draw horizontal line under header
+		paint.setStyle(Paint.Style.STROKE);
+		canvas.drawLine(marginLeft, yPosition, marginRight, yPosition, paint);
+		paint.setStyle(Paint.Style.FILL);
+		yPosition += 20;
+
+		// Billing details header
+		titlePaint.setTextSize(14);
+		canvas.drawText("Billing Details", marginLeft, yPosition, titlePaint);
+		yPosition += 20;
 
 		// Draw invoice details
 		paint.setTextSize(12);
-		canvas.drawText("Invoice Number: " + invoiceNumberTextView.getText().toString().replace("Invoice Number: ", ""), 10, 165, paint);
-		canvas.drawText("Date: " + invoiceDateTextView.getText().toString().replace("Date: ", ""), 10, 185, paint);
-		canvas.drawText("Customer: " + customerNameTextView.getText().toString().replace("Customer: ", ""), 10, 205, paint);
-		canvas.drawText("Contact: " + customerContactTextView.getText().toString().replace("Contact: ", ""), 10, 225, paint);
+		canvas.drawText("Invoice Number: " + invoiceNumberTextView.getText().toString().replace("Invoice Number: ", ""), marginLeft, yPosition, paint);
+		yPosition += 20;
+		canvas.drawText("Date: " + invoiceDateTextView.getText().toString().replace("Date: ", ""), marginLeft, yPosition, paint);
+		yPosition += 20;
+		canvas.drawText("Customer: " + customerNameTextView.getText().toString().replace("Customer: ", ""), marginLeft, yPosition, paint);
+		yPosition += 20;
+		canvas.drawText("Contact: " + customerContactTextView.getText().toString().replace("Contact: ", ""), marginLeft, yPosition, paint);
+		yPosition += 25;
 
-		// Draw the item list header
-		int yPosition = 265;
+		// Shipping address header
+		canvas.drawText("Shipping Address", marginLeft, yPosition, titlePaint);
+		yPosition += 20;
+		canvas.drawText("123 Shipping Street", marginLeft, yPosition, paint);
+		yPosition += 20;
+		canvas.drawText("City, State, ZIP", marginLeft, yPosition, paint);
+		yPosition += 20;
+		canvas.drawText("Phone: (987) 654-3210", marginLeft, yPosition, paint);
+		yPosition += 30;
+
+		// Item list header
 		titlePaint.setTextSize(14);
-		((Canvas) canvas).drawText("Item Name", 10, yPosition, titlePaint);
+		canvas.drawText("Item Name", marginLeft, yPosition, titlePaint);
 		canvas.drawText("Quantity", 200, yPosition, titlePaint);
 		canvas.drawText("Unit Price", 300, yPosition, titlePaint);
-		canvas.drawText("Total Price", 400, yPosition, titlePaint);
+		canvas.drawText("Amount", 400, yPosition, titlePaint);
+		yPosition += 15;
 
-		// Draw a horizontal line under the header
+		// Draw a horizontal line under the item list header
 		paint.setStyle(Paint.Style.STROKE);
-		canvas.drawLine(10, yPosition + 5, 580, yPosition + 5, paint);
+		canvas.drawLine(marginLeft, yPosition, marginRight, yPosition, paint);
 		paint.setStyle(Paint.Style.FILL);
+		yPosition += 20;
 
 		// Draw the items
-		yPosition += 25;
 		for (InvoiceItem item : invoiceItemList) {
-			canvas.drawText(item.getItemName(), 10, yPosition, paint);
+			canvas.drawText(item.getItemName(), marginLeft, yPosition, paint);
 			canvas.drawText(String.valueOf(item.getQuantity()), 200, yPosition, paint);
 			canvas.drawText(String.format("%.2f", item.getUnitPrice()), 300, yPosition, paint);
 			canvas.drawText(String.format("%.2f", item.getTotalPrice()), 400, yPosition, paint);
 			yPosition += 20;
 		}
 
-		// Draw the total amount and notes
+		// Draw total amount and additional notes
 		yPosition += 30;
-		canvas.drawText("Total Amount: " + totalAmountTextView.getText().toString().replace("Total Amount: ", ""), 10, yPosition, titlePaint);
+		canvas.drawText("Total Amount: " + totalAmountTextView.getText().toString().replace("Total Amount: ", ""), marginLeft, yPosition, titlePaint);
 		yPosition += 20;
-		canvas.drawText(additionalNotesTextView.getText().toString(), 10, yPosition, paint);
+		canvas.drawText(additionalNotesTextView.getText().toString(), marginLeft, yPosition, paint);
+		yPosition += 40;
+
+		// Draw terms and conditions
+		titlePaint.setTextSize(12);
+		canvas.drawText("Terms and Conditions", marginLeft, yPosition, titlePaint);
+		yPosition += 20;
+		paint.setTextSize(10);
+		canvas.drawText("1. Payment is due within 30 days.", marginLeft, yPosition, paint);
+		yPosition += 15;
+		canvas.drawText("2. Late payments may incur additional charges.", marginLeft, yPosition, paint);
+		yPosition += 15;
+		canvas.drawText("3. Goods sold are not refundable.", marginLeft, yPosition, paint);
+		yPosition += 20;
 
 		// Finish the page
 		pdfDocument.finishPage(page);
