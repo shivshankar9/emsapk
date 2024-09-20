@@ -22,7 +22,8 @@ public class InvoiceItemAdapter extends RecyclerView.Adapter<InvoiceItemAdapter.
 	@NonNull
 	@Override
 	public InvoiceItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_invoice_item, parent, false); // Ensure correct layout file is used
+		View view = LayoutInflater.from(parent.getContext())
+				.inflate(R.layout.item_invoice_item, parent, false);
 		return new InvoiceItemViewHolder(view);
 	}
 
@@ -32,8 +33,8 @@ public class InvoiceItemAdapter extends RecyclerView.Adapter<InvoiceItemAdapter.
 
 		holder.itemNameTextView.setText(item.getItemName());
 		holder.quantityTextView.setText(String.valueOf(item.getQuantity()));
-		holder.unitPriceTextView.setText(String.valueOf(item.getUnitPrice()));
-		holder.totalPriceTextView.setText(String.valueOf(item.getTotalPrice()));
+		holder.unitPriceTextView.setText(String.format("%.2f", item.getUnitPrice()));
+		holder.totalPriceTextView.setText(String.format("%.2f", item.getTotalPrice()));
 	}
 
 	@Override
@@ -51,10 +52,10 @@ public class InvoiceItemAdapter extends RecyclerView.Adapter<InvoiceItemAdapter.
 
 		public InvoiceItemViewHolder(@NonNull View itemView) {
 			super(itemView);
-			itemNameTextView = itemView.findViewById(R.id.tvItemName);
-			quantityTextView = itemView.findViewById(R.id.tvItemQty);
-			unitPriceTextView = itemView.findViewById(R.id.tvItemPrice);
-			totalPriceTextView = itemView.findViewById(R.id.unit_price_edit_text);
+			itemNameTextView = itemView.findViewById(R.id.item_name_text_view);
+			quantityTextView = itemView.findViewById(R.id.quantity_text_view);
+			unitPriceTextView = itemView.findViewById(R.id.unit_price_text_view);
+			totalPriceTextView = itemView.findViewById(R.id.total_price_text_view);
 		}
 	}
 }

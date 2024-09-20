@@ -7,27 +7,36 @@ import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.os.Environment;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bigdatanyze.ems1.adapter.InvoiceItemAdapter;
+import com.bigdatanyze.ems1.model.InvoiceItem;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class InvoicePreviewActivity extends AppCompatActivity {
 
 	private static final int STORAGE_PERMISSION_CODE = 100;
 	private TextView invoiceNumberTextView, invoiceDateTextView, customerNameTextView, customerContactTextView;
 	private TextView totalAmountTextView, additionalNotesTextView;
-	private LinearLayout itemListLayout;
+	private RecyclerView itemRecyclerView;
 	private Button downloadPdfButton;
+
+	private InvoiceItemAdapter invoiceItemAdapter;
+	private List<InvoiceItem> invoiceItemList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +50,14 @@ public class InvoicePreviewActivity extends AppCompatActivity {
 		customerContactTextView = findViewById(R.id.customer_contact);
 		totalAmountTextView = findViewById(R.id.total_amount);
 		additionalNotesTextView = findViewById(R.id.additional_notes);
-		itemListLayout = findViewById(R.id.item_list);
+		itemRecyclerView = findViewById(R.id.item_recycler_view);
 		downloadPdfButton = findViewById(R.id.download_pdf_button);
+
+		// Set up RecyclerView
+		invoiceItemList = new ArrayList<>();
+		invoiceItemAdapter = new InvoiceItemAdapter(invoiceItemList);
+		itemRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+		itemRecyclerView.setAdapter(invoiceItemAdapter);
 
 		// Check for storage permissions
 		if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -62,14 +77,15 @@ public class InvoicePreviewActivity extends AppCompatActivity {
 			ArrayList<Bundle> itemBundles = extras.getParcelableArrayList("items");
 			if (itemBundles != null) {
 				for (Bundle itemBundle : itemBundles) {
-					TextView itemView = new TextView(this);
-					itemView.setText(String.format("%s - Quantity: %d, Unit Price: %.2f, Total Price: %.2f",
-							itemBundle.getString("itemName"),
-							itemBundle.getInt("quantity"),
-							itemBundle.getDouble("unitPrice"),
-							itemBundle.getDouble("totalPrice")));
-					itemListLayout.addView(itemView);
+					String itemName = itemBundle.getString("itemName");
+					int quantity = itemBundle.getInt("quantity");
+					double unitPrice = itemBundle.getDouble("unitPrice");
+					double totalPrice = itemBundle.getDouble("totalPrice");
+
+					InvoiceItem invoiceItem = new InvoiceItem(itemName, quantity, unitPrice, totalPrice);
+					invoiceItemList.add(invoiceItem);
 				}
+				invoiceItemAdapter.notifyDataSetChanged();
 			}
 		}
 
@@ -114,20 +130,11 @@ public class InvoicePreviewActivity extends AppCompatActivity {
 
 		// Draw the items
 		yPosition += 20;
-		for (int i = 0; i < itemListLayout.getChildCount(); i++) {
-			TextView itemView = (TextView) itemListLayout.getChildAt(i);
-			String[] itemDetails = itemView.getText().toString().split(", ");
-
-			// Split item details into appropriate fields
-			String itemName = itemDetails[0];
-			String quantity = itemDetails[1].replace("Quantity: ", "");
-			String unitPrice = itemDetails[2].replace("Unit Price: ", "");
-			String totalPrice = itemDetails[3].replace("Total Price: ", "");
-
-			page.getCanvas().drawText(itemName, 10, yPosition, paint);
-			page.getCanvas().drawText(quantity, 150, yPosition, paint);
-			page.getCanvas().drawText(unitPrice, 250, yPosition, paint);
-			page.getCanvas().drawText(totalPrice, 350, yPosition, paint);
+		for (InvoiceItem item : invoiceItemList) {
+			page.getCanvas().drawText(item.getItemName(), 10, yPosition, paint);
+			page.getCanvas().drawText(String.valueOf(item.getQuantity()), 150, yPosition, paint);
+			page.getCanvas().drawText(String.format("%.2f", item.getUnitPrice()), 250, yPosition, paint);
+			page.getCanvas().drawText(String.format("%.2f", item.getTotalPrice()), 350, yPosition, paint);
 
 			yPosition += 20;
 		}
