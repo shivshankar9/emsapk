@@ -51,10 +51,10 @@ public class InvoiceItemAdapter extends RecyclerView.Adapter<InvoiceItemAdapter.
 
 		public InvoiceItemViewHolder(@NonNull View itemView) {
 			super(itemView);
-			itemNameTextView = itemView.findViewById(R.id.item_name_text_view);
-			quantityTextView = itemView.findViewById(R.id.quantity_text_view);
-			unitPriceTextView = itemView.findViewById(R.id.unit_price_text_view);
-			totalPriceTextView = itemView.findViewById(R.id.total_price_text_view);
+			itemNameTextView = itemView.findViewById(R.id.tvItemName);
+			quantityTextView = itemView.findViewById(R.id.tvItemQty);
+			unitPriceTextView = itemView.findViewById(R.id.tvItemPrice);
+			totalPriceTextView = itemView.findViewById(R.id.unit_price_edit_text);
 		}
 	}
 }
