@@ -78,12 +78,37 @@
                 android:textSize="16sp"
                 android:paddingBottom="16dp" />
 
-        <!-- Download PDF Button -->
-        <Button
-                android:id="@+id/download_pdf_button"
-                android:layout_width="wrap_content"
+        <!-- Buttons for PDF Actions -->
+        <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Download PDF" />
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingTop="16dp">
+
+            <Button
+                    android:id="@+id/download_pdf_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Download PDF"
+                    android:layout_marginEnd="8dp" />
+
+            <Button
+                    android:id="@+id/open_pdf_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Open PDF"
+                    android:layout_marginEnd="8dp" />
+
+            <Button
+                    android:id="@+id/share_pdf_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Share PDF" />
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
