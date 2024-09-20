@@ -9,35 +9,81 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+        <!-- Invoice Details -->
         <TextView
-                android:id="@+id/invoice_preview_text_view"
-                android:layout_width="match_parent"
+                android:id="@+id/invoice_number"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Invoice Preview"
-                android:textSize="22sp"
+                android:text="Invoice Number: #12345"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:gravity="center"
-                android:paddingBottom="16dp"
-                android:textColor="@color/black" />
+                android:paddingBottom="8dp" />
 
-        <!-- Download button -->
+        <TextView
+                android:id="@+id/invoice_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date: 01/01/2024"
+                android:textSize="16sp"
+                android:paddingBottom="8dp" />
+
+        <TextView
+                android:id="@+id/customer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Customer: John Doe"
+                android:textSize="16sp"
+                android:paddingBottom="8dp" />
+
+        <TextView
+                android:id="@+id/customer_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact: john.doe@example.com"
+                android:textSize="16sp"
+                android:paddingBottom="8dp" />
+
+        <!-- RecyclerView for Invoice Items -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Items:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/item_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        <!-- Total Amount -->
+        <TextView
+                android:id="@+id/total_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Amount: $0.00"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp" />
+
+        <!-- Additional Notes -->
+        <TextView
+                android:id="@+id/additional_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notes: Thank you for your business!"
+                android:textSize="16sp"
+                android:paddingBottom="16dp" />
+
+        <!-- Download PDF Button -->
         <Button
                 android:id="@+id/download_pdf_button"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Download Invoice PDF"
-                android:layout_marginTop="16dp"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/colorPrimary" />
+                android:text="Download PDF" />
 
-        <TextView
-                android:id="@+id/invoice_details_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:paddingTop="24dp"
-                android:lineSpacingExtra="4dp" />
     </LinearLayout>
-
 </ScrollView>

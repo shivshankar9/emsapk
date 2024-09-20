@@ -142,7 +142,6 @@ public class AddInvoiceActivity extends AppCompatActivity {
 
 			Intent intent = new Intent(this, InvoicePreviewActivity.class);
 			Bundle bundle = new Bundle();
-			bundle.putInt("id", invoice.getId());
 			bundle.putString("invoiceNumber", invoice.getInvoiceNumber());
 			bundle.putString("customerName", invoice.getCustomerName());
 			bundle.putString("customerContact", invoice.getCustomerContact());
@@ -153,7 +152,6 @@ public class AddInvoiceActivity extends AppCompatActivity {
 			ArrayList<Bundle> itemBundles = new ArrayList<>();
 			for (InvoiceItem item : invoice.getItems()) {
 				Bundle itemBundle = new Bundle();
-				itemBundle.putInt("id", item.getId());
 				itemBundle.putString("itemName", item.getItemName());
 				itemBundle.putInt("quantity", item.getQuantity());
 				itemBundle.putDouble("unitPrice", item.getUnitPrice());

@@ -32,7 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Employee"
+                android:text="Customer Details"
                 android:textSize="14sp"
                 android:background="@drawable/smaller_rounded_button"
                 android:textColor="@android:color/black" />
