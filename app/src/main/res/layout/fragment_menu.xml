@@ -28,12 +28,24 @@
                 android:layout_height="wrap_content"
                 android:text="Add Invoice" />
 
-        <!-- Add new button to view invoices -->
         <Button
                 android:id="@+id/buttonViewInvoices"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="View All Invoices" />
 
+        <!-- New Button for Database Backup -->
+        <Button
+                android:id="@+id/buttonBackupDatabase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Backup Database" />
+
+        <!-- New Button for Database Restore -->
+        <Button
+                android:id="@+id/buttonRestoreDatabase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Restore Database" />
     </LinearLayout>
 </layout>
