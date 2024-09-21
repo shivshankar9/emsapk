@@ -6,11 +6,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- Storage permissions -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- For Android versions below 10 (max SDK 28), WRITE_EXTERNAL_STORAGE is required -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
                      android:maxSdkVersion="28" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <!-- Permission to manage external storage for Android 11 and above if necessary -->
+    <!-- For Android 11 and above (SDK 30+), MANAGE_EXTERNAL_STORAGE is needed -->
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
                      tools:ignore="ScopedStorage" />
 
@@ -35,8 +36,6 @@
                     android:name="android.support.FILE_PROVIDER_PATHS"
                     android:resource="@xml/file_paths" />
         </provider>
-
-        <!-- Define your activities here -->
 
         <!-- LoginActivity is the launcher activity -->
         <activity
