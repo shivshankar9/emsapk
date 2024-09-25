@@ -59,6 +59,14 @@ public class MenuFragment extends Fragment {
 			Intent intent = new Intent(getActivity(), ViewPartyActivity.class);
 			startActivity(intent);
 		});
+		binding.buttonViewItems.setOnClickListener(v -> {
+			Intent intent = new Intent(getActivity(), ViewItemsActivity.class);
+			startActivity(intent);
+		});
+		binding.buttonAddItem.setOnClickListener(v -> {
+			Intent intent = new Intent(getActivity(), AddItemActivity.class);
+			startActivity(intent);
+		});
 
 		// Handle backup button click
 		binding.buttonBackupDatabase.setOnClickListener(v -> {

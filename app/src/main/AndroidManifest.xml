@@ -114,6 +114,18 @@
                 android:exported="true"
                 android:label="View Party"
                 android:theme="@style/Theme.Ems1" />
+        <activity
+                android:name=".AddItemActivity"
+                android:exported="true"
+                android:label="add_item"
+                android:theme="@style/Theme.Ems1" />
+
+        <activity
+                android:name=".ViewItemsActivity"
+                android:exported="true"
+                android:label="view_items"
+                android:theme="@style/Theme.Ems1" />
+
 
     </application>
 </manifest>

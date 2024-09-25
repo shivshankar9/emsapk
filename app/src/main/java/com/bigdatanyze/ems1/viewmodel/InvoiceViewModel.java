@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
 import com.bigdatanyze.ems1.model.Invoice;
+import com.bigdatanyze.ems1.model.Item;  // Import Item
 import com.bigdatanyze.ems1.model.Party;
 import com.bigdatanyze.ems1.repository.InvoiceRepository;
 
@@ -43,15 +44,11 @@ public class InvoiceViewModel extends AndroidViewModel {
 		return repository.getLastInvoiceNumber();
 	}
 
-	// Ensure this method in your repository returns LiveData<List<Party>>
 	public LiveData<List<Party>> getAllParties() {
 		return repository.getAllParties();
 	}
 
-
-
 	public LiveData<List<String>> getAllPartyNames() {
-		// This maps the LiveData<List<Party>> to LiveData<List<String>>
 		return Transformations.map(getAllParties(), parties -> {
 			List<String> names = new ArrayList<>();
 			for (Party party : parties) {
@@ -59,5 +56,10 @@ public class InvoiceViewModel extends AndroidViewModel {
 			}
 			return names;
 		});
+	}
+
+	// Minimal addition to fetch all items from the repository
+	public LiveData<List<Item>> getAllItems() {
+		return repository.getAllItems();  // Fetch all items
 	}
 }

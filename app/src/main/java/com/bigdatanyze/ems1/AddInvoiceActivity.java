@@ -17,7 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bigdatanyze.ems1.adapter.InvoiceItemAdapter;
 import com.bigdatanyze.ems1.model.Invoice;
 import com.bigdatanyze.ems1.model.InvoiceItem;
-import com.bigdatanyze.ems1.model.Party; // Ensure this import is added
+import com.bigdatanyze.ems1.model.Party;
+import com.bigdatanyze.ems1.model.Item;  // Import Item for item selection
 import com.bigdatanyze.ems1.viewmodel.InvoiceViewModel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,14 +28,14 @@ import java.util.Locale;
 
 public class AddInvoiceActivity extends AppCompatActivity {
 
-	private AutoCompleteTextView customerNameAutoComplete;
+	private AutoCompleteTextView customerNameAutoComplete, itemNameAutoComplete;
 	private EditText invoiceNumberEditText, customerContactEditText, dateEditText, notesEditText;
-	private EditText itemNameEditText, quantityEditText, unitPriceEditText;
+	private EditText quantityEditText, unitPriceEditText;
 	private RecyclerView itemsRecyclerView;
 	private InvoiceItemAdapter itemAdapter;
 	private List<InvoiceItem> invoiceItemList;
 	private InvoiceViewModel invoiceViewModel;
-	private ArrayAdapter<String> customerAdapter;
+	private ArrayAdapter<String> customerAdapter, itemAdapterForAutoComplete;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +43,7 @@ public class AddInvoiceActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_add_invoice);
 
 		initializeUIComponents();
-
-		setupViewModel(); // Ensure this is called to set up customer name suggestions.
-
+		setupViewModel();
 		generateDefaultInvoiceNumber();
 		generateCurrentDate();
 		setupClickListeners();
@@ -56,7 +55,7 @@ public class AddInvoiceActivity extends AppCompatActivity {
 		customerContactEditText = findViewById(R.id.customer_contact_edit_text);
 		dateEditText = findViewById(R.id.date_edit_text);
 		notesEditText = findViewById(R.id.notes_edit_text);
-		itemNameEditText = findViewById(R.id.item_name_edit_text);
+		itemNameAutoComplete = findViewById(R.id.item_name_auto_complete);
 		quantityEditText = findViewById(R.id.quantity_edit_text);
 		unitPriceEditText = findViewById(R.id.unit_price_edit_text);
 		Button addItemButton = findViewById(R.id.add_item_button);
@@ -97,7 +96,7 @@ public class AddInvoiceActivity extends AppCompatActivity {
 	}
 
 	private void addItemToInvoice() {
-		String itemName = itemNameEditText.getText().toString().trim();
+		String itemName = itemNameAutoComplete.getText().toString().trim();
 		String quantityStr = quantityEditText.getText().toString().trim();
 		String unitPriceStr = unitPriceEditText.getText().toString().trim();
 
@@ -126,7 +125,7 @@ public class AddInvoiceActivity extends AppCompatActivity {
 	}
 
 	private void clearItemInputFields() {
-		itemNameEditText.setText("");
+		itemNameAutoComplete.setText("");
 		quantityEditText.setText("");
 		unitPriceEditText.setText("");
 	}
@@ -191,7 +190,7 @@ public class AddInvoiceActivity extends AppCompatActivity {
 	private void setupViewModel() {
 		invoiceViewModel = new ViewModelProvider(this).get(InvoiceViewModel.class);
 
-		// Fetching existing customer names and updating the AutoCompleteTextView
+		// Fetch existing customer names
 		invoiceViewModel.getAllParties().observe(this, new Observer<List<Party>>() {
 			@Override
 			public void onChanged(List<Party> parties) {
@@ -204,7 +203,7 @@ public class AddInvoiceActivity extends AppCompatActivity {
 						android.R.layout.simple_dropdown_item_1line, partyNames);
 				customerNameAutoComplete.setAdapter(customerAdapter);
 
-				// Set listener to get the selected party's contact
+				// Set listener to fetch customer contact
 				customerNameAutoComplete.setOnItemClickListener((parent, view, position, id) -> {
 					String selectedName = customerAdapter.getItem(position);
 					for (Party party : parties) {
@@ -214,6 +213,21 @@ public class AddInvoiceActivity extends AppCompatActivity {
 						}
 					}
 				});
+			}
+		});
+
+		// Fetch existing item names
+		invoiceViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
+			@Override
+			public void onChanged(List<Item> items) {
+				List<String> itemNames = new ArrayList<>();
+				for (Item item : items) {
+					itemNames.add(item.getItemName());
+				}
+
+				itemAdapterForAutoComplete = new ArrayAdapter<>(AddInvoiceActivity.this,
+						android.R.layout.simple_dropdown_item_1line, itemNames);
+				itemNameAutoComplete.setAdapter(itemAdapterForAutoComplete);
 			}
 		});
 	}

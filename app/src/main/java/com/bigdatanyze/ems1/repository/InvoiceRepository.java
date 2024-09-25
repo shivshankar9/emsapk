@@ -2,11 +2,15 @@ package com.bigdatanyze.ems1.repository;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
+
 import com.bigdatanyze.ems1.dao.InvoiceDao;
 import com.bigdatanyze.ems1.dao.PartyDao; // Import PartyDao
+import com.bigdatanyze.ems1.dao.ItemDao; // Import ItemDao
 import com.bigdatanyze.ems1.database.AppDatabase;
 import com.bigdatanyze.ems1.model.Invoice;
+import com.bigdatanyze.ems1.model.Item; // Import Item
 import com.bigdatanyze.ems1.model.Party;
+
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
@@ -14,6 +18,7 @@ public class InvoiceRepository {
 
 	private InvoiceDao invoiceDao;
 	private PartyDao partyDao;  // Add PartyDao
+	private ItemDao itemDao;  // Add ItemDao
 	private LiveData<List<Invoice>> allInvoices;
 	private final ExecutorService executorService;
 
@@ -21,6 +26,7 @@ public class InvoiceRepository {
 		AppDatabase database = AppDatabase.getDatabase(application);
 		invoiceDao = database.invoiceDao();
 		partyDao = database.partyDao();  // Initialize partyDao
+		itemDao = database.itemDao();  // Initialize itemDao
 		allInvoices = invoiceDao.getAllInvoices();
 		executorService = AppDatabase.databaseWriteExecutor;
 	}
@@ -47,10 +53,15 @@ public class InvoiceRepository {
 
 	public LiveData<List<Party>> getAllParties() {
 		// Fetch all parties from the database
-		return partyDao.getAllPartiesLive();  // Use the getAllPartiesLive() method
+		return partyDao.getAllPartiesLive();
 	}
 
 	public LiveData<Object> getPartyContact(String selectedParty) {
 		return invoiceDao.getPartyContact(selectedParty);  // Ensure this method exists in InvoiceDao
+	}
+
+	// Fetch all items from the Item table
+	public LiveData<List<Item>> getAllItems() {
+		return itemDao.getAllItems();  // Fetch all items from the database
 	}
 }

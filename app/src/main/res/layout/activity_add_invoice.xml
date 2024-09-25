@@ -9,6 +9,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+        <!-- Invoice Number -->
         <EditText
                 android:id="@+id/invoice_number_edit_text"
                 android:layout_width="match_parent"
@@ -17,9 +18,10 @@
                 android:inputType="text"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
-                android:textColorHint="@color/hint_color" />
+                android:textColorHint="@color/hint_color"
+                android:enabled="false" />
 
-        <!-- Change to AutoCompleteTextView for customer name -->
+        <!-- Customer Name AutoCompleteTextView -->
         <AutoCompleteTextView
                 android:id="@+id/customer_name_auto_complete"
                 android:layout_width="match_parent"
@@ -31,6 +33,7 @@
                 android:textColorHint="@color/hint_color"
                 android:completionThreshold="1" />
 
+        <!-- Customer Contact -->
         <EditText
                 android:id="@+id/customer_contact_edit_text"
                 android:layout_width="match_parent"
@@ -41,16 +44,19 @@
                 android:background="@drawable/edit_text_background"
                 android:textColorHint="@color/hint_color" />
 
+        <!-- Date EditText -->
         <EditText
                 android:id="@+id/date_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Date (YYYY-MM-DD)"
-                android:inputType="text"
+                android:inputType="date"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
-                android:textColorHint="@color/hint_color" />
+                android:textColorHint="@color/hint_color"
+                android:enabled="false" />
 
+        <!-- Notes Section -->
         <EditText
                 android:id="@+id/notes_edit_text"
                 android:layout_width="match_parent"
@@ -61,18 +67,19 @@
                 android:background="@drawable/edit_text_background"
                 android:textColorHint="@color/hint_color" />
 
-        <!-- Remaining UI components -->
-
-        <EditText
-                android:id="@+id/item_name_edit_text"
+        <!-- Item Name AutoCompleteTextView -->
+        <AutoCompleteTextView
+                android:id="@+id/item_name_auto_complete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Item Name"
                 android:inputType="text"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
-                android:textColorHint="@color/hint_color" />
+                android:textColorHint="@color/hint_color"
+                android:completionThreshold="1" />
 
+        <!-- Quantity -->
         <EditText
                 android:id="@+id/quantity_edit_text"
                 android:layout_width="match_parent"
@@ -83,6 +90,7 @@
                 android:background="@drawable/edit_text_background"
                 android:textColorHint="@color/hint_color" />
 
+        <!-- Unit Price -->
         <EditText
                 android:id="@+id/unit_price_edit_text"
                 android:layout_width="match_parent"
@@ -93,6 +101,7 @@
                 android:background="@drawable/edit_text_background"
                 android:textColorHint="@color/hint_color" />
 
+        <!-- Add Item Button -->
         <Button
                 android:id="@+id/add_item_button"
                 android:layout_width="wrap_content"
@@ -103,12 +112,14 @@
                 android:background="@color/button_background"
                 android:textColor="@android:color/white" />
 
+        <!-- RecyclerView for displaying items -->
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/items_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp" />
 
+        <!-- Save Invoice Button -->
         <Button
                 android:id="@+id/save_invoice_button"
                 android:layout_width="wrap_content"
