@@ -19,15 +19,17 @@
                 android:background="@drawable/edit_text_background"
                 android:textColorHint="@color/hint_color" />
 
-        <EditText
-                android:id="@+id/customer_name_edit_text"
+        <!-- Change to AutoCompleteTextView for customer name -->
+        <AutoCompleteTextView
+                android:id="@+id/customer_name_auto_complete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Customer Name"
                 android:inputType="text"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
-                android:textColorHint="@color/hint_color" />
+                android:textColorHint="@color/hint_color"
+                android:completionThreshold="1" />
 
         <EditText
                 android:id="@+id/customer_contact_edit_text"
@@ -59,10 +61,7 @@
                 android:background="@drawable/edit_text_background"
                 android:textColorHint="@color/hint_color" />
 
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="16dp"
-                android:background="?android:attr/dividerHorizontal" />
+        <!-- Remaining UI components -->
 
         <EditText
                 android:id="@+id/item_name_edit_text"

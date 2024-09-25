@@ -4,18 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bigdatanyze.ems1.adapter.InvoiceItemAdapter;
 import com.bigdatanyze.ems1.model.Invoice;
 import com.bigdatanyze.ems1.model.InvoiceItem;
+import com.bigdatanyze.ems1.model.Party; // Ensure this import is added
 import com.bigdatanyze.ems1.viewmodel.InvoiceViewModel;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,12 +27,14 @@ import java.util.Locale;
 
 public class AddInvoiceActivity extends AppCompatActivity {
 
-	private EditText invoiceNumberEditText, customerNameEditText, customerContactEditText, dateEditText, notesEditText;
+	private AutoCompleteTextView customerNameAutoComplete;
+	private EditText invoiceNumberEditText, customerContactEditText, dateEditText, notesEditText;
 	private EditText itemNameEditText, quantityEditText, unitPriceEditText;
 	private RecyclerView itemsRecyclerView;
 	private InvoiceItemAdapter itemAdapter;
 	private List<InvoiceItem> invoiceItemList;
 	private InvoiceViewModel invoiceViewModel;
+	private ArrayAdapter<String> customerAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +43,16 @@ public class AddInvoiceActivity extends AppCompatActivity {
 
 		initializeUIComponents();
 
-		invoiceViewModel = new ViewModelProvider(this).get(InvoiceViewModel.class);
+		setupViewModel(); // Ensure this is called to set up customer name suggestions.
 
 		generateDefaultInvoiceNumber();
 		generateCurrentDate();
-
 		setupClickListeners();
 	}
 
 	private void initializeUIComponents() {
 		invoiceNumberEditText = findViewById(R.id.invoice_number_edit_text);
-		customerNameEditText = findViewById(R.id.customer_name_edit_text);
+		customerNameAutoComplete = findViewById(R.id.customer_name_auto_complete);
 		customerContactEditText = findViewById(R.id.customer_contact_edit_text);
 		dateEditText = findViewById(R.id.date_edit_text);
 		notesEditText = findViewById(R.id.notes_edit_text);
@@ -129,7 +133,7 @@ public class AddInvoiceActivity extends AppCompatActivity {
 
 	private void saveInvoice() {
 		String invoiceNumber = invoiceNumberEditText.getText().toString().trim();
-		String customerName = customerNameEditText.getText().toString().trim();
+		String customerName = customerNameAutoComplete.getText().toString().trim();
 		String customerContact = customerContactEditText.getText().toString().trim();
 		String date = dateEditText.getText().toString().trim();
 		String notes = notesEditText.getText().toString().trim();
@@ -182,5 +186,35 @@ public class AddInvoiceActivity extends AppCompatActivity {
 			totalAmount += item.getTotalPrice();
 		}
 		return totalAmount;
+	}
+
+	private void setupViewModel() {
+		invoiceViewModel = new ViewModelProvider(this).get(InvoiceViewModel.class);
+
+		// Fetching existing customer names and updating the AutoCompleteTextView
+		invoiceViewModel.getAllParties().observe(this, new Observer<List<Party>>() {
+			@Override
+			public void onChanged(List<Party> parties) {
+				List<String> partyNames = new ArrayList<>();
+				for (Party party : parties) {
+					partyNames.add(party.getName());
+				}
+
+				customerAdapter = new ArrayAdapter<>(AddInvoiceActivity.this,
+						android.R.layout.simple_dropdown_item_1line, partyNames);
+				customerNameAutoComplete.setAdapter(customerAdapter);
+
+				// Set listener to get the selected party's contact
+				customerNameAutoComplete.setOnItemClickListener((parent, view, position, id) -> {
+					String selectedName = customerAdapter.getItem(position);
+					for (Party party : parties) {
+						if (party.getName().equals(selectedName)) {
+							customerContactEditText.setText(party.getContact());
+							break;
+						}
+					}
+				});
+			}
+		});
 	}
 }

@@ -28,4 +28,10 @@ public interface InvoiceDao {
 
 	@Query("SELECT invoiceNumber FROM invoice ORDER BY id DESC LIMIT 1")
 	LiveData<String> getLastInvoiceNumber();
+
+	@Query("SELECT name FROM PARTY ORDER BY name") // Fetch party names from parties table
+	LiveData<List<String>> getAllParties();
+
+	@Query("SELECT contact FROM party WHERE name = :selectedParty LIMIT 1") // Fetch contact for the selected party
+	LiveData<Object> getPartyContact(String selectedParty);
 }
