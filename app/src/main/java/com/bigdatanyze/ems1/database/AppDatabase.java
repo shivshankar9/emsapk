@@ -6,20 +6,18 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.bigdatanyze.ems1.dao.EmployeeDao;
-import com.bigdatanyze.ems1.dao.ExpenseDao;
-import com.bigdatanyze.ems1.dao.InvoiceDao;
-import com.bigdatanyze.ems1.dao.InvoiceItemDao;
+import com.bigdatanyze.ems1.dao.*;
 import com.bigdatanyze.ems1.model.Employee;
 import com.bigdatanyze.ems1.model.Expense;
 import com.bigdatanyze.ems1.model.Invoice;
 import com.bigdatanyze.ems1.model.InvoiceItem;
 import com.bigdatanyze.ems1.util.Converters;
+import com.bigdatanyze.ems1.model.Party;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Employee.class, Expense.class, Invoice.class, InvoiceItem.class}, version = 3, exportSchema = false)
+@Database(entities = {Employee.class, Expense.class, Invoice.class, InvoiceItem.class,Party.class}, version = 4, exportSchema = false)
 @TypeConverters({Converters.class})  // Register the Converters class here
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -30,6 +28,7 @@ public abstract class AppDatabase extends RoomDatabase {
 	public abstract EmployeeDao employeeDao();
 	public abstract ExpenseDao expenseDao();
 	public abstract InvoiceDao invoiceDao();
+	public abstract PartyDao partyDao();
 	public abstract InvoiceItemDao invoiceItemDao();
 
 	// Executor for database write operations

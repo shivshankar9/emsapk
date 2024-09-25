@@ -104,6 +104,16 @@
                 android:exported="true"
                 android:label="Notifications"
                 android:theme="@style/Theme.Ems1" />
+        <activity
+                android:name=".AddPartyActivity"
+                android:exported="true"
+                android:label="Add Party"
+                android:theme="@style/Theme.Ems1" />
+        <activity
+                android:name=".ViewPartyActivity"
+                android:exported="true"
+                android:label="View Party"
+                android:theme="@style/Theme.Ems1" />
 
     </application>
 </manifest>

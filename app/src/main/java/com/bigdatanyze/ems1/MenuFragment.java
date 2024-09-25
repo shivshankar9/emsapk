@@ -36,6 +36,10 @@ public class MenuFragment extends Fragment {
 			Intent intent = new Intent(getActivity(), AddEmployeeActivity.class);
 			startActivity(intent);
 		});
+		binding.buttonAddPartyButton.setOnClickListener(v -> {
+			Intent intent = new Intent(getActivity(), AddPartyActivity.class);
+			startActivity(intent);
+		});
 
 		binding.buttonAddExpense.setOnClickListener(v -> {
 			Intent intent = new Intent(getActivity(), AddExpenseActivity.class);
@@ -49,6 +53,10 @@ public class MenuFragment extends Fragment {
 
 		binding.buttonViewInvoices.setOnClickListener(v -> {
 			Intent intent = new Intent(getActivity(), ViewInvoicesActivity.class);
+			startActivity(intent);
+		});
+		binding.buttonViewPary.setOnClickListener(v -> {
+			Intent intent = new Intent(getActivity(), ViewPartyActivity.class);
 			startActivity(intent);
 		});
 

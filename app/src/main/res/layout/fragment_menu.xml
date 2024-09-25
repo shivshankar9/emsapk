@@ -1,51 +1,77 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="16dp"
+              android:background="#f5f5f5">
 
-    <data>
-        <!-- Define any variables or import necessary classes here if needed -->
-    </data>
-
-    <LinearLayout
+    <Button
+            android:id="@+id/buttonAddEmployee"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="wrap_content"
+            android:text="Add Employee"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#6200EE"
+            android:layout_marginBottom="10dp" />
 
-        <Button
-                android:id="@+id/buttonAddEmployee"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Employee" />
+    <Button
+            android:id="@+id/buttonAddExpense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Expense"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#03DAC5"
+            android:layout_marginBottom="10dp" />
 
-        <Button
-                android:id="@+id/buttonAddExpense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Expense" />
+    <Button
+            android:id="@+id/buttonAddInvoice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Invoice"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#3700B3"
+            android:layout_marginBottom="10dp" />
 
-        <Button
-                android:id="@+id/buttonAddInvoice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Invoice" />
+    <Button
+            android:id="@+id/buttonViewInvoices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View All Invoices"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#6200EE"
+            android:layout_marginBottom="10dp" />
+    <Button
+            android:id="@+id/buttonViewPary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View All Party"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#6200EE"
+            android:layout_marginBottom="10dp" />
+    <Button
+            android:id="@+id/buttonAddPartyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Party"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#6200EE"
+            android:layout_marginBottom="10dp" />
 
-        <Button
-                android:id="@+id/buttonViewInvoices"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="View All Invoices" />
+    <Button
+            android:id="@+id/buttonBackupDatabase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Backup Database"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#03DAC5"
+            android:layout_marginBottom="10dp" />
 
-        <!-- New Button for Database Backup -->
-        <Button
-                android:id="@+id/buttonBackupDatabase"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Backup Database" />
-
-        <!-- New Button for Database Restore -->
-        <Button
-                android:id="@+id/buttonRestoreDatabase"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Restore Database" />
-    </LinearLayout>
-</layout>
+    <Button
+            android:id="@+id/buttonRestoreDatabase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Restore Database"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#6200EE"
+            android:layout_marginBottom="10dp" />
+</LinearLayout>
