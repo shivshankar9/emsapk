@@ -216,7 +216,7 @@ public class AddInvoiceActivity extends AppCompatActivity {
 			}
 		});
 
-		// Fetch existing item names
+		// Fetch existing item names and set prices
 		invoiceViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
 			@Override
 			public void onChanged(List<Item> items) {
@@ -228,6 +228,16 @@ public class AddInvoiceActivity extends AppCompatActivity {
 				itemAdapterForAutoComplete = new ArrayAdapter<>(AddInvoiceActivity.this,
 						android.R.layout.simple_dropdown_item_1line, itemNames);
 				itemNameAutoComplete.setAdapter(itemAdapterForAutoComplete);
+
+				itemNameAutoComplete.setOnItemClickListener((parent, view, position, id) -> {
+					String selectedItemName = itemAdapterForAutoComplete.getItem(position);
+					for (Item item : items) {
+						if (item.getItemName().equals(selectedItemName)) {
+							unitPriceEditText.setText(String.valueOf(item.getItemPrice()));
+							break;
+						}
+					}
+				});
 			}
 		});
 	}
