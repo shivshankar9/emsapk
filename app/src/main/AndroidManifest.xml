@@ -105,5 +105,40 @@
                 android:label="Notifications"
                 android:theme="@style/Theme.Ems1" />
 
+        <!-- AddPartyActivity for adding parties -->
+        <activity
+                android:name=".AddPartyActivity"
+                android:exported="true"
+                android:label="Add Party"
+                android:theme="@style/Theme.Ems1" />
+
+        <!-- ViewPartyActivity for viewing parties -->
+        <activity
+                android:name=".ViewPartyActivity"
+                android:exported="true"
+                android:label="View Party"
+                android:theme="@style/Theme.Ems1" />
+
+        <!-- AddItemActivity for adding items -->
+        <activity
+                android:name=".AddItemActivity"
+                android:exported="true"
+                android:label="Add Item"
+                android:theme="@style/Theme.Ems1" />
+
+        <!-- ViewItemsActivity for viewing items -->
+        <activity
+                android:name=".ViewItemsActivity"
+                android:exported="true"
+                android:label="View Items"
+                android:theme="@style/Theme.Ems1" />
+
+        <!-- EditBusinessProfileActivity for editing business profile -->
+        <activity
+                android:name=".EditBusinessProfileActivity"
+                android:exported="true"
+                android:label="Edit Business Profile"
+                android:theme="@style/Theme.Ems1" />
+
     </application>
 </manifest>

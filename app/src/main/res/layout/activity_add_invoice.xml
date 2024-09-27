@@ -9,94 +9,175 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+        <!-- Invoice Number -->
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Invoice Number"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="4dp"/>
+
         <EditText
                 android:id="@+id/invoice_number_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Invoice Number"
+                android:hint="Enter Invoice Number"
                 android:inputType="text"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
-                android:textColorHint="@color/hint_color" />
+                android:textColorHint="@color/hint_color"
+                android:enabled="false" />
 
-        <EditText
-                android:id="@+id/customer_name_edit_text"
+        <!-- Customer Name -->
+        <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Customer Name"
+                android:text="Customer Name"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"/>
+
+        <AutoCompleteTextView
+                android:id="@+id/customer_name_auto_complete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select Customer"
                 android:inputType="text"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
-                android:textColorHint="@color/hint_color" />
+                android:textColorHint="@color/hint_color"
+                android:completionThreshold="1" />
+
+        <!-- Customer Contact -->
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Customer Contact"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"/>
 
         <EditText
                 android:id="@+id/customer_contact_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Customer Contact"
+                android:hint="Enter Contact Number"
                 android:inputType="phone"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
                 android:textColorHint="@color/hint_color" />
 
+        <!-- Date -->
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"/>
+
         <EditText
                 android:id="@+id/date_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Date (YYYY-MM-DD)"
-                android:inputType="text"
+                android:hint="YYYY-MM-DD"
+                android:inputType="date"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
-                android:textColorHint="@color/hint_color" />
+                android:textColorHint="@color/hint_color"
+                android:enabled="false" />
+
+        <!-- Notes Section -->
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notes"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"/>
 
         <EditText
                 android:id="@+id/notes_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Notes"
+                android:hint="Additional notes or instructions"
                 android:inputType="textMultiLine"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
-                android:textColorHint="@color/hint_color" />
+                android:textColorHint="@color/hint_color"
+                android:minHeight="100dp"
+                android:gravity="top" />
 
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="16dp"
-                android:background="?android:attr/dividerHorizontal" />
-
-        <EditText
-                android:id="@+id/item_name_edit_text"
+        <!-- Item Name -->
+        <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Item Name"
+                android:text="Item Name"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"/>
+
+        <AutoCompleteTextView
+                android:id="@+id/item_name_auto_complete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select Item"
                 android:inputType="text"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
-                android:textColorHint="@color/hint_color" />
+                android:textColorHint="@color/hint_color"
+                android:completionThreshold="1" />
+
+        <!-- Quantity -->
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quantity"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"/>
 
         <EditText
                 android:id="@+id/quantity_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Quantity"
+                android:hint="Enter Quantity"
                 android:inputType="number"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
                 android:textColorHint="@color/hint_color" />
 
+        <!-- Unit Price -->
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unit Price"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"/>
+
         <EditText
                 android:id="@+id/unit_price_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Unit Price"
+                android:hint="Enter Unit Price"
                 android:inputType="numberDecimal"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
                 android:textColorHint="@color/hint_color" />
 
+        <!-- Add Item Button -->
         <Button
                 android:id="@+id/add_item_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Add Item"
                 android:layout_marginTop="16dp"
@@ -104,15 +185,18 @@
                 android:background="@color/button_background"
                 android:textColor="@android:color/white" />
 
+        <!-- RecyclerView for displaying items -->
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/items_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="16dp"
+                android:nestedScrollingEnabled="false" />
 
+        <!-- Save Invoice Button -->
         <Button
                 android:id="@+id/save_invoice_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Save Invoice"
                 android:layout_marginTop="16dp"

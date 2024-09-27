@@ -43,6 +43,9 @@ public class Invoice {
 		this.notes = notes;
 	}
 
+	public Invoice(String invoiceNumber, String customerName, String customerContact, String date, String notes, List<InvoiceItem> invoiceItemList) {
+	}
+
 	// Getters and setters
 	public int getId() {
 		return id;

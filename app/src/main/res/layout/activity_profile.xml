@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+        <!-- Business Logo -->
+        <ImageView
+                android:id="@+id/ivBusinessLogo"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="Business Logo"
+                android:scaleType="centerCrop"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_placeholder_logo" />
+
+        <!-- Select Logo Button -->
+        <Button
+                android:id="@+id/btnSelectLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Logo"
+                app:layout_constraintTop_toBottomOf="@id/ivBusinessLogo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Business Name EditText -->
+        <EditText
+                android:id="@+id/etBusinessName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Enter Business Name"
+                android:padding="12dp"
+                android:background="@drawable/rounded_edit_text"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/btnSelectLogo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_default="spread" />
+
+        <!-- Save Button -->
+        <Button
+                android:id="@+id/btnSaveProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                app:layout_constraintTop_toBottomOf="@id/etBusinessName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

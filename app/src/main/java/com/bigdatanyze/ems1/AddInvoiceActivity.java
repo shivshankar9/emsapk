@@ -4,18 +4,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bigdatanyze.ems1.adapter.InvoiceItemAdapter;
 import com.bigdatanyze.ems1.model.Invoice;
 import com.bigdatanyze.ems1.model.InvoiceItem;
+import com.bigdatanyze.ems1.model.Party;
+import com.bigdatanyze.ems1.model.Item;  // Import Item for item selection
 import com.bigdatanyze.ems1.viewmodel.InvoiceViewModel;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,12 +28,14 @@ import java.util.Locale;
 
 public class AddInvoiceActivity extends AppCompatActivity {
 
-	private EditText invoiceNumberEditText, customerNameEditText, customerContactEditText, dateEditText, notesEditText;
-	private EditText itemNameEditText, quantityEditText, unitPriceEditText;
+	private AutoCompleteTextView customerNameAutoComplete, itemNameAutoComplete;
+	private EditText invoiceNumberEditText, customerContactEditText, dateEditText, notesEditText;
+	private EditText quantityEditText, unitPriceEditText;
 	private RecyclerView itemsRecyclerView;
 	private InvoiceItemAdapter itemAdapter;
 	private List<InvoiceItem> invoiceItemList;
 	private InvoiceViewModel invoiceViewModel;
+	private ArrayAdapter<String> customerAdapter, itemAdapterForAutoComplete;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,22 +43,19 @@ public class AddInvoiceActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_add_invoice);
 
 		initializeUIComponents();
-
-		invoiceViewModel = new ViewModelProvider(this).get(InvoiceViewModel.class);
-
+		setupViewModel();
 		generateDefaultInvoiceNumber();
 		generateCurrentDate();
-
 		setupClickListeners();
 	}
 
 	private void initializeUIComponents() {
 		invoiceNumberEditText = findViewById(R.id.invoice_number_edit_text);
-		customerNameEditText = findViewById(R.id.customer_name_edit_text);
+		customerNameAutoComplete = findViewById(R.id.customer_name_auto_complete);
 		customerContactEditText = findViewById(R.id.customer_contact_edit_text);
 		dateEditText = findViewById(R.id.date_edit_text);
 		notesEditText = findViewById(R.id.notes_edit_text);
-		itemNameEditText = findViewById(R.id.item_name_edit_text);
+		itemNameAutoComplete = findViewById(R.id.item_name_auto_complete);
 		quantityEditText = findViewById(R.id.quantity_edit_text);
 		unitPriceEditText = findViewById(R.id.unit_price_edit_text);
 		Button addItemButton = findViewById(R.id.add_item_button);
@@ -93,7 +96,7 @@ public class AddInvoiceActivity extends AppCompatActivity {
 	}
 
 	private void addItemToInvoice() {
-		String itemName = itemNameEditText.getText().toString().trim();
+		String itemName = itemNameAutoComplete.getText().toString().trim();
 		String quantityStr = quantityEditText.getText().toString().trim();
 		String unitPriceStr = unitPriceEditText.getText().toString().trim();
 
@@ -122,14 +125,14 @@ public class AddInvoiceActivity extends AppCompatActivity {
 	}
 
 	private void clearItemInputFields() {
-		itemNameEditText.setText("");
+		itemNameAutoComplete.setText("");
 		quantityEditText.setText("");
 		unitPriceEditText.setText("");
 	}
 
 	private void saveInvoice() {
 		String invoiceNumber = invoiceNumberEditText.getText().toString().trim();
-		String customerName = customerNameEditText.getText().toString().trim();
+		String customerName = customerNameAutoComplete.getText().toString().trim();
 		String customerContact = customerContactEditText.getText().toString().trim();
 		String date = dateEditText.getText().toString().trim();
 		String notes = notesEditText.getText().toString().trim();
@@ -182,5 +185,60 @@ public class AddInvoiceActivity extends AppCompatActivity {
 			totalAmount += item.getTotalPrice();
 		}
 		return totalAmount;
+	}
+
+	private void setupViewModel() {
+		invoiceViewModel = new ViewModelProvider(this).get(InvoiceViewModel.class);
+
+		// Fetch existing customer names
+		invoiceViewModel.getAllParties().observe(this, new Observer<List<Party>>() {
+			@Override
+			public void onChanged(List<Party> parties) {
+				List<String> partyNames = new ArrayList<>();
+				for (Party party : parties) {
+					partyNames.add(party.getName());
+				}
+
+				customerAdapter = new ArrayAdapter<>(AddInvoiceActivity.this,
+						android.R.layout.simple_dropdown_item_1line, partyNames);
+				customerNameAutoComplete.setAdapter(customerAdapter);
+
+				// Set listener to fetch customer contact
+				customerNameAutoComplete.setOnItemClickListener((parent, view, position, id) -> {
+					String selectedName = customerAdapter.getItem(position);
+					for (Party party : parties) {
+						if (party.getName().equals(selectedName)) {
+							customerContactEditText.setText(party.getContact());
+							break;
+						}
+					}
+				});
+			}
+		});
+
+		// Fetch existing item names and set prices
+		invoiceViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
+			@Override
+			public void onChanged(List<Item> items) {
+				List<String> itemNames = new ArrayList<>();
+				for (Item item : items) {
+					itemNames.add(item.getItemName());
+				}
+
+				itemAdapterForAutoComplete = new ArrayAdapter<>(AddInvoiceActivity.this,
+						android.R.layout.simple_dropdown_item_1line, itemNames);
+				itemNameAutoComplete.setAdapter(itemAdapterForAutoComplete);
+
+				itemNameAutoComplete.setOnItemClickListener((parent, view, position, id) -> {
+					String selectedItemName = itemAdapterForAutoComplete.getItem(position);
+					for (Item item : items) {
+						if (item.getItemName().equals(selectedItemName)) {
+							unitPriceEditText.setText(String.valueOf(item.getItemPrice()));
+							break;
+						}
+					}
+				});
+			}
+		});
 	}
 }

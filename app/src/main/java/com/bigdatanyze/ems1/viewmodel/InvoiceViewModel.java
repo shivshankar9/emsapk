@@ -3,10 +3,14 @@ package com.bigdatanyze.ems1.viewmodel;
 import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Transformations;
 
 import com.bigdatanyze.ems1.model.Invoice;
+import com.bigdatanyze.ems1.model.Item;  // Import Item
+import com.bigdatanyze.ems1.model.Party;
 import com.bigdatanyze.ems1.repository.InvoiceRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InvoiceViewModel extends AndroidViewModel {
@@ -38,5 +42,24 @@ public class InvoiceViewModel extends AndroidViewModel {
 
 	public LiveData<String> getLastInvoiceNumber() {
 		return repository.getLastInvoiceNumber();
+	}
+
+	public LiveData<List<Party>> getAllParties() {
+		return repository.getAllParties();
+	}
+
+	public LiveData<List<String>> getAllPartyNames() {
+		return Transformations.map(getAllParties(), parties -> {
+			List<String> names = new ArrayList<>();
+			for (Party party : parties) {
+				names.add(party.getName());
+			}
+			return names;
+		});
+	}
+
+	// Minimal addition to fetch all items from the repository
+	public LiveData<List<Item>> getAllItems() {
+		return repository.getAllItems();  // Fetch all items
 	}
 }

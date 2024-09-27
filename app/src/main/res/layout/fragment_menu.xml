@@ -1,51 +1,66 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="16dp"
+              android:background="@android:color/background_light">
 
-    <data>
-        <!-- Define any variables or import necessary classes here if needed -->
-    </data>
 
-    <LinearLayout
+    <Spinner
+            android:id="@+id/spinnerSales"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="wrap_content"
+            android:backgroundTint="#673AB7"
+            android:layout_marginBottom="12dp"
+            android:padding="16dp" />
 
-        <Button
-                android:id="@+id/buttonAddEmployee"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Employee" />
+    <!-- Dropdown for Items -->
+    <Spinner
+            android:id="@+id/spinnerViewItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#673AB7"
+            android:layout_marginBottom="12dp"
+            android:padding="16dp" />
 
-        <Button
-                android:id="@+id/buttonAddExpense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Expense" />
+    <!-- Dropdown for Party -->
+    <Spinner
+            android:id="@+id/spinnerParty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#7B4FCA"
+            android:layout_marginBottom="12dp"
+            android:padding="16dp" />
 
-        <Button
-                android:id="@+id/buttonAddInvoice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Invoice" />
+    <!-- Dropdown for Purchase -->
+    <Spinner
+            android:id="@+id/spinnerPurchase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#673AB7"
+            android:layout_marginBottom="12dp"
+            android:padding="16dp" />
 
-        <Button
-                android:id="@+id/buttonViewInvoices"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="View All Invoices" />
+    <!-- Dropdown for Backup/Restore -->
+    <Spinner
+            android:id="@+id/spinnerBackupRestore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#673AB7"
+            android:layout_marginBottom="12dp"
+            android:padding="16dp" />
 
-        <!-- New Button for Database Backup -->
-        <Button
-                android:id="@+id/buttonBackupDatabase"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Backup Database" />
-
-        <!-- New Button for Database Restore -->
-        <Button
-                android:id="@+id/buttonRestoreDatabase"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Restore Database" />
-    </LinearLayout>
-</layout>
+<!--    &lt;!&ndash; Add Employee (No Dropdown) &ndash;&gt;
+    <Button
+            android:id="@+id/buttonAddEmployee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Employee"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#7B44DD"
+            android:layout_marginBottom="12dp"
+            android:elevation="4dp"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />-->
+</LinearLayout>

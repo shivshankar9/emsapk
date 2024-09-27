@@ -1,11 +1,15 @@
 package com.bigdatanyze.ems1;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -19,58 +23,93 @@ public class MenuFragment extends Fragment {
 	private ActivityResultLauncher<String> filePickerLauncher;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
-		// Inflate the layout for this fragment using View Binding
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		// Inflate the layout using ViewBinding
 		binding = FragmentMenuBinding.inflate(inflater, container, false);
 		View view = binding.getRoot();
 
-		// Register file picker for restore database functionality
-		filePickerLauncher = registerForActivityResult(
-				new ActivityResultContracts.GetContent(),
-				this::onFilePicked
-		);
+		// Initialize file picker for restore functionality
+		filePickerLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), this::onFilePicked);
 
-		// Set click listeners for the buttons
-		binding.buttonAddEmployee.setOnClickListener(v -> {
-			Intent intent = new Intent(getActivity(), AddEmployeeActivity.class);
-			startActivity(intent);
-		});
-
-		binding.buttonAddExpense.setOnClickListener(v -> {
-			Intent intent = new Intent(getActivity(), AddExpenseActivity.class);
-			startActivity(intent);
-		});
-
-		binding.buttonAddInvoice.setOnClickListener(v -> {
-			Intent intent = new Intent(getActivity(), AddInvoiceActivity.class);
-			startActivity(intent);
-		});
-
-		binding.buttonViewInvoices.setOnClickListener(v -> {
-			Intent intent = new Intent(getActivity(), ViewInvoicesActivity.class);
-			startActivity(intent);
-		});
-
-		// Handle backup button click
-		binding.buttonBackupDatabase.setOnClickListener(v -> {
-			DatabaseBackup.backupDatabase(requireContext());
-		});
-
-		// Handle restore button click - launch file picker
-		binding.buttonRestoreDatabase.setOnClickListener(v -> {
-			filePickerLauncher.launch("application/octet-stream"); // Expecting DB files
-		});
+		// Set up dropdown menus for each spinner
+		setupDropdownMenus();
 
 		return view;
 	}
 
-	// Handle the result from the file picker
+	// Method to set up dropdown menus for each spinner
+	private void setupDropdownMenus() {
+		setupSpinner(binding.spinnerSales, R.array.sales_options);
+		setupSpinner(binding.spinnerViewItems, R.array.item_options);
+		setupSpinner(binding.spinnerParty, R.array.party_options); // Party options now include Add Employee
+		setupSpinner(binding.spinnerPurchase, R.array.purchase_options);
+		setupSpinner(binding.spinnerBackupRestore, R.array.backup_restore_options);
+	}
+
+	// Method to configure a spinner with options
+	private void setupSpinner(Spinner spinner, int arrayResource) {
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+				arrayResource, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+
+		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			private boolean isFirstSelection = true; // Flag to track initial selection
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				if (isFirstSelection) {
+					isFirstSelection = false; // Skip action for the initial selection
+					return;
+				}
+				handleSpinnerSelection(spinner, position);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// Do nothing
+			}
+		});
+	}
+
+	// Handle spinner selections
+	private void handleSpinnerSelection(Spinner spinner, int position) {
+		if (spinner == binding.spinnerSales) {
+			if (position == 0) {
+				startActivity(new Intent(getActivity(), AddInvoiceActivity.class));
+			} else if (position == 1) {
+				startActivity(new Intent(getActivity(), ViewInvoicesActivity.class));
+			}
+		} else if (spinner == binding.spinnerViewItems) {
+			if (position == 0) {
+				startActivity(new Intent(getActivity(), AddItemActivity.class));
+			} else if (position == 1) {
+				startActivity(new Intent(getActivity(), ViewItemsActivity.class));
+			}
+		} else if (spinner == binding.spinnerParty) {
+			if (position == 0) {
+				startActivity(new Intent(getActivity(), AddPartyActivity.class));
+			} else if (position == 1) {
+				startActivity(new Intent(getActivity(), ViewPartyActivity.class));
+			} else if (position == 2) {  // New option for Add Employee
+				startActivity(new Intent(getActivity(), AddEmployeeActivity.class));
+			}
+		} else if (spinner == binding.spinnerPurchase) {
+			// Handle purchase options if needed
+		} else if (spinner == binding.spinnerBackupRestore) {
+			if (position == 0) {
+				DatabaseBackup.backupDatabase(requireContext());
+			} else if (position == 1) {
+				filePickerLauncher.launch("application/octet-stream");
+			}
+		}
+	}
+
+	// Handle file selection for database restore
 	private void onFilePicked(Uri uri) {
 		if (uri != null) {
 			DatabaseBackup.restoreDatabase(requireContext(), uri);
 		} else {
-			// Handle case where no file was picked
 			Toast.makeText(requireContext(), "No file selected.", Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -78,6 +117,6 @@ public class MenuFragment extends Fragment {
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		binding = null;  // Prevent memory leaks
+		binding = null;
 	}
 }
