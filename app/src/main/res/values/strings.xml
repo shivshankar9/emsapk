@@ -43,4 +43,24 @@
     <string name="add_expense">Add Expense</string>
     <string name="pdf_icon_description"/>
     <string name="overflow_menu_description"/>
+    <string-array name="sales_options">
+        <item>Add Sale</item>
+        <item>View Sales</item>
+    </string-array>
+    <string-array name="item_options">
+        <item>Add Item</item>
+        <item>View Item</item>
+    </string-array>
+    <string-array name="party_options">
+        <item>Add Party</item>
+        <item>View Party</item>
+    </string-array>
+    <string-array name="purchase_options">
+        <item>Add Purchase</item>
+        <item>View Purchase</item>
+    </string-array>
+    <string-array name="backup_restore_options">
+        <item>Backup Database</item>
+        <item>Restore Database</item>
+    </string-array>
 </resources>

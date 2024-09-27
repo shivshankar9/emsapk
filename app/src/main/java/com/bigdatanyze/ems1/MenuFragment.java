@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupMenu;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -30,19 +32,19 @@ public class MenuFragment extends Fragment {
 		// Initialize file picker for restore functionality
 		filePickerLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), this::onFilePicked);
 
-		// Set up dropdown menus for each button
+		// Set up dropdown menus for each spinner
 		setupDropdownMenus();
 
 		return view;
 	}
 
-	// Method to set up dropdown menus for each button
+	// Method to set up dropdown menus for each spinner
 	private void setupDropdownMenus() {
-		binding.buttonSales.setOnClickListener(v -> showPopupMenu(v, R.menu.menu_sales)); // Sales menu
-		binding.buttonParty.setOnClickListener(v -> showPopupMenu(v, R.menu.menu_party));
-		binding.buttonPurchase.setOnClickListener(v -> showPopupMenu(v, R.menu.menu_purchase));
-		binding.buttonBackupRestore.setOnClickListener(v -> showPopupMenu(v, R.menu.menu_backup_restore));
-		binding.buttonViewItems.setOnClickListener(v -> showPopupMenu(v, R.menu.menu_item));
+		setupSpinner(binding.spinnerSales, R.array.sales_options);
+		setupSpinner(binding.spinnerViewItems, R.array.item_options);
+		setupSpinner(binding.spinnerParty, R.array.party_options);
+		setupSpinner(binding.spinnerPurchase, R.array.purchase_options);
+		setupSpinner(binding.spinnerBackupRestore, R.array.backup_restore_options);
 
 		binding.buttonAddEmployee.setOnClickListener(v -> {
 			Intent intent = new Intent(getActivity(), AddEmployeeActivity.class);
@@ -50,45 +52,60 @@ public class MenuFragment extends Fragment {
 		});
 	}
 
-	// Method to display the dropdown (PopupMenu)
-	private void showPopupMenu(View view, int menuResource) {
-		PopupMenu popupMenu = new PopupMenu(getActivity(), view);
-		popupMenu.getMenuInflater().inflate(menuResource, popupMenu.getMenu());
-		popupMenu.setOnMenuItemClickListener(this::handleMenuItemClick);
-		popupMenu.show();
+	// Method to configure a spinner with options
+	private void setupSpinner(Spinner spinner, int arrayResource) {
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+				arrayResource, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+
+		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			private boolean isFirstSelection = true; // Flag to track initial selection
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				if (isFirstSelection) {
+					isFirstSelection = false; // Skip action for the initial selection
+					return;
+				}
+				handleSpinnerSelection(spinner, position);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// Do nothing
+			}
+		});
 	}
 
-	@SuppressLint("NonConstantResourceId")
-	private boolean handleMenuItemClick(MenuItem item) {
-		if (item.getItemId() == R.id.action_add_sale) {
-			startActivity(new Intent(getActivity(), AddInvoiceActivity.class));
-			return true;
-		} else if (item.getItemId() == R.id.action_view_sales) {
-			startActivity(new Intent(getActivity(), ViewInvoicesActivity.class));
-			return true;
-		} else if (item.getItemId() == R.id.action_add_party) {
-			startActivity(new Intent(getActivity(), AddPartyActivity.class));
-			return true;
-		} else if (item.getItemId() == R.id.action_view_party) {
-			startActivity(new Intent(getActivity(), ViewPartyActivity.class));
-			return true;
-		} else if (item.getItemId() == R.id.action_add_item) {
-			startActivity(new Intent(getActivity(), AddItemActivity.class));
-			return true;
-		} else if (item.getItemId() == R.id.action_view_item) {
-			startActivity(new Intent(getActivity(), ViewItemsActivity.class));
-			return true;
-		} else if (item.getItemId() == R.id.action_add_expense) {
-			startActivity(new Intent(getActivity(), AddExpenseActivity.class));
-			return true;
-		} else if (item.getItemId() == R.id.action_backup_database) {
-			DatabaseBackup.backupDatabase(requireContext());
-			return true;
-		} else if (item.getItemId() == R.id.action_restore_database) {
-			filePickerLauncher.launch("application/octet-stream");
-			return true;
-		} else {
-			return false;
+	// Handle spinner selections
+	private void handleSpinnerSelection(Spinner spinner, int position) {
+		if (spinner == binding.spinnerSales) {
+			if (position == 0) {
+				startActivity(new Intent(getActivity(), AddInvoiceActivity.class));
+			} else if (position == 1) {
+				startActivity(new Intent(getActivity(), ViewInvoicesActivity.class));
+			}
+		} else if (spinner == binding.spinnerViewItems) {
+			if (position == 0) {
+				startActivity(new Intent(getActivity(), AddItemActivity.class));
+			} else if (position == 1) {
+				startActivity(new Intent(getActivity(), ViewItemsActivity.class));
+			}
+		} else if (spinner == binding.spinnerParty) {
+			if (position == 0) {
+				startActivity(new Intent(getActivity(), AddPartyActivity.class));
+			} else if (position == 1) {
+				startActivity(new Intent(getActivity(), ViewPartyActivity.class));
+			}
+		} else if (spinner == binding.spinnerPurchase) {
+			// Handle purchase options if needed
+		} else if (spinner == binding.spinnerBackupRestore) {
+			if (position == 0) {
+				DatabaseBackup.backupDatabase(requireContext());
+			} else if (position == 1) {
+				filePickerLauncher.launch("application/octet-stream");
+			}
 		}
 	}
 
