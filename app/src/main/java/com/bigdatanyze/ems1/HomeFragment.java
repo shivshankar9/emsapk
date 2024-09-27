@@ -1,9 +1,14 @@
 package com.bigdatanyze.ems1;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.MenuItem;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,12 +26,24 @@ public class HomeFragment extends Fragment {
 	private EmployeeAdapter employeeAdapter;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		binding = FragmentHomeBinding.inflate(inflater, container, false);
 		View view = binding.getRoot();
 
-		// Set up RecyclerViews
+		setupRecyclerViews();
+		setupViewModels();
+		setupSearchView();
+		setupViewToggleButtons();
+		setupFloatingActionButton();
+
+		// Default view to display Expenses first
+		showExpenseView();
+
+		return view;
+	}
+
+	private void setupRecyclerViews() {
 		binding.recyclerViewExpense.setLayoutManager(new LinearLayoutManager(getContext()));
 		binding.recyclerViewEmployee.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -37,8 +54,9 @@ public class HomeFragment extends Fragment {
 		// Set adapters to RecyclerViews
 		binding.recyclerViewExpense.setAdapter(expenseAdapter);
 		binding.recyclerViewEmployee.setAdapter(employeeAdapter);
+	}
 
-		// Set up ViewModels
+	private void setupViewModels() {
 		ExpenseViewModel expenseViewModel = new ViewModelProvider(this).get(ExpenseViewModel.class);
 		EmployeeViewModel employeeViewModel = new ViewModelProvider(this).get(EmployeeViewModel.class);
 
@@ -50,44 +68,69 @@ public class HomeFragment extends Fragment {
 		employeeViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
 			employeeAdapter.setEmployeeList(employees);
 		});
+	}
 
-		// Set up SearchView to work for both Expense and Employee RecyclerViews
+	private void setupSearchView() {
 		binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				// No need to handle submission separately, as filtering occurs in real-time
-				return false;
+				return false; // No separate handling needed
 			}
 
 			@Override
 			public boolean onQueryTextChange(String newText) {
 				if (binding.recyclerViewExpense.getVisibility() == View.VISIBLE) {
-					expenseAdapter.filter(newText); // Filter Expense list based on the query
+					expenseAdapter.filter(newText); // Filter Expense list
 				} else if (binding.recyclerViewEmployee.getVisibility() == View.VISIBLE) {
-					employeeAdapter.filter(newText); // Filter Employee list based on the query
+					employeeAdapter.filter(newText); // Filter Employee list
 				}
 				return true;
 			}
 		});
+	}
 
-		// Set up button click listeners to toggle between Expense and Employee views
-		binding.buttonExpenseView.setOnClickListener(v -> {
-			binding.recyclerViewExpense.setVisibility(View.VISIBLE);
-			binding.recyclerViewEmployee.setVisibility(View.GONE);
-			binding.searchView.setQueryHint("Search Expenses"); // Set SearchView hint to "Search Expenses"
-		});
+	private void setupViewToggleButtons() {
+		binding.buttonExpenseView.setOnClickListener(v -> showExpenseView());
+		binding.buttonEmployeeView.setOnClickListener(v -> showEmployeeView());
+	}
 
-		binding.buttonEmployeeView.setOnClickListener(v -> {
-			binding.recyclerViewExpense.setVisibility(View.GONE);
-			binding.recyclerViewEmployee.setVisibility(View.VISIBLE);
-			binding.searchView.setQueryHint("Search Employees"); // Set SearchView hint to "Search Employees"
-		});
-
-		// Default view to display Expenses first
+	private void showExpenseView() {
 		binding.recyclerViewExpense.setVisibility(View.VISIBLE);
 		binding.recyclerViewEmployee.setVisibility(View.GONE);
-		binding.searchView.setQueryHint("Search Expenses"); // Default placeholder for Expenses
+		binding.searchView.setQueryHint("Search Expenses"); // Set SearchView hint
+	}
 
-		return view;
+	private void showEmployeeView() {
+		binding.recyclerViewExpense.setVisibility(View.GONE);
+		binding.recyclerViewEmployee.setVisibility(View.VISIBLE);
+		binding.searchView.setQueryHint("Search Employees"); // Set SearchView hint
+	}
+
+	private void setupFloatingActionButton() {
+		binding.fabAddOptions.setOnClickListener(view -> {
+			// Toggle visibility of the circular menu
+			if (binding.circularMenu.getVisibility() == View.GONE) {
+				binding.circularMenu.setVisibility(View.VISIBLE);
+				binding.circularMenu.setAlpha(0f);
+				binding.circularMenu.animate().alpha(1f).setDuration(300).start();
+			} else {
+				binding.circularMenu.animate().alpha(0f).setDuration(300).withEndAction(() -> {
+					binding.circularMenu.setVisibility(View.GONE);
+				}).start();
+			}
+		});
+
+		// Handle button clicks in the circular menu
+		binding.actionAddSale.setOnClickListener(v -> {
+			startActivity(new Intent(getActivity(), AddInvoiceActivity.class));
+		});
+
+		binding.actionViewSales.setOnClickListener(v -> {
+			startActivity(new Intent(getActivity(), ViewInvoicesActivity.class));
+		});
+
+		binding.actionAddParty.setOnClickListener(v -> {
+			startActivity(new Intent(getActivity(), AddPartyActivity.class));
+		});
 	}
 }
