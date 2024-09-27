@@ -11,6 +11,7 @@
     <string name="add_expense">Add Expense</string>
     <string name="pdf_icon_description"/>
     <string name="overflow_menu_description"/>
+    <string name="logo_description"/>
     <string-array name="sales_options">
         <item>Add Sale</item>
         <item>View Sales</item>
