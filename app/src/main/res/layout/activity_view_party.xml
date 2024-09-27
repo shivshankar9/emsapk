@@ -5,8 +5,29 @@
               android:orientation="vertical"
               android:padding="16dp">
 
+    <!-- Heading for the Party List -->
+    <TextView
+            android:id="@+id/textViewHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Party List"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16dp"
+            android:gravity="center" /> <!-- Center the heading -->
+
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewParties"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1" /> <!-- Use weight to allow RecyclerView to take remaining space -->
+
+    <Button
+            android:id="@+id/buttonAddParty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add New Party"
+            android:layout_gravity="center" /> <!-- Center the button at the bottom -->
+
 </LinearLayout>

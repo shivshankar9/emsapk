@@ -1,9 +1,9 @@
 package com.bigdatanyze.ems1;
 
+import android.content.Intent; // Import Intent
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.View; // Import View
+import android.widget.Button; // Import Button
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +23,7 @@ public class ViewPartyActivity extends AppCompatActivity {
 	private RecyclerView recyclerView;
 	private PartyAdapter partyAdapter;
 	private PartyViewModel partyViewModel;
+	private Button buttonAddParty; // Declare the button
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,16 @@ public class ViewPartyActivity extends AppCompatActivity {
 			public void onChanged(List<Party> parties) {
 				// Update the adapter with new data
 				partyAdapter.setPartyList(parties);
+			}
+		});
+
+		// Initialize and set onClickListener for Add Party button
+		buttonAddParty = findViewById(R.id.buttonAddParty); // Assuming you have this button in your layout
+		buttonAddParty.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(ViewPartyActivity.this, AddPartyActivity.class);
+				startActivity(intent); // Start AddPartyActivity
 			}
 		});
 	}
