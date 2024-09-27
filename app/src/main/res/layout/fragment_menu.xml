@@ -6,49 +6,73 @@
               android:background="@android:color/background_light">
 
     <!-- Dropdown for Sales -->
-    <Spinner
-            android:id="@+id/spinnerSales"
+    <Button
+            android:id="@+id/buttonSales"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Sales"
+            android:textColor="@android:color/white"
             android:backgroundTint="#673AB7"
             android:layout_marginBottom="12dp"
-            android:padding="16dp" />
-
+            android:elevation="4dp"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
     <!-- Dropdown for Items -->
-    <Spinner
-            android:id="@+id/spinnerViewItems"
+    <Button
+            android:id="@+id/buttonViewItems"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="ViewItems"
+            android:textColor="@android:color/white"
             android:backgroundTint="#673AB7"
             android:layout_marginBottom="12dp"
-            android:padding="16dp" />
+            android:elevation="4dp"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
 
     <!-- Dropdown for Party -->
-    <Spinner
-            android:id="@+id/spinnerParty"
+    <Button
+            android:id="@+id/buttonParty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Party"
+            android:textColor="@android:color/white"
             android:backgroundTint="#7B4FCA"
             android:layout_marginBottom="12dp"
-            android:padding="16dp" />
+            android:elevation="4dp"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
 
     <!-- Dropdown for Purchase -->
-    <Spinner
-            android:id="@+id/spinnerPurchase"
+    <Button
+            android:id="@+id/buttonPurchase"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Purchase"
+            android:textColor="@android:color/white"
             android:backgroundTint="#673AB7"
             android:layout_marginBottom="12dp"
-            android:padding="16dp" />
+            android:elevation="4dp"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
 
     <!-- Dropdown for Backup/Restore -->
-    <Spinner
-            android:id="@+id/spinnerBackupRestore"
+    <Button
+            android:id="@+id/buttonBackupRestore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Backup &amp; Restore"
+            android:textColor="@android:color/white"
             android:backgroundTint="#673AB7"
             android:layout_marginBottom="12dp"
-            android:padding="16dp" />
+            android:elevation="4dp"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
 
     <!-- Add Employee (No Dropdown) -->
     <Button

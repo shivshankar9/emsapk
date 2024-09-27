@@ -1,6 +1,7 @@
 package com.bigdatanyze.ems1;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,19 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		// Check if user is logged in
+		SharedPreferences preferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+		boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
+
+		if (!isLoggedIn) {
+			// If not logged in, redirect to LoginActivity
+			Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+			startActivity(intent);
+			finish(); // Finish MainActivity so the user cannot return to it
+			return; // Exit onCreate
+		}
+
 		binding = ActivityMainBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 

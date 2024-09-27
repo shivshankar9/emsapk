@@ -23,6 +23,17 @@ public class LoginActivity extends AppCompatActivity {
 		editTextPassword = findViewById(R.id.editTextPassword);
 		buttonLogin = findViewById(R.id.buttonLogin);
 
+		// Check if the user is already logged in
+		SharedPreferences preferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+		boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
+		if (isLoggedIn) {
+			// Redirect to MainActivity if already logged in
+			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+			startActivity(intent);
+			finish(); // Close LoginActivity
+			return; // Exit onCreate
+		}
+
 		buttonLogin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -32,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
 
 				if (username.equals("admin") && password.equals("password")) {
 					// Save login state
-					SharedPreferences preferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
 					SharedPreferences.Editor editor = preferences.edit();
 					editor.putBoolean("isLoggedIn", true);
 					editor.apply();
