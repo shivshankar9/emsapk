@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -42,14 +41,9 @@ public class MenuFragment extends Fragment {
 	private void setupDropdownMenus() {
 		setupSpinner(binding.spinnerSales, R.array.sales_options);
 		setupSpinner(binding.spinnerViewItems, R.array.item_options);
-		setupSpinner(binding.spinnerParty, R.array.party_options);
+		setupSpinner(binding.spinnerParty, R.array.party_options); // Party options now include Add Employee
 		setupSpinner(binding.spinnerPurchase, R.array.purchase_options);
 		setupSpinner(binding.spinnerBackupRestore, R.array.backup_restore_options);
-
-		binding.buttonAddEmployee.setOnClickListener(v -> {
-			Intent intent = new Intent(getActivity(), AddEmployeeActivity.class);
-			startActivity(intent);
-		});
 	}
 
 	// Method to configure a spinner with options
@@ -97,6 +91,8 @@ public class MenuFragment extends Fragment {
 				startActivity(new Intent(getActivity(), AddPartyActivity.class));
 			} else if (position == 1) {
 				startActivity(new Intent(getActivity(), ViewPartyActivity.class));
+			} else if (position == 2) {  // New option for Add Employee
+				startActivity(new Intent(getActivity(), AddEmployeeActivity.class));
 			}
 		} else if (spinner == binding.spinnerPurchase) {
 			// Handle purchase options if needed

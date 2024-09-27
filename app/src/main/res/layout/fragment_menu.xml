@@ -50,7 +50,7 @@
             android:layout_marginBottom="12dp"
             android:padding="16dp" />
 
-    <!-- Add Employee (No Dropdown) -->
+<!--    &lt;!&ndash; Add Employee (No Dropdown) &ndash;&gt;
     <Button
             android:id="@+id/buttonAddEmployee"
             android:layout_width="match_parent"
@@ -62,5 +62,5 @@
             android:elevation="4dp"
             android:padding="16dp"
             android:textSize="16sp"
-            android:fontFamily="sans-serif-medium" />
+            android:fontFamily="sans-serif-medium" />-->
 </LinearLayout>
