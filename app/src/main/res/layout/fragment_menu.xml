@@ -18,6 +18,19 @@
             android:padding="16dp"
             android:textSize="16sp"
             android:fontFamily="sans-serif-medium" />
+    <!-- Dropdown for Items -->
+    <Button
+            android:id="@+id/buttonViewItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ViewItems"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#673AB7"
+            android:layout_marginBottom="12dp"
+            android:elevation="4dp"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
 
     <!-- Dropdown for Party -->
     <Button

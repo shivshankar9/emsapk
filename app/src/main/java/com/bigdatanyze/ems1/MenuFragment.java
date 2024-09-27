@@ -15,7 +15,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import com.bigdatanyze.ems1.database.DatabaseBackup;
 import com.bigdatanyze.ems1.databinding.FragmentMenuBinding;
-import com.bigdatanyze.ems1.R;
 
 public class MenuFragment extends Fragment {
 
@@ -39,10 +38,11 @@ public class MenuFragment extends Fragment {
 
 	// Method to set up dropdown menus for each button
 	private void setupDropdownMenus() {
-		binding.buttonSales.setOnClickListener(v -> showPopupMenu(v, R.menu.menu_sales));
+		binding.buttonSales.setOnClickListener(v -> showPopupMenu(v, R.menu.menu_sales)); // Sales menu
 		binding.buttonParty.setOnClickListener(v -> showPopupMenu(v, R.menu.menu_party));
 		binding.buttonPurchase.setOnClickListener(v -> showPopupMenu(v, R.menu.menu_purchase));
 		binding.buttonBackupRestore.setOnClickListener(v -> showPopupMenu(v, R.menu.menu_backup_restore));
+		binding.buttonViewItems.setOnClickListener(v -> showPopupMenu(v, R.menu.menu_item));
 
 		binding.buttonAddEmployee.setOnClickListener(v -> {
 			Intent intent = new Intent(getActivity(), AddEmployeeActivity.class);
@@ -58,7 +58,6 @@ public class MenuFragment extends Fragment {
 		popupMenu.show();
 	}
 
-	// Handle click events for dropdown menu items
 	@SuppressLint("NonConstantResourceId")
 	private boolean handleMenuItemClick(MenuItem item) {
 		if (item.getItemId() == R.id.action_add_sale) {
@@ -73,6 +72,12 @@ public class MenuFragment extends Fragment {
 		} else if (item.getItemId() == R.id.action_view_party) {
 			startActivity(new Intent(getActivity(), ViewPartyActivity.class));
 			return true;
+		} else if (item.getItemId() == R.id.action_add_item) {
+			startActivity(new Intent(getActivity(), AddItemActivity.class));
+			return true;
+		} else if (item.getItemId() == R.id.action_view_item) {
+			startActivity(new Intent(getActivity(), ViewItemsActivity.class));
+			return true;
 		} else if (item.getItemId() == R.id.action_add_expense) {
 			startActivity(new Intent(getActivity(), AddExpenseActivity.class));
 			return true;
@@ -86,7 +91,6 @@ public class MenuFragment extends Fragment {
 			return false;
 		}
 	}
-
 
 	// Handle file selection for database restore
 	private void onFilePicked(Uri uri) {
