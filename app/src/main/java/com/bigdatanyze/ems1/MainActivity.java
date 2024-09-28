@@ -44,7 +44,13 @@ public class MainActivity extends AppCompatActivity {
 		viewModel.getBusinessProfile().observe(this, profile -> {
 			if (profile != null) {
 				binding.tvHeading.setText(profile.getBusinessName()); // Update the business name
-				binding.logoImageView.setImageURI(Uri.parse(profile.getLogoUri())); // Update the logo
+
+				String logoUri = profile.getLogoUri();
+				if (logoUri != null && !logoUri.isEmpty()) {
+					binding.logoImageView.setImageURI(Uri.parse(logoUri)); // Update the logo
+				} else {
+					binding.logoImageView.setImageResource(R.drawable.app_logo); // Set a default logo if null or empty
+				}
 			}
 		});
 
@@ -117,7 +123,13 @@ public class MainActivity extends AppCompatActivity {
 			BusinessProfile updatedProfile = (BusinessProfile) data.getSerializableExtra("updatedProfile");
 			if (updatedProfile != null) {
 				binding.tvHeading.setText(updatedProfile.getBusinessName()); // Update the business name
-				binding.logoImageView.setImageURI(Uri.parse(updatedProfile.getLogoUri())); // Update the logo
+
+				String logoUri = updatedProfile.getLogoUri();
+				if (logoUri != null && !logoUri.isEmpty()) {
+					binding.logoImageView.setImageURI(Uri.parse(logoUri)); // Update the logo
+				} else {
+					binding.logoImageView.setImageResource(R.drawable.app_logo); // Set a default logo if null or empty
+				}
 			}
 		}
 	}

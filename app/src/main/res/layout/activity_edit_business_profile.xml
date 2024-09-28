@@ -1,47 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="16dp">
 
-    <data>
-        <!-- You can add data variables here if needed -->
-    </data>
-
-    <RelativeLayout
+    <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
-            android:background="@color/white">
-
-        <ImageView
-                android:id="@+id/ivLogo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="16dp"
-                android:contentDescription="@string/logo_description"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_placeholder_logo" />
-
-        <EditText
-                android:id="@+id/etBusinessName"
+            android:layout_height="wrap_content"
+            android:hint="Business Name">
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_business_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ivLogo"
-                android:layout_marginBottom="24dp"
-                android:hint="Enter Business Name"
-                android:padding="10dp"
-                android:background="@drawable/edit_text_background"
-                android:textColorHint="@color/gray" />
+                android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-                android:id="@+id/btnSave"
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Company Address">
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_company_address"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/etBusinessName"
-                android:text="Save Changes"
-                android:textColor="@android:color/white"
-                android:background="@color/colorPrimary"
-                android:padding="10dp"
-                android:layout_marginTop="10dp" />
+                android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    </RelativeLayout>
-</layout>
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone Number">
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email">
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save" />
+</LinearLayout>

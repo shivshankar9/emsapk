@@ -1,32 +1,34 @@
 package com.bigdatanyze.ems1.repository;
 
-import android.app.Application;
 import androidx.lifecycle.LiveData;
-import com.bigdatanyze.ems1.dao.BusinessProfileDao;
-import com.bigdatanyze.ems1.database.AppDatabase;
+import androidx.lifecycle.MutableLiveData;
+
 import com.bigdatanyze.ems1.model.BusinessProfile;
 
 public class BusinessProfileRepository {
-	private final BusinessProfileDao businessProfileDao; // Assume you have a DAO
+	private MutableLiveData<BusinessProfile> businessProfile;
 
-	public BusinessProfileRepository(Application application) {
-		AppDatabase db = AppDatabase.getDatabase(application); // Assuming a Room Database
-		businessProfileDao = db.businessProfileDao(); // Getting the DAO instance
+	public BusinessProfileRepository() {
+		businessProfile = new MutableLiveData<>();
+		fetchBusinessProfile();
+	}
+
+	private void fetchBusinessProfile() {
+		// Simulate fetching data from a database or API
+		BusinessProfile profile = new BusinessProfile();
+		profile.setBusinessName("Sample Business");
+		profile.setLogoUri("your_logo_uri"); // Replace with an actual URI if you have one
+		profile.setCompanyAddress("123 Main St, City, Country");
+		profile.setPhoneNumber("123-456-7890");
+		profile.setEmail("contact@samplebusiness.com");
+		businessProfile.setValue(profile);
 	}
 
 	public LiveData<BusinessProfile> getBusinessProfile() {
-		return businessProfileDao.getBusinessProfile(); // Fetch the business profile
+		return businessProfile;
 	}
 
-	public void insert(BusinessProfile profile) {
-		AppDatabase.databaseWriteExecutor.execute(() -> businessProfileDao.insert(profile));
-	}
-
-	public void update(BusinessProfile profile) {
-		AppDatabase.databaseWriteExecutor.execute(() -> businessProfileDao.update(profile));
-	}
-
-	public void delete(BusinessProfile profile) {
-		AppDatabase.databaseWriteExecutor.execute(() -> businessProfileDao.delete(profile));
+	public void updateBusinessProfile(BusinessProfile profile) {
+		businessProfile.setValue(profile);
 	}
 }
