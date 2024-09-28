@@ -29,7 +29,6 @@ public abstract class AppDatabase extends RoomDatabase {
 	public abstract InvoiceItemDao invoiceItemDao();
 	public abstract BusinessProfileDao businessProfileDao();
 
-
 	// Executor for database write operations
 	private static final int NUMBER_OF_THREADS = 4;
 	public static final ExecutorService databaseWriteExecutor =

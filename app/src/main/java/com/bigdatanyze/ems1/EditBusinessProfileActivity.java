@@ -1,9 +1,12 @@
 package com.bigdatanyze.ems1;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import com.bigdatanyze.ems1.model.BusinessProfile;
@@ -12,9 +15,12 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class EditBusinessProfileActivity extends AppCompatActivity {
+	private static final int PICK_IMAGE_REQUEST = 1;
 	private BusinessProfileViewModel viewModel;
 	private TextInputEditText etBusinessName, etCompanyAddress, etPhoneNumber, etEmail;
 	private MaterialButton btnSave;
+	private ImageView ivLogo;
+	private Uri logoUri;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +32,7 @@ public class EditBusinessProfileActivity extends AppCompatActivity {
 		etPhoneNumber = findViewById(R.id.et_phone_number);
 		etEmail = findViewById(R.id.et_email);
 		btnSave = findViewById(R.id.btn_save);
+		ivLogo = findViewById(R.id.iv_logo); // ImageView for logo
 
 		// Initialize ViewModel
 		viewModel = new ViewModelProvider(this).get(BusinessProfileViewModel.class);
@@ -37,8 +44,12 @@ public class EditBusinessProfileActivity extends AppCompatActivity {
 				etCompanyAddress.setText(businessProfile.getCompanyAddress());
 				etPhoneNumber.setText(businessProfile.getPhoneNumber());
 				etEmail.setText(businessProfile.getEmail());
+				logoUri = Uri.parse(businessProfile.getLogoUri()); // Retrieve existing logo URI
+				ivLogo.setImageURI(logoUri); // Set the logo if available
 			}
 		});
+
+		ivLogo.setOnClickListener(v -> openImageChooser()); // Open image chooser on logo click
 
 		btnSave.setOnClickListener(v -> {
 			String businessName = etBusinessName.getText().toString();
@@ -52,7 +63,7 @@ public class EditBusinessProfileActivity extends AppCompatActivity {
 				updatedProfile.setCompanyAddress(companyAddress);
 				updatedProfile.setPhoneNumber(phoneNumber);
 				updatedProfile.setEmail(email);
-				// Optionally set the logo URI here as well
+				updatedProfile.setLogoUri(logoUri != null ? logoUri.toString() : null); // Set logo URI
 
 				// Update the ViewModel
 				viewModel.updateBusinessProfile(updatedProfile);
@@ -66,5 +77,19 @@ public class EditBusinessProfileActivity extends AppCompatActivity {
 				// Show an error message if needed
 			}
 		});
+	}
+
+	private void openImageChooser() {
+		Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		startActivityForResult(intent, PICK_IMAGE_REQUEST);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+			logoUri = data.getData();
+			ivLogo.setImageURI(logoUri); // Set the selected image as logo
+		}
 	}
 }

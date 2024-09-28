@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/toolbar"
             android:layout_margin="16dp"
-             />
+    />
 
     <!-- ScrollView containing the invoice details and items -->
     <ScrollView
@@ -38,6 +38,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+            <!-- Business Profile Section -->
+            <TextView
+                    android:id="@+id/business_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Business Name: Your Business"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:paddingBottom="8dp" />
+
+            <ImageView
+                    android:id="@+id/business_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Business Logo"
+                    android:paddingBottom="16dp" />
 
             <!-- Invoice Details -->
             <TextView
@@ -147,7 +164,6 @@
                     android:text="Notes: Thank you for your business!"
                     android:textSize="16sp"
                     android:paddingBottom="16dp" />
-
         </LinearLayout>
     </ScrollView>
 
