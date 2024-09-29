@@ -47,6 +47,7 @@
             android:queryHint="Search Expenses"
             android:iconifiedByDefault="true"
             android:background="@drawable/rounded_search_bar"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp" />
 
     <!-- RecyclerView for displaying Expenses -->
