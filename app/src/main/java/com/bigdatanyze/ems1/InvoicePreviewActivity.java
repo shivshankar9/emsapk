@@ -19,11 +19,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bigdatanyze.ems1.adapter.InvoiceItemAdapter;
+import com.bigdatanyze.ems1.model.BusinessProfile;
 import com.bigdatanyze.ems1.model.InvoiceItem;
+import com.bigdatanyze.ems1.viewmodel.BusinessProfileViewModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,16 +38,22 @@ import java.util.List;
 
 public class InvoicePreviewActivity extends AppCompatActivity {
 
+
 	private static final int STORAGE_PERMISSION_CODE = 100;
 	private TextView invoiceNumberTextView, invoiceDateTextView, customerNameTextView, customerContactTextView;
-	private TextView totalAmountTextView, additionalNotesTextView;
+	private TextView totalAmountTextView, additionalNotesTextView, businessNameTextView;
 	private RecyclerView itemRecyclerView;
 	private Button downloadPdfButton, openPdfButton, sharePdfButton;
-
 	private InvoiceItemAdapter invoiceItemAdapter;
 	private List<InvoiceItem> invoiceItemList;
-
+	private BusinessProfileViewModel businessProfileViewModel;
 	private String pdfFilePath; // To store the path of the generated PDF
+	private String businessName = "Finverge Pvt Ltd";  // Default demo name
+	private String businessAddress = "Company Address";  // Default demo address
+	private String businessCityStateZip = "City, State, ZIP";  // Default demo city, state, ZIP
+	private String businessEmail = "example@company.com";  // Default demo email
+	private String businessPhone = "Phone: (123) 456-7890";  // Default demo phone number
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +67,7 @@ public class InvoicePreviewActivity extends AppCompatActivity {
 		customerContactTextView = findViewById(R.id.customer_contact);
 		totalAmountTextView = findViewById(R.id.total_amount);
 		additionalNotesTextView = findViewById(R.id.additional_notes);
+		businessNameTextView = findViewById(R.id.business_name);  // Assuming this is for business profile name
 		itemRecyclerView = findViewById(R.id.item_recycler_view);
 		downloadPdfButton = findViewById(R.id.download_pdf_button);
 		openPdfButton = findViewById(R.id.open_pdf_button);
@@ -96,12 +107,26 @@ public class InvoicePreviewActivity extends AppCompatActivity {
 			}
 		}
 
+		// Set up BusinessProfileViewModel
+		businessProfileViewModel = new ViewModelProvider(this).get(BusinessProfileViewModel.class);
+		businessProfileViewModel.getBusinessProfile().observe(this, new Observer<BusinessProfile>() {
+			@Override
+			public void onChanged(BusinessProfile businessProfile) {
+				if (businessProfile != null) {
+					businessName = businessProfile.getBusinessName();
+					businessAddress = businessProfile.getCompanyAddress();
+					businessCityStateZip = businessProfile.getEmail() + ", " + businessProfile.getEmail() + ", " + businessProfile.getEmail();
+					businessEmail = businessProfile.getEmail();
+					businessPhone = "Phone: " + businessProfile.getPhoneNumber();
+					businessNameTextView.setText(businessProfile.getBusinessName());  // Update with business name				}
+			}}
+		});
+
 		// Set up button listeners
 		downloadPdfButton.setOnClickListener(v -> generatePdf());
 		openPdfButton.setOnClickListener(v -> openPdf());
 		sharePdfButton.setOnClickListener(v -> sharePdf());
 	}
-
 	/**
 	 * Checks and requests storage permissions if not already granted.
 	 */
@@ -150,16 +175,16 @@ public class InvoicePreviewActivity extends AppCompatActivity {
 		canvas.drawText("Tax Invoice", canvasWidth / 2, yPosition, taxInvoicePaint);
 		yPosition += 30;
 
-		// Draw company header
-		canvas.drawText("Finverge Pvt Ltd", marginLeft, yPosition, titlePaint);
+		// Draw business profile or default demo details
+		canvas.drawText(businessName, marginLeft, yPosition, titlePaint);  // Use dynamic business name
 		yPosition += 20;
-		canvas.drawText("Company Address", marginLeft, yPosition, paint);
+		canvas.drawText(businessAddress, marginLeft, yPosition, paint);  // Use dynamic address
 		yPosition += 20;
-		canvas.drawText("City, State, ZIP", marginLeft, yPosition, paint);
+		canvas.drawText(businessCityStateZip, marginLeft, yPosition, paint);  // Use dynamic city, state, ZIP
 		yPosition += 20;
-		canvas.drawText("Email: example@company.com", marginLeft, yPosition, paint);
+		canvas.drawText(businessEmail, marginLeft, yPosition, paint);  // Use dynamic email
 		yPosition += 20;
-		canvas.drawText("Phone: (123) 456-7890", marginLeft, yPosition, paint);
+		canvas.drawText(businessPhone, marginLeft, yPosition, paint);  // Use dynamic phone
 		yPosition += 25;
 
 		// Draw horizontal line under header
