@@ -39,7 +39,7 @@
                 android:textColor="@android:color/black" />
     </LinearLayout>
 
-    <!-- Search Bar with default query hint -->
+    <!-- Search Bar -->
     <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_add" />
+            android:src="@drawable/ic_add" /> <!-- Default icon -->
 
     <!-- Circular Menu -->
     <LinearLayout
@@ -88,22 +88,45 @@
             android:visibility="gone"
             android:layout_marginTop="16dp">
 
+        <!-- Add Sale Button -->
         <Button
                 android:id="@+id/actionAddSale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add Sale" />
 
+        <!-- View Sales Button -->
         <Button
                 android:id="@+id/actionViewSales"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="View Sales" />
 
+        <!-- Add Purchase Button -->
         <Button
-                android:id="@+id/actionAddParty"
+                android:id="@+id/actionAddPurchase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Party" />
+                android:text="Add Purchase" />
     </LinearLayout>
+
+    <!-- Add Party Button -->
+    <Button
+            android:id="@+id/buttonAddParty"
+            android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Add Party"
+    android:visibility="gone"
+    android:layout_marginTop="8dp"
+    android:layout_gravity="center"/> <!-- Center alignment -->
+
+    <!-- Add Item Button -->
+    <Button
+            android:id="@+id/buttonAddItem"
+            android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Add Item"
+    android:visibility="gone"
+    android:layout_marginTop="8dp"
+    android:layout_gravity="center"/> <!-- Center alignment -->
 </LinearLayout>
