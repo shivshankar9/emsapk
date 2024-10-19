@@ -105,6 +105,8 @@ public class HomeFragment extends Fragment {
 		binding.recyclerViewParties.setVisibility(View.VISIBLE);
 		binding.recyclerViewItems.setVisibility(View.GONE);
 		binding.searchView.setQueryHint("Search Parties");
+		binding.buttonAddParty.setVisibility(View.VISIBLE); // Show Add Party button
+		binding.buttonAddItem.setVisibility(View.GONE); // Hide Add Item button
 
 		// Fade-in effect
 		binding.recyclerViewParties.setAlpha(0f);
@@ -115,6 +117,8 @@ public class HomeFragment extends Fragment {
 		binding.recyclerViewParties.setVisibility(View.GONE);
 		binding.recyclerViewItems.setVisibility(View.VISIBLE);
 		binding.searchView.setQueryHint("Search Items");
+		binding.buttonAddParty.setVisibility(View.GONE); // Hide Add Party button
+		binding.buttonAddItem.setVisibility(View.VISIBLE); // Show Add Item button
 
 		// Fade-in effect
 		binding.recyclerViewItems.setAlpha(0f);
@@ -142,8 +146,12 @@ public class HomeFragment extends Fragment {
 			startActivity(new Intent(getActivity(), ViewInvoicesActivity.class));
 		});
 
-		binding.actionAddParty.setOnClickListener(v -> {
+		binding.buttonAddParty.setOnClickListener(v -> {
 			startActivity(new Intent(getActivity(), AddPartyActivity.class));
+		});
+
+		binding.buttonAddItem.setOnClickListener(v -> {
+			startActivity(new Intent(getActivity(), AddItemActivity.class));
 		});
 	}
 }
