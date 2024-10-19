@@ -15,25 +15,25 @@
             android:gravity="center"
             tools:ignore="ExtraText">
 
-        <!-- Expense View Button -->
+        <!-- Party View Button -->
         <Button
-                android:id="@+id/buttonExpenseView"
+                android:id="@+id/buttonPartyView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Expense"
+                android:text="Party"
                 android:textSize="14sp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/smaller_rounded_button"
                 android:textColor="@android:color/black" />
 
-        <!-- Employee View Button -->
+        <!-- Items View Button -->
         <Button
-                android:id="@+id/buttonEmployeeView"
+                android:id="@+id/buttonItemsView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Customer Details"
+                android:text="Items"
                 android:textSize="14sp"
                 android:background="@drawable/smaller_rounded_button"
                 android:textColor="@android:color/black" />
@@ -44,24 +44,24 @@
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:queryHint="Search Expenses"
+            android:queryHint="Search Parties or Items"
             android:iconifiedByDefault="true"
             android:background="@drawable/rounded_search_bar"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp" />
 
-    <!-- RecyclerView for displaying Expenses -->
+    <!-- RecyclerView for displaying Parties -->
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewExpense"
+            android:id="@+id/recyclerViewParties"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:divider="@drawable/recycler_divider"
             android:dividerHeight="1dp" />
 
-    <!-- RecyclerView for displaying Employees -->
+    <!-- RecyclerView for displaying Items -->
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewEmployee"
+            android:id="@+id/recyclerViewItems"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -86,24 +86,24 @@
             android:orientation="vertical"
             android:gravity="center"
             android:visibility="gone"
-    android:layout_marginTop="16dp">
+            android:layout_marginTop="16dp">
 
-    <Button
-            android:id="@+id/actionAddSale"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add Sale" />
+        <Button
+                android:id="@+id/actionAddSale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Sale" />
 
-    <Button
-            android:id="@+id/actionViewSales"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="View Sales" />
+        <Button
+                android:id="@+id/actionViewSales"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Sales" />
 
-    <Button
-            android:id="@+id/actionAddParty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add Party" />
+        <Button
+                android:id="@+id/actionAddParty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Party" />
+    </LinearLayout>
 </LinearLayout>
-        </LinearLayout>

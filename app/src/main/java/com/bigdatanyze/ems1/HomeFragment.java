@@ -1,6 +1,5 @@
 package com.bigdatanyze.ems1;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,17 +10,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.appcompat.widget.SearchView;
-import com.bigdatanyze.ems1.adapter.EmployeeAdapter;
-import com.bigdatanyze.ems1.adapter.ExpenseAdapter;
+import com.bigdatanyze.ems1.adapter.ItemAdapter;
+import com.bigdatanyze.ems1.adapter.PartyAdapter;
 import com.bigdatanyze.ems1.databinding.FragmentHomeBinding;
-import com.bigdatanyze.ems1.viewmodel.EmployeeViewModel;
-import com.bigdatanyze.ems1.viewmodel.ExpenseViewModel;
+import com.bigdatanyze.ems1.viewmodel.ItemViewModel;
+import com.bigdatanyze.ems1.viewmodel.PartyViewModel;
 
 public class HomeFragment extends Fragment {
 
 	private FragmentHomeBinding binding;
-	private ExpenseAdapter expenseAdapter;
-	private EmployeeAdapter employeeAdapter;
+	private ItemAdapter itemAdapter;
+	private PartyAdapter partyAdapter;
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -35,37 +34,36 @@ public class HomeFragment extends Fragment {
 		setupViewToggleButtons();
 		setupFloatingActionButton();
 
-		// Default view to display Expenses first
-		showExpenseView();
+		// Default view to display Parties first
+		showPartyView();
 
 		return view;
 	}
 
 	private void setupRecyclerViews() {
-		// Set layout managers for both RecyclerViews
-		binding.recyclerViewExpense.setLayoutManager(new LinearLayoutManager(getContext()));
-		binding.recyclerViewEmployee.setLayoutManager(new LinearLayoutManager(getContext()));
+		binding.recyclerViewParties.setLayoutManager(new LinearLayoutManager(getContext()));
+		binding.recyclerViewItems.setLayoutManager(new LinearLayoutManager(getContext()));
 
 		// Initialize adapters
-		expenseAdapter = new ExpenseAdapter();
-		employeeAdapter = new EmployeeAdapter();
+		partyAdapter = new PartyAdapter();
+		itemAdapter = new ItemAdapter();
 
 		// Set adapters to RecyclerViews
-		binding.recyclerViewExpense.setAdapter(expenseAdapter);
-		binding.recyclerViewEmployee.setAdapter(employeeAdapter);
+		binding.recyclerViewParties.setAdapter(partyAdapter);
+		binding.recyclerViewItems.setAdapter(itemAdapter);
 	}
 
 	private void setupViewModels() {
-		ExpenseViewModel expenseViewModel = new ViewModelProvider(this).get(ExpenseViewModel.class);
-		EmployeeViewModel employeeViewModel = new ViewModelProvider(this).get(EmployeeViewModel.class);
+		PartyViewModel partyViewModel = new ViewModelProvider(this).get(PartyViewModel.class);
+		ItemViewModel itemViewModel = new ViewModelProvider(this).get(ItemViewModel.class);
 
-		// Observe Expense and Employee data and update adapters
-		expenseViewModel.getAllExpenses().observe(getViewLifecycleOwner(), expenses -> {
-			expenseAdapter.setExpenseList(expenses);
+		// Observe Party and Item data and update adapters
+		partyViewModel.getAllParties().observe(getViewLifecycleOwner(), parties -> {
+			partyAdapter.setPartyList(parties);
 		});
 
-		employeeViewModel.getAllEmployees().observe(getViewLifecycleOwner(), employees -> {
-			employeeAdapter.setEmployeeList(employees);
+		itemViewModel.getAllItems().observe(getViewLifecycleOwner(), items -> {
+			itemAdapter.setItems(items);
 		});
 	}
 
@@ -79,10 +77,10 @@ public class HomeFragment extends Fragment {
 			@Override
 			public boolean onQueryTextChange(String newText) {
 				// Filter based on which view is currently visible
-				if (binding.recyclerViewExpense.getVisibility() == View.VISIBLE) {
-					expenseAdapter.filter(newText); // Filter Expense list
-				} else if (binding.recyclerViewEmployee.getVisibility() == View.VISIBLE) {
-					employeeAdapter.filter(newText); // Filter Employee list
+				if (binding.recyclerViewParties.getVisibility() == View.VISIBLE) {
+					partyAdapter.getFilter().filter(newText); // Filter Party list
+				} else if (binding.recyclerViewItems.getVisibility() == View.VISIBLE) {
+					itemAdapter.getFilter().filter(newText); // Filter Item list
 				}
 				return true;
 			}
@@ -90,45 +88,41 @@ public class HomeFragment extends Fragment {
 	}
 
 	private void setupViewToggleButtons() {
-		// Add simple fade animations for button toggles
-		binding.buttonExpenseView.setOnClickListener(v -> {
-			showExpenseView();
-			binding.buttonExpenseView.setAlpha(1f);
-			binding.buttonEmployeeView.setAlpha(0.7f);
+		binding.buttonPartyView.setOnClickListener(v -> {
+			showPartyView();
+			binding.buttonPartyView.setAlpha(1f);
+			binding.buttonItemsView.setAlpha(0.7f);
 		});
 
-		binding.buttonEmployeeView.setOnClickListener(v -> {
-			showEmployeeView();
-			binding.buttonEmployeeView.setAlpha(1f);
-			binding.buttonExpenseView.setAlpha(0.7f);
+		binding.buttonItemsView.setOnClickListener(v -> {
+			showItemView();
+			binding.buttonItemsView.setAlpha(1f);
+			binding.buttonPartyView.setAlpha(0.7f);
 		});
 	}
 
-	private void showExpenseView() {
-		// Set visibility and animation for expense view
-		binding.recyclerViewExpense.setVisibility(View.VISIBLE);
-		binding.recyclerViewEmployee.setVisibility(View.GONE);
-		binding.searchView.setQueryHint("Search Expenses");
+	private void showPartyView() {
+		binding.recyclerViewParties.setVisibility(View.VISIBLE);
+		binding.recyclerViewItems.setVisibility(View.GONE);
+		binding.searchView.setQueryHint("Search Parties");
 
-		// Add a subtle fade-in effect
-		binding.recyclerViewExpense.setAlpha(0f);
-		binding.recyclerViewExpense.animate().alpha(1f).setDuration(300).start();
+		// Fade-in effect
+		binding.recyclerViewParties.setAlpha(0f);
+		binding.recyclerViewParties.animate().alpha(1f).setDuration(300).start();
 	}
 
-	private void showEmployeeView() {
-		// Set visibility and animation for employee view
-		binding.recyclerViewExpense.setVisibility(View.GONE);
-		binding.recyclerViewEmployee.setVisibility(View.VISIBLE);
-		binding.searchView.setQueryHint("Search Employees");
+	private void showItemView() {
+		binding.recyclerViewParties.setVisibility(View.GONE);
+		binding.recyclerViewItems.setVisibility(View.VISIBLE);
+		binding.searchView.setQueryHint("Search Items");
 
-		// Add a subtle fade-in effect
-		binding.recyclerViewEmployee.setAlpha(0f);
-		binding.recyclerViewEmployee.animate().alpha(1f).setDuration(300).start();
+		// Fade-in effect
+		binding.recyclerViewItems.setAlpha(0f);
+		binding.recyclerViewItems.animate().alpha(1f).setDuration(300).start();
 	}
 
 	private void setupFloatingActionButton() {
 		binding.fabAddOptions.setOnClickListener(view -> {
-			// Toggle visibility of the circular menu
 			if (binding.circularMenu.getVisibility() == View.GONE) {
 				binding.circularMenu.setVisibility(View.VISIBLE);
 				binding.circularMenu.setAlpha(0f);
@@ -140,7 +134,6 @@ public class HomeFragment extends Fragment {
 			}
 		});
 
-		// Handle button clicks in the circular menu
 		binding.actionAddSale.setOnClickListener(v -> {
 			startActivity(new Intent(getActivity(), AddInvoiceActivity.class));
 		});
