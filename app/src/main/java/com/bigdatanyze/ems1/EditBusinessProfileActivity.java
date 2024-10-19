@@ -1,67 +1,95 @@
 package com.bigdatanyze.ems1;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
+import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import com.bigdatanyze.ems1.databinding.ActivityEditBusinessProfileBinding;
 import com.bigdatanyze.ems1.model.BusinessProfile;
 import com.bigdatanyze.ems1.viewmodel.BusinessProfileViewModel;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class EditBusinessProfileActivity extends AppCompatActivity {
-
-	private ActivityEditBusinessProfileBinding binding;
+	private static final int PICK_IMAGE_REQUEST = 1;
 	private BusinessProfileViewModel viewModel;
+	private TextInputEditText etBusinessName, etCompanyAddress, etPhoneNumber, etEmail;
+	private MaterialButton btnSave;
+	private ImageView ivLogo;
 	private Uri logoUri;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		binding = ActivityEditBusinessProfileBinding.inflate(getLayoutInflater());
-		setContentView(binding.getRoot());
+		setContentView(R.layout.activity_edit_business_profile);
 
+		etBusinessName = findViewById(R.id.et_business_name);
+		etCompanyAddress = findViewById(R.id.et_company_address);
+		etPhoneNumber = findViewById(R.id.et_phone_number);
+		etEmail = findViewById(R.id.et_email);
+		btnSave = findViewById(R.id.btn_save);
+		ivLogo = findViewById(R.id.iv_logo); // ImageView for logo
+
+		// Initialize ViewModel
 		viewModel = new ViewModelProvider(this).get(BusinessProfileViewModel.class);
 
-		// Observe the existing profile
-		viewModel.getBusinessProfile().observe(this, profile -> {
-			if (profile != null) {
-				binding.etBusinessName.setText(profile.getBusinessName());
-				binding.ivLogo.setImageURI(Uri.parse(profile.getLogoUri()));
-				logoUri = Uri.parse(profile.getLogoUri());
+		// Observe the LiveData from the ViewModel
+		viewModel.getBusinessProfile().observe(this, businessProfile -> {
+			if (businessProfile != null) {
+				etBusinessName.setText(businessProfile.getBusinessName());
+				etCompanyAddress.setText(businessProfile.getCompanyAddress());
+				etPhoneNumber.setText(businessProfile.getPhoneNumber());
+				etEmail.setText(businessProfile.getEmail());
+				logoUri = Uri.parse(businessProfile.getLogoUri()); // Retrieve existing logo URI
+				ivLogo.setImageURI(logoUri); // Set the logo if available
 			}
 		});
 
-		// Logo click listener to choose a new image
-		binding.ivLogo.setOnClickListener(v -> {
-			// Open an intent to choose an image
-			Intent intent = new Intent(Intent.ACTION_PICK);
-			intent.setType("image/*");
-			startActivityForResult(intent, 1); // Request code 1 for image picking
+		ivLogo.setOnClickListener(v -> openImageChooser()); // Open image chooser on logo click
+
+		btnSave.setOnClickListener(v -> {
+			String businessName = etBusinessName.getText().toString();
+			String companyAddress = etCompanyAddress.getText().toString();
+			String phoneNumber = etPhoneNumber.getText().toString();
+			String email = etEmail.getText().toString();
+
+			if (!businessName.isEmpty()) {
+				BusinessProfile updatedProfile = new BusinessProfile();
+				updatedProfile.setBusinessName(businessName);
+				updatedProfile.setCompanyAddress(companyAddress);
+				updatedProfile.setPhoneNumber(phoneNumber);
+				updatedProfile.setEmail(email);
+				updatedProfile.setLogoUri(logoUri != null ? logoUri.toString() : null); // Set logo URI
+
+				// Update the ViewModel
+				viewModel.updateBusinessProfile(updatedProfile);
+
+				// Return updated profile
+				Intent intent = new Intent();
+				intent.putExtra("updatedProfile", updatedProfile);
+				setResult(RESULT_OK, intent);
+				finish();
+			} else {
+				// Show an error message if needed
+			}
 		});
+	}
 
-		// Save button listener
-		binding.btnSave.setOnClickListener(v -> {
-			String businessName = binding.etBusinessName.getText().toString();
-			String logoPath = logoUri != null ? logoUri.toString() : "";
-
-			BusinessProfile newProfile = new BusinessProfile(businessName, logoPath);
-			viewModel.update(newProfile);
-
-			// Send updated profile back to MainActivity
-			Intent resultIntent = new Intent();
-			resultIntent.putExtra("updatedProfile", newProfile);
-			setResult(RESULT_OK, resultIntent);
-			finish(); // Close activity after saving
-		});
+	private void openImageChooser() {
+		Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		startActivityForResult(intent, PICK_IMAGE_REQUEST);
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
-			logoUri = data.getData(); // Get the image URI
-			binding.ivLogo.setImageURI(logoUri); // Display the selected image
+		if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+			logoUri = data.getData();
+			ivLogo.setImageURI(logoUri); // Set the selected image as logo
 		}
 	}
 }

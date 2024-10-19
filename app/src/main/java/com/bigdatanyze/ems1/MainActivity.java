@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bigdatanyze.ems1.databinding.ActivityMainBinding;
 import com.bigdatanyze.ems1.model.BusinessProfile;
 import com.bigdatanyze.ems1.viewmodel.BusinessProfileViewModel;
+import com.bumptech.glide.Glide; // Add Glide import
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,7 +45,19 @@ public class MainActivity extends AppCompatActivity {
 		viewModel.getBusinessProfile().observe(this, profile -> {
 			if (profile != null) {
 				binding.tvHeading.setText(profile.getBusinessName()); // Update the business name
-				binding.logoImageView.setImageURI(Uri.parse(profile.getLogoUri())); // Update the logo
+
+				String logoUri = profile.getLogoUri();
+				Log.d("LogoUri", "Logo URI: " + logoUri);
+				if (logoUri != null && !logoUri.isEmpty()) {
+					// Use Glide to load the logo
+					Glide.with(this)
+							.load(Uri.parse(logoUri))
+							.placeholder(R.drawable.ic_logo) // Placeholder while loading
+							.error(R.drawable.ic_logo) // Default logo on error
+							.into(binding.logoImageView); // Target ImageView
+				} else {
+					binding.logoImageView.setImageResource(R.drawable.ic_logo); // Set a default logo if null or empty
+				}
 			}
 		});
 
@@ -117,7 +130,18 @@ public class MainActivity extends AppCompatActivity {
 			BusinessProfile updatedProfile = (BusinessProfile) data.getSerializableExtra("updatedProfile");
 			if (updatedProfile != null) {
 				binding.tvHeading.setText(updatedProfile.getBusinessName()); // Update the business name
-				binding.logoImageView.setImageURI(Uri.parse(updatedProfile.getLogoUri())); // Update the logo
+
+				String logoUri = updatedProfile.getLogoUri();
+				Log.d("LogoUri", "Updated Logo URI: " + logoUri);
+				if (logoUri != null && !logoUri.isEmpty()) {
+					Glide.with(this)
+							.load(Uri.parse(logoUri))
+							.placeholder(R.drawable.ic_logo) // Placeholder while loading
+							.error(R.drawable.ic_logo) // Default logo on error
+							.into(binding.logoImageView); // Target ImageView
+				} else {
+					binding.logoImageView.setImageResource(R.drawable.ic_logo); // Set a default logo if null or empty
+				}
 			}
 		}
 	}
