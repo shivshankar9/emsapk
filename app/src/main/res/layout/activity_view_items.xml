@@ -1,13 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:padding="16dp">
+              android:padding="16dp"
+              android:background="@android:color/background_light">
 
+    <!-- Heading for the Item List -->
+    <TextView
+            android:id="@+id/textViewHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Item List"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="Heading: Item List" /> <!-- Accessibility improvement -->
+
+    <!-- RecyclerView for displaying items -->
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewItems"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#f5f5f5"
-            android:scrollbars="vertical" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="List of Items" /> <!-- Accessibility improvement -->
+
+    <!-- Button for adding a new item -->
+    <Button
+            android:id="@+id/buttonAddItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add New Item"
+            android:layout_gravity="center"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="12dp"
+            android:textColor="@android:color/holo_purple"
+            android:backgroundTint="@color/purple_500"
+            android:layout_marginTop="16dp"
+            android:contentDescription="Button: Add New Item" /> <!-- Accessibility improvement -->
+
 </LinearLayout>
