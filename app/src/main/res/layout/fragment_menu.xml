@@ -21,7 +21,9 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#673AB7"
             android:layout_marginBottom="12dp"
-            android:padding="16dp" />
+            android:padding="16dp"
+
+    />
 
     <!-- Dropdown for Party -->
     <Spinner
