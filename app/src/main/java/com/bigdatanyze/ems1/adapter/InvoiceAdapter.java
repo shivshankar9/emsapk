@@ -28,28 +28,24 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.InvoiceV
 	@NonNull
 	@Override
 	public InvoiceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.invoice_item, parent, false);
+		View view = LayoutInflater.from(context).inflate(R.layout.invoice_item, parent, false);
 		return new InvoiceViewHolder(view);
 	}
 
 	@Override
 	public void onBindViewHolder(@NonNull InvoiceViewHolder holder, int position) {
 		Invoice invoice = invoiceList.get(position);
-		holder.invoiceNumberTextView.setText("Invoice Number: " + invoice.getInvoiceNumber());
-		holder.dateTextView.setText("Date: " + invoice.getDate());
-		holder.amountTextView.setText("Amount: $" + invoice.getTotalAmount());
-
-		holder.pdfIcon.setOnClickListener(v -> onInvoiceClickListener.onInvoiceClick(invoice));
+		holder.bind(invoice);
 	}
 
 	@Override
 	public int getItemCount() {
-		return invoiceList.size();
+		return invoiceList != null ? invoiceList.size() : 0; // Handle null invoiceList
 	}
 
 	public void updateInvoices(List<Invoice> invoices) {
 		this.invoiceList = invoices;
-		notifyDataSetChanged();
+		notifyDataSetChanged(); // Notify adapter of data change
 	}
 
 	public interface OnInvoiceClickListener {
@@ -70,6 +66,20 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.InvoiceV
 			amountTextView = itemView.findViewById(R.id.amount);
 			pdfIcon = itemView.findViewById(R.id.pdf_icon);
 			cardView = itemView.findViewById(R.id.card_view);
+
+			// Set click listener on the PDF icon here
+			pdfIcon.setOnClickListener(v -> {
+				int position = getAdapterPosition();
+				if (position != RecyclerView.NO_POSITION) {
+					onInvoiceClickListener.onInvoiceClick(invoiceList.get(position));
+				}
+			});
+		}
+
+		public void bind(Invoice invoice) {
+			invoiceNumberTextView.setText("Invoice Number: " + invoice.getInvoiceNumber());
+			dateTextView.setText("Date: " + invoice.getDate());
+			amountTextView.setText("Amount: $" + invoice.getTotalAmount());
 		}
 	}
 }

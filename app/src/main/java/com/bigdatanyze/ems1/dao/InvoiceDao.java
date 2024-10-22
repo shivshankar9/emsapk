@@ -9,6 +9,7 @@ import androidx.room.Update;
 
 import com.bigdatanyze.ems1.model.Invoice;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -28,6 +29,10 @@ public interface InvoiceDao {
 
 	@Query("SELECT invoiceNumber FROM invoice ORDER BY id DESC LIMIT 1")
 	LiveData<String> getLastInvoiceNumber();
+
+     @Query("SELECT * FROM invoice WHERE date BETWEEN :fromDate AND :toDate")
+		LiveData<List<Invoice>> getInvoicesByDateRange(long fromDate, long toDate);
+
 
 	@Query("SELECT name FROM PARTY ORDER BY name") // Fetch party names from parties table
 	LiveData<List<String>> getAllParties();

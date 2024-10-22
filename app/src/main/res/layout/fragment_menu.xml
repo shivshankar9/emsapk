@@ -3,66 +3,50 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               android:padding="16dp"
-   >
+              android:gravity="center">
 
+ <!-- Sales Button -->
+ <Button
+         android:id="@+id/buttonSales"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="Sales"
+         android:textColor="@android:color/white"
+         android:background="@drawable/rounded_futuristic_button"
+         android:layout_marginBottom="16dp"
+         android:textSize="18sp" />
 
-    <Spinner
-            android:id="@+id/spinnerSales"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#673AB7"
-            android:layout_marginBottom="12dp"
-            android:padding="16dp" />
+ <!-- Items Button -->
+ <Button
+         android:id="@+id/buttonItems"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="Items"
+         android:textColor="@android:color/white"
+         android:background="@drawable/rounded_futuristic_button"
+         android:layout_marginBottom="16dp"
+         android:textSize="18sp" />
 
-    <!-- Dropdown for Items -->
-    <Spinner
-            android:id="@+id/spinnerViewItems"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#673AB7"
-            android:layout_marginBottom="12dp"
-            android:padding="16dp"
+ <!-- Party Button -->
+ <Button
+         android:id="@+id/buttonParty"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="Party"
+         android:textColor="@android:color/white"
+         android:background="@drawable/rounded_futuristic_button"
+         android:layout_marginBottom="16dp"
+         android:textSize="18sp" />
 
-    />
+ <!-- Backup/Restore Button -->
+ <Button
+         android:id="@+id/buttonBackupRestore"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="Backup/Restore"
+         android:textColor="@android:color/white"
+         android:background="@drawable/rounded_futuristic_button"
+         android:layout_marginBottom="16dp"
+         android:textSize="18sp" />
 
-    <!-- Dropdown for Party -->
-    <Spinner
-            android:id="@+id/spinnerParty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#7B4FCA"
-            android:layout_marginBottom="12dp"
-            android:padding="16dp" />
-
-    <!-- Dropdown for Purchase -->
-    <Spinner
-            android:id="@+id/spinnerPurchase"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#673AB7"
-            android:layout_marginBottom="12dp"
-            android:padding="16dp" />
-
-    <!-- Dropdown for Backup/Restore -->
-    <Spinner
-            android:id="@+id/spinnerBackupRestore"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#673AB7"
-            android:layout_marginBottom="12dp"
-            android:padding="16dp" />
-
-<!--    &lt;!&ndash; Add Employee (No Dropdown) &ndash;&gt;
-    <Button
-            android:id="@+id/buttonAddEmployee"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Employee"
-            android:textColor="@android:color/white"
-            android:backgroundTint="#7B44DD"
-            android:layout_marginBottom="12dp"
-            android:elevation="4dp"
-            android:padding="16dp"
-            android:textSize="16sp"
-            android:fontFamily="sans-serif-medium" />-->
 </LinearLayout>

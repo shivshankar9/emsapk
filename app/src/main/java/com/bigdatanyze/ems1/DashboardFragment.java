@@ -4,13 +4,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bigdatanyze.ems1.adapter.RecentActivityAdapter;
+import com.bigdatanyze.ems1.model.Invoice;
+import com.bigdatanyze.ems1.viewmodel.InvoiceViewModel;
 import com.bigdatanyze.ems1.databinding.FragmentDashboardBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +21,8 @@ import java.util.List;
 public class DashboardFragment extends Fragment {
 
 	private FragmentDashboardBinding binding;
+	private InvoiceViewModel invoiceViewModel;
+	private TextView totalRevenueTextView;
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -25,40 +30,48 @@ public class DashboardFragment extends Fragment {
 		binding = FragmentDashboardBinding.inflate(inflater, container, false);
 		View view = binding.getRoot();
 
-		setupRecentActivityRecyclerView();
+		totalRevenueTextView = binding.totalRevenueTextView; // Add a TextView in your XML for showing total revenue
 
+		setupRecentActivityRecyclerView();
 		setupBottomNavigation();
+
+		// Initialize ViewModel
+		invoiceViewModel = new ViewModelProvider(this).get(InvoiceViewModel.class);
+
+		// Observe the LiveData for invoices and update total revenue
+		invoiceViewModel.getAllInvoices().observe(getViewLifecycleOwner(), this::updateTotalRevenue);
 
 		return view;
 	}
 
+	// Method to calculate and update total revenue
+	private void updateTotalRevenue(List<Invoice> invoices) {
+		double totalRevenue = 0.0;
+		if (invoices != null && !invoices.isEmpty()) {
+			for (Invoice invoice : invoices) {
+				totalRevenue += invoice.getTotalAmount();
+			}
+			totalRevenueTextView.setText(String.format("$%.2f", totalRevenue));
+		} else {
+			totalRevenueTextView.setText("Total Revenue: $0.00");
+		}
+	}
+
 	private void setupRecentActivityRecyclerView() {
 		binding.recyclerViewRecentActivity.setLayoutManager(new LinearLayoutManager(getContext()));
-
-		// Initialize and set the adapter for recent activities
 		RecentActivityAdapter adapter = new RecentActivityAdapter(getRecentActivities());
 		binding.recyclerViewRecentActivity.setAdapter(adapter);
 	}
 
-//	private void setupAIButton() {
-//		binding.btnAI.setOnClickListener(v -> {
-//			// TODO: Implement action for AI Assistant button
-//		});
-//	}
-
 	private void setupBottomNavigation() {
 		binding.bottomNavigation.setOnNavigationItemSelectedListener(item -> {
 			if (item.getItemId() == R.id.nav_home) {
-				// Navigate to Home
 				return true;
 			} else if (item.getItemId() == R.id.nav_inventory) {
-				// Navigate to Inventory
 				return true;
 			} else if (item.getItemId() == R.id.nav_invoices) {
-				// Navigate to Invoices
 				return true;
 			} else if (item.getItemId() == R.id.nav_reports) {
-				// Navigate to Reports
 				return true;
 			} else {
 				return false;
@@ -66,10 +79,7 @@ public class DashboardFragment extends Fragment {
 		});
 	}
 
-
-	// Example method to get recent activities
 	private List<String> getRecentActivities() {
-		// Return a list of recent activities
 		return Arrays.asList("Added item A", "Removed item B", "Updated item C");
 	}
 }
