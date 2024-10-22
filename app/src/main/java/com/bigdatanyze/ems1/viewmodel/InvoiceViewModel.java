@@ -24,6 +24,7 @@ public class InvoiceViewModel extends AndroidViewModel {
 		allInvoices = repository.getAllInvoices();
 	}
 
+
 	public LiveData<List<Invoice>> getAllInvoices() {
 		return allInvoices;
 	}
