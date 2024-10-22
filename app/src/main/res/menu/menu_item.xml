@@ -5,5 +5,7 @@
             android:title="Add Item" />
     <item
             android:id="@+id/action_view_item"
-            android:title="View Item" />
+            android:title="View Item"
+
+    />
 </menu>

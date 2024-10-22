@@ -1,6 +1,7 @@
 package com.bigdatanyze.ems1.database;
 
 import android.content.Context;
+import androidx.lifecycle.LiveData;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -10,6 +11,7 @@ import com.bigdatanyze.ems1.dao.*;
 import com.bigdatanyze.ems1.model.*;
 import com.bigdatanyze.ems1.util.Converters;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -44,4 +46,5 @@ public abstract class AppDatabase extends RoomDatabase {
 		}
 		return instance;
 	}
+
 }

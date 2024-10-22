@@ -1,34 +1,54 @@
 package com.bigdatanyze.ems1.repository;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import android.content.Context;
 
+import androidx.lifecycle.LiveData;
+
+import com.bigdatanyze.ems1.dao.BusinessProfileDao;
+import com.bigdatanyze.ems1.database.AppDatabase;
 import com.bigdatanyze.ems1.model.BusinessProfile;
 
+import java.util.concurrent.ExecutorService;
+
 public class BusinessProfileRepository {
-	private MutableLiveData<BusinessProfile> businessProfile;
 
-	public BusinessProfileRepository() {
-		businessProfile = new MutableLiveData<>();
-		fetchBusinessProfile();
+	private final BusinessProfileDao businessProfileDao;
+	private final ExecutorService executorService;
+
+	// Constructor that takes the application context to get the database instance
+	public BusinessProfileRepository(Context context) {
+		AppDatabase db = AppDatabase.getDatabase(context);
+		businessProfileDao = db.businessProfileDao();
+		executorService = AppDatabase.databaseWriteExecutor;
+	}
+	public void insertOrUpdateBusinessProfile(BusinessProfile profile) {
+		AppDatabase.databaseWriteExecutor.execute(() -> {
+			if (businessProfileDao.getBusinessProfileSync() != null) {
+				businessProfileDao.update(profile);
+			} else {
+				businessProfileDao.insert(profile);
+			}
+		});
 	}
 
-	private void fetchBusinessProfile() {
-		// Simulate fetching data from a database or API
-		BusinessProfile profile = new BusinessProfile();
-		profile.setBusinessName("Sample Business");
-		profile.setLogoUri("your_logo_uri"); // Replace with an actual URI if you have one
-		profile.setCompanyAddress("123 Main St, City, Country");
-		profile.setPhoneNumber("123-456-7890");
-		profile.setEmail("contact@samplebusiness.com");
-		businessProfile.setValue(profile);
-	}
 
+	// Fetch the business profile from the database
 	public LiveData<BusinessProfile> getBusinessProfile() {
-		return businessProfile;
+		return businessProfileDao.getBusinessProfile();
 	}
 
+	// Update the business profile in the database
 	public void updateBusinessProfile(BusinessProfile profile) {
-		businessProfile.setValue(profile);
+		executorService.execute(() -> {
+			// Check if the profile exists, and either update or insert it
+			BusinessProfile existingProfile = businessProfileDao.getBusinessProfileSync();
+			if (existingProfile != null) {
+				profile.setId(existingProfile.getId());  // Ensure the profile has the same ID if updating
+				businessProfileDao.update(profile);
+			} else {
+				businessProfileDao.insert(profile);
+			}
+		});
+
 	}
 }

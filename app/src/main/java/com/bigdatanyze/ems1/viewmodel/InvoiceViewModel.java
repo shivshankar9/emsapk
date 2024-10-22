@@ -6,11 +6,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
 import com.bigdatanyze.ems1.model.Invoice;
-import com.bigdatanyze.ems1.model.Item;  // Import Item
+import com.bigdatanyze.ems1.model.Item;
 import com.bigdatanyze.ems1.model.Party;
 import com.bigdatanyze.ems1.repository.InvoiceRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class InvoiceViewModel extends AndroidViewModel {
@@ -58,7 +59,11 @@ public class InvoiceViewModel extends AndroidViewModel {
 		});
 	}
 
-	// Minimal addition to fetch all items from the repository
+	public LiveData<List<Invoice>> getInvoicesByDateRange(Date fromDate, Date toDate) {
+		long fromTimestamp = (fromDate != null) ? fromDate.getTime() : 0; // Default to 0 if null
+		long toTimestamp = (toDate != null) ? toDate.getTime() : System.currentTimeMillis(); // Current time if null
+		return repository.getInvoicesByDateRange(fromTimestamp, toTimestamp);
+	}
 	public LiveData<List<Item>> getAllItems() {
 		return repository.getAllItems();  // Fetch all items
 	}

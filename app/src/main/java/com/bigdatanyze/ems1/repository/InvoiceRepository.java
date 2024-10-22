@@ -11,6 +11,7 @@ import com.bigdatanyze.ems1.model.Invoice;
 import com.bigdatanyze.ems1.model.Item; // Import Item
 import com.bigdatanyze.ems1.model.Party;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
@@ -38,6 +39,10 @@ public class InvoiceRepository {
 	public void insert(Invoice invoice) {
 		executorService.execute(() -> invoiceDao.insert(invoice));
 	}
+	public LiveData<List<Invoice>> getInvoicesByDateRange(long fromDate, long toDate) {
+		return invoiceDao.getInvoicesByDateRange(fromDate, toDate);
+	}
+
 
 	public void update(Invoice invoice) {
 		executorService.execute(() -> invoiceDao.update(invoice));

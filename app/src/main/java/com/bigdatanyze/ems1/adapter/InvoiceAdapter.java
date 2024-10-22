@@ -16,12 +16,11 @@ import java.util.List;
 public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.InvoiceViewHolder> {
 
 	private List<Invoice> invoiceList;
-	private Context context;
-	private OnInvoiceClickListener onInvoiceClickListener;
-	private Invoice selectedInvoice;
+	private final Context context;
+	private final OnInvoiceClickListener onInvoiceClickListener;
 
 	public InvoiceAdapter(Context context, List<Invoice> invoiceList, OnInvoiceClickListener onInvoiceClickListener) {
-		this.context = context;  // Initialize the context
+		this.context = context;
 		this.invoiceList = invoiceList;
 		this.onInvoiceClickListener = onInvoiceClickListener;
 	}
@@ -29,46 +28,24 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.InvoiceV
 	@NonNull
 	@Override
 	public InvoiceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.invoice_item, parent, false);
+		View view = LayoutInflater.from(context).inflate(R.layout.invoice_item, parent, false);
 		return new InvoiceViewHolder(view);
 	}
 
 	@Override
 	public void onBindViewHolder(@NonNull InvoiceViewHolder holder, int position) {
 		Invoice invoice = invoiceList.get(position);
-		holder.invoiceNumberTextView.setText("Invoice Number: " + invoice.getInvoiceNumber());
-		holder.dateTextView.setText("Date: " + invoice.getDate());
-		holder.amountTextView.setText("Amount: $" + invoice.getTotalAmount());
-
-		holder.pdfIcon.setOnClickListener(v -> {
-			if (onInvoiceClickListener != null) {
-				onInvoiceClickListener.onInvoiceClick(invoice);
-			}
-		});
-
-		// Highlight the selected invoice
-		holder.cardView.setCardBackgroundColor(invoice.equals(selectedInvoice) ?
-				context.getResources().getColor(R.color.colorAccent) :
-				context.getResources().getColor(R.color.white));
-
-		holder.cardView.setOnClickListener(v -> {
-			selectedInvoice = invoice;
-			notifyDataSetChanged(); // Refresh the adapter to update highlights
-		});
+		holder.bind(invoice);
 	}
 
 	@Override
 	public int getItemCount() {
-		return invoiceList.size();
+		return invoiceList != null ? invoiceList.size() : 0; // Handle null invoiceList
 	}
 
 	public void updateInvoices(List<Invoice> invoices) {
 		this.invoiceList = invoices;
-		notifyDataSetChanged();
-	}
-
-	public Invoice getSelectedInvoice() {
-		return selectedInvoice;
+		notifyDataSetChanged(); // Notify adapter of data change
 	}
 
 	public interface OnInvoiceClickListener {
@@ -88,7 +65,21 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.InvoiceV
 			dateTextView = itemView.findViewById(R.id.date);
 			amountTextView = itemView.findViewById(R.id.amount);
 			pdfIcon = itemView.findViewById(R.id.pdf_icon);
-			cardView = itemView.findViewById(R.id.card_view); // Ensure card_view id matches your layout
+			cardView = itemView.findViewById(R.id.card_view);
+
+			// Set click listener on the PDF icon here
+			pdfIcon.setOnClickListener(v -> {
+				int position = getAdapterPosition();
+				if (position != RecyclerView.NO_POSITION) {
+					onInvoiceClickListener.onInvoiceClick(invoiceList.get(position));
+				}
+			});
+		}
+
+		public void bind(Invoice invoice) {
+			invoiceNumberTextView.setText("Invoice Number: " + invoice.getInvoiceNumber());
+			dateTextView.setText("Date: " + invoice.getDate());
+			amountTextView.setText("Amount: $" + invoice.getTotalAmount());
 		}
 	}
 }
