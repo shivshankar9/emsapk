@@ -67,7 +67,15 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.InvoiceV
 			pdfIcon = itemView.findViewById(R.id.pdf_icon);
 			cardView = itemView.findViewById(R.id.card_view);
 
-			// Set click listener on the PDF icon here
+			// Set click listener on the card view
+			itemView.setOnClickListener(v -> {
+				int position = getAdapterPosition();
+				if (position != RecyclerView.NO_POSITION) {
+					onInvoiceClickListener.onInvoiceClick(invoiceList.get(position));
+				}
+			});
+
+			// Optionally, set click listener on the PDF icon
 			pdfIcon.setOnClickListener(v -> {
 				int position = getAdapterPosition();
 				if (position != RecyclerView.NO_POSITION) {
@@ -79,7 +87,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.InvoiceV
 		public void bind(Invoice invoice) {
 			invoiceNumberTextView.setText("Invoice Number: " + invoice.getInvoiceNumber());
 			dateTextView.setText("Date: " + invoice.getDate());
-			amountTextView.setText("Amount: $" + invoice.getTotalAmount());
+			amountTextView.setText("Amount: $" + String.format("%.2f", invoice.getTotalAmount())); // Ensure two decimal places
 		}
 	}
 }

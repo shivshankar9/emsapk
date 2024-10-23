@@ -115,7 +115,7 @@ public class InvoicePreviewActivity extends AppCompatActivity {
 				if (businessProfile != null) {
 					businessName = businessProfile.getBusinessName();
 					businessAddress = businessProfile.getCompanyAddress();
-					businessCityStateZip = businessProfile.getEmail() + ", " + businessProfile.getEmail() + ", " + businessProfile.getEmail();
+					businessCityStateZip = businessProfile.getCityStateZip();
 					businessEmail = businessProfile.getEmail();
 					businessPhone = "Phone: " + businessProfile.getPhoneNumber();
 					businessNameTextView.setText(businessProfile.getBusinessName());  // Update with business name				}
@@ -141,6 +141,7 @@ public class InvoicePreviewActivity extends AppCompatActivity {
 					STORAGE_PERMISSION_CODE);
 		}
 	}
+
 
 	/**
 	 * Generates the PDF of the invoice with improved layout and design.

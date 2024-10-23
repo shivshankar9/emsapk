@@ -11,6 +11,7 @@ import com.bigdatanyze.ems1.model.Party;
 import com.bigdatanyze.ems1.repository.InvoiceRepository;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +30,26 @@ public class InvoiceViewModel extends AndroidViewModel {
 		return allInvoices;
 	}
 
+	public LiveData<List<Invoice>> getInvoicesByDateRange(Date fromDate, Date toDate) {
+		long fromTimestamp = (fromDate != null) ? fromDate.getTime() : 0;
+		long toTimestamp = (toDate != null) ? toDate.getTime() : System.currentTimeMillis();
+		return repository.getInvoicesByDateRange(fromTimestamp, toTimestamp);
+	}
+
+	// Method to get invoices for the current month
+	public LiveData<List<Invoice>> getInvoicesForCurrentMonth() {
+		Calendar calendar = Calendar.getInstance();
+
+		// Set the first day of the current month
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		Date fromDate = calendar.getTime();
+
+		// Set the last day to today
+		Date toDate = new Date();
+
+		return getInvoicesByDateRange(fromDate, toDate);
+	}
+
 	public void insert(Invoice invoice) {
 		repository.insert(invoice);
 	}
@@ -39,10 +60,6 @@ public class InvoiceViewModel extends AndroidViewModel {
 
 	public void delete(Invoice invoice) {
 		repository.delete(invoice);
-	}
-
-	public LiveData<String> getLastInvoiceNumber() {
-		return repository.getLastInvoiceNumber();
 	}
 
 	public LiveData<List<Party>> getAllParties() {
@@ -59,12 +76,10 @@ public class InvoiceViewModel extends AndroidViewModel {
 		});
 	}
 
-	public LiveData<List<Invoice>> getInvoicesByDateRange(Date fromDate, Date toDate) {
-		long fromTimestamp = (fromDate != null) ? fromDate.getTime() : 0; // Default to 0 if null
-		long toTimestamp = (toDate != null) ? toDate.getTime() : System.currentTimeMillis(); // Current time if null
-		return repository.getInvoicesByDateRange(fromTimestamp, toTimestamp);
-	}
 	public LiveData<List<Item>> getAllItems() {
-		return repository.getAllItems();  // Fetch all items
+		return repository.getAllItems();
 	}
-}
+
+	public LiveData<String> getLastInvoiceNumber() {
+		return repository.getLastInvoiceNumber();
+	}};

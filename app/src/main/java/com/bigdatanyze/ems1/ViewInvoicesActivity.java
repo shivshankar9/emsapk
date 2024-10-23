@@ -20,8 +20,8 @@ public class ViewInvoicesActivity extends AppCompatActivity implements InvoiceAd
 	private RecyclerView invoicesRecyclerView;
 	private InvoiceAdapter invoiceAdapter;
 	private InvoiceViewModel invoiceViewModel;
-	private TextView totalSalesTextView; // TextView for total sales
-	private TextView noInvoicesTextView; // TextView to show 'No invoices found'
+	private TextView totalSalesTextView;
+	private TextView noInvoicesTextView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,58 +32,57 @@ public class ViewInvoicesActivity extends AppCompatActivity implements InvoiceAd
 		invoicesRecyclerView = findViewById(R.id.invoices_recycler_view);
 		invoicesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-		noInvoicesTextView = findViewById(R.id.no_invoices_text_view); // Add this TextView in your XML layout file
+		noInvoicesTextView = findViewById(R.id.no_invoices_text_view);
 
 		// Initialize ViewModel
 		invoiceViewModel = new ViewModelProvider(this).get(InvoiceViewModel.class);
 
-		// Observe the LiveData from the ViewModel
+		// Observe the LiveData from the ViewModel to get all invoices
 		invoiceViewModel.getAllInvoices().observe(this, invoices -> {
 			try {
 				if (invoices != null && !invoices.isEmpty()) {
-					// Hide "No invoices found" message
-					noInvoicesTextView.setVisibility(View.GONE);
-					invoicesRecyclerView.setVisibility(View.VISIBLE);
+					noInvoicesTextView.setVisibility(View.GONE); // Hide the 'No invoices' message
+					invoicesRecyclerView.setVisibility(View.VISIBLE); // Show the RecyclerView
 
 					Log.d("ViewInvoicesActivity", "Number of invoices fetched: " + invoices.size());
 
+					// If adapter is not initialized, initialize and set it
 					if (invoiceAdapter == null) {
 						invoiceAdapter = new InvoiceAdapter(this, invoices, this);
 						invoicesRecyclerView.setAdapter(invoiceAdapter);
 					} else {
-						invoiceAdapter.updateInvoices(invoices);
+						invoiceAdapter.updateInvoices(invoices); // Update if invoices list changes
 					}
 
+					// Update total sales text
 					updateTotalSales(invoices);
 				} else {
-					// If no invoices are found
-					showNoInvoicesMessage();
+					showNoInvoicesMessage(); // Show 'No invoices' message if list is empty
 				}
 			} catch (Exception e) {
-				Log.e("ViewInvoicesActivity", "Error while fetching invoices: " + e.getMessage(), e);
-				showNoInvoicesMessage();
+				Log.e("ViewInvoicesActivity", "Error fetching invoices: " + e.getMessage(), e);
+				showNoInvoicesMessage(); // Handle errors
 			}
 		});
 	}
 
-	// Show "No Invoices to View" when no invoices are available
 	private void showNoInvoicesMessage() {
-		invoicesRecyclerView.setVisibility(View.GONE); // Hide the RecyclerView
-		noInvoicesTextView.setVisibility(View.VISIBLE); // Show 'No invoices found' message
+		invoicesRecyclerView.setVisibility(View.GONE); // Hide RecyclerView
+		noInvoicesTextView.setVisibility(View.VISIBLE); // Show 'No Invoices' message
 		noInvoicesTextView.setText("No Invoices to View");
-		totalSalesTextView.setText("Total Sales: $0.00"); // Reset total sales to zero
+		totalSalesTextView.setText("Total Sales: $0.00"); // Reset total sales display
 	}
 
-	// Update total sales if invoices are available
+	// Calculate and display total sales from the invoices list
 	private void updateTotalSales(List<Invoice> invoices) {
 		double totalSales = 0.0;
 		for (Invoice invoice : invoices) {
-			totalSales += invoice.getTotalAmount();
+			totalSales += invoice.getTotalAmount(); // Sum total sales
 		}
-		totalSalesTextView.setText(String.format("Total Sales: $%.2f", totalSales));
+		totalSalesTextView.setText(String.format("Total Sales: $%.2f", totalSales)); // Display total sales
 	}
 
-	// Handle invoice click events
+	// Handle invoice click and show invoice details in PDFViewerActivity
 	@Override
 	public void onInvoiceClick(Invoice invoice) {
 		try {

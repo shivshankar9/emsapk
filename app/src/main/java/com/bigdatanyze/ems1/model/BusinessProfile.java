@@ -12,6 +12,16 @@ public class BusinessProfile implements Serializable {
 	private String businessName;
 	private String logoUri;
 	private String companyAddress;
+
+	public String getCityStateZip() {
+		return CityStateZip;
+	}
+
+	public void setCityStateZip(String cityStateZip) {
+		CityStateZip = cityStateZip;
+	}
+
+	private String CityStateZip;
 	private String phoneNumber;
 	private String email;
 

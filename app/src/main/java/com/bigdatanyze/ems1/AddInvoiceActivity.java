@@ -73,15 +73,16 @@ public class AddInvoiceActivity extends AppCompatActivity {
 			try {
 				if (lastInvoiceNumber != null) {
 					String cleanedNumber = lastInvoiceNumber.replaceAll("[^0-9]", "");
-					int nextNumber = cleanedNumber.isEmpty() ? 1001 : Integer.parseInt(cleanedNumber) + 1;
-					invoiceNumberEditText.setText(String.format(Locale.getDefault(), "%d", nextNumber));
+					int nextNumber = cleanedNumber.isEmpty() ? 1 : Integer.parseInt(cleanedNumber) + 1;
+					invoiceNumberEditText.setText(String.valueOf(nextNumber));
 				} else {
-					invoiceNumberEditText.setText("1001");
+					invoiceNumberEditText.setText("1");
 				}
 			} catch (NumberFormatException e) {
-				invoiceNumberEditText.setText("1001");
-				Toast.makeText(this, "Error generating invoice number, defaulting to 1001", Toast.LENGTH_SHORT).show();
+				invoiceNumberEditText.setText("1");
+				Toast.makeText(this, "Error generating invoice number, defaulting to 1", Toast.LENGTH_SHORT).show();
 			}
+
 		});
 	}
 
