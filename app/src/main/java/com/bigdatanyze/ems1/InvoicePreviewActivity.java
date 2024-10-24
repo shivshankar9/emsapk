@@ -115,7 +115,7 @@ public class InvoicePreviewActivity extends AppCompatActivity {
 				if (businessProfile != null) {
 					businessName = businessProfile.getBusinessName();
 					businessAddress = businessProfile.getCompanyAddress();
-					businessCityStateZip = businessProfile.getCityStateZip();
+					businessCityStateZip = businessProfile.getCityStateZip() + ", " + businessProfile.getEmail() + ", " + businessProfile.getEmail();
 					businessEmail = businessProfile.getEmail();
 					businessPhone = "Phone: " + businessProfile.getPhoneNumber();
 					businessNameTextView.setText(businessProfile.getBusinessName());  // Update with business name				}

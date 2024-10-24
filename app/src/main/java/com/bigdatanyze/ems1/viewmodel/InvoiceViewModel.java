@@ -36,17 +36,11 @@ public class InvoiceViewModel extends AndroidViewModel {
 		return repository.getInvoicesByDateRange(fromTimestamp, toTimestamp);
 	}
 
-	// Method to get invoices for the current month
 	public LiveData<List<Invoice>> getInvoicesForCurrentMonth() {
 		Calendar calendar = Calendar.getInstance();
-
-		// Set the first day of the current month
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		Date fromDate = calendar.getTime();
-
-		// Set the last day to today
 		Date toDate = new Date();
-
 		return getInvoicesByDateRange(fromDate, toDate);
 	}
 
@@ -82,4 +76,9 @@ public class InvoiceViewModel extends AndroidViewModel {
 
 	public LiveData<String> getLastInvoiceNumber() {
 		return repository.getLastInvoiceNumber();
-	}};
+	}
+
+	public LiveData<Invoice> getInvoiceById(int invoiceId) {
+		return repository.getInvoiceById(invoiceId); // Call the repository's method
+	}
+}

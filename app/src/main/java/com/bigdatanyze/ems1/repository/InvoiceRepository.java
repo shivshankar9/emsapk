@@ -55,7 +55,9 @@ public class InvoiceRepository {
 	public LiveData<String> getLastInvoiceNumber() {
 		return invoiceDao.getLastInvoiceNumber();
 	}
-
+	public LiveData<Invoice> getInvoiceById(int invoiceId) {
+		return invoiceDao.getInvoiceById(invoiceId);
+	}
 	public LiveData<List<Party>> getAllParties() {
 		// Fetch all parties from the database
 		return partyDao.getAllPartiesLive();

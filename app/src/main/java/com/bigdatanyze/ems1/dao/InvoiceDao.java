@@ -15,6 +15,10 @@ import java.util.List;
 @Dao
 public interface InvoiceDao {
 
+	@Query("SELECT * FROM invoice WHERE id = :invoiceId")
+	LiveData<Invoice> getInvoiceById(int invoiceId);
+
+
 	@Insert
 	void insert(Invoice invoice);
 

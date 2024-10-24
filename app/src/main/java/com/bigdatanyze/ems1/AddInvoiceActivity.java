@@ -132,6 +132,7 @@ public class AddInvoiceActivity extends AppCompatActivity {
 	}
 
 	private void saveInvoice() {
+
 		String invoiceNumber = invoiceNumberEditText.getText().toString().trim();
 		String customerName = customerNameAutoComplete.getText().toString().trim();
 		String customerContact = customerContactEditText.getText().toString().trim();
