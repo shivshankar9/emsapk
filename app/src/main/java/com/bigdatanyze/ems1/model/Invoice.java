@@ -11,7 +11,7 @@ import java.util.List;
 import com.bigdatanyze.ems1.util.Converters;
 
 @Entity(tableName = "invoice")
-public class Invoice {
+public class Invoice extends BusinessProfile {
 
 	@PrimaryKey(autoGenerate = true)
 	private int id;
@@ -118,4 +118,7 @@ public class Invoice {
 	public String getFormattedAmount() {
 		return String.format("$%.2f", totalAmount);
 	}
+
+
+
 }
