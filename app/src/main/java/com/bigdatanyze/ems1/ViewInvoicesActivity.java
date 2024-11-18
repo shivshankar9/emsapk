@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bigdatanyze.ems1.adapter.InvoiceAdapter;
 import com.bigdatanyze.ems1.model.Invoice;
+import com.bigdatanyze.ems1.util.PdfUtils;
 import com.bigdatanyze.ems1.viewmodel.InvoiceViewModel;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -123,33 +124,49 @@ public class ViewInvoicesActivity extends AppCompatActivity implements InvoiceAd
 		totalSalesTextView.setText(String.format("Total Sales: $%.2f", totalSales));
 	}
 
-	@Override
-	public void onInvoiceClick(Invoice invoice) {
-		if (invoice == null || isFinishing()) {
-			// If the activity is finishing or invoice is null, return early
-			return;
-		}
-
-		// Use app-specific directory for storing PDFs
-		File pdfDir = new File(getExternalFilesDir(null), "Finverge");
-		if (!pdfDir.exists()) {
-			pdfDir.mkdirs(); // Create the directory if it doesn't exist
-		}
-
-		File pdfFile = new File(pdfDir, "Invoice_" + invoice.getInvoiceNumber() + ".pdf");
-
-		if (pdfFile.exists()) {
-			openGeneratedPDF(pdfFile);
-		} else {
-			try {
-				generateInvoicePdf(invoice, pdfFile);
-				openGeneratedPDF(pdfFile);
-			} catch (Exception e) {
-				Log.e("ViewInvoicesActivity", "Error generating PDF: " + e.getMessage(), e);
-				Toast.makeText(this, "Error generating PDF.", Toast.LENGTH_SHORT).show();
-			}
-		}
+//	@Override
+//	public void onInvoiceClick(Invoice invoice) {
+//		if (invoice == null || isFinishing()) {
+//			// If the activity is finishing or invoice is null, return early
+//			return;
+//		}
+//
+//		// Use app-specific directory for storing PDFs
+//		File pdfDir = new File(getExternalFilesDir(null), "Finverge");
+//		if (!pdfDir.exists()) {
+//			pdfDir.mkdirs(); // Create the directory if it doesn't exist
+//		}
+//
+//		File pdfFile = new File(pdfDir, "Invoice_" + invoice.getInvoiceNumber() + ".pdf");
+//
+//		if (pdfFile.exists()) {
+//			openGeneratedPDF(pdfFile);
+//		} else {
+//			try {
+//				generateInvoicePdf(invoice, pdfFile);
+//				openGeneratedPDF(pdfFile);
+//			} catch (Exception e) {
+//				Log.e("ViewInvoicesActivity", "Error generating PDF: " + e.getMessage(), e);
+//				Toast.makeText(this, "Error generating PDF.", Toast.LENGTH_SHORT).show();
+//			}
+//		}
+//	}
+@Override
+public void onInvoiceClick(Invoice invoice) {
+	if (invoice == null || isFinishing()) {
+		return; // Return early if no invoice or the activity is finishing
 	}
+
+	try {
+		// Generate PDF using utility method
+		File pdfFile = PdfUtils.generateInvoicePdf(this, invoice);
+		openGeneratedPDF(pdfFile);
+	} catch (Exception e) {
+		Log.e("ViewInvoicesActivity", "Error generating PDF: " + e.getMessage(), e);
+		Toast.makeText(this, "Error generating PDF.", Toast.LENGTH_SHORT).show();
+	}
+}
+
 
 	private void generateInvoicePdf(Invoice invoice, File pdfFile) throws DocumentException, IOException {
 		Document document = new Document();
