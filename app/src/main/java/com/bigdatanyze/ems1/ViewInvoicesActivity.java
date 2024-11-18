@@ -4,8 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -22,9 +23,9 @@ import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bigdatanyze.ems1.adapter.InvoiceAdapter;
 import com.bigdatanyze.ems1.model.Invoice;
-import com.bigdatanyze.ems1.util.PdfUtils;
 import com.bigdatanyze.ems1.viewmodel.InvoiceViewModel;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -39,7 +40,7 @@ import java.util.List;
 
 public class ViewInvoicesActivity extends AppCompatActivity implements InvoiceAdapter.OnInvoiceClickListener {
 
-	private static final int REQUEST_WRITE_STORAGE = 112; // Request code for storage permission
+	private static final int REQUEST_WRITE_STORAGE = 112;
 
 	private RecyclerView invoicesRecyclerView;
 	private InvoiceAdapter invoiceAdapter;
@@ -61,10 +62,15 @@ public class ViewInvoicesActivity extends AppCompatActivity implements InvoiceAd
 
 		noInvoicesTextView = findViewById(R.id.no_invoices_text_view);
 
-		// Request storage permission if not granted
-		if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
+		// Check and request storage permission for Android 12 or below
+		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+			if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+				ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
+			} else {
+				setupViewModel(); // Permission already granted
+			}
 		} else {
+			// For Android 13+, no need to request WRITE_EXTERNAL_STORAGE permission.
 			setupViewModel();
 		}
 	}
@@ -119,29 +125,24 @@ public class ViewInvoicesActivity extends AppCompatActivity implements InvoiceAd
 
 	@Override
 	public void onInvoiceClick(Invoice invoice) {
-		if (invoice == null) {
-			Toast.makeText(this, "Invoice is null.", Toast.LENGTH_SHORT).show();
+		if (invoice == null || isFinishing()) {
+			// If the activity is finishing or invoice is null, return early
 			return;
 		}
 
-		// Define the path where the PDF should be saved
-		File pdfDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Finverge");
+		// Use app-specific directory for storing PDFs
+		File pdfDir = new File(getExternalFilesDir(null), "Finverge");
 		if (!pdfDir.exists()) {
 			pdfDir.mkdirs(); // Create the directory if it doesn't exist
 		}
 
 		File pdfFile = new File(pdfDir, "Invoice_" + invoice.getInvoiceNumber() + ".pdf");
 
-		// Check if the PDF already exists
 		if (pdfFile.exists()) {
-			// Open the existing PDF
 			openGeneratedPDF(pdfFile);
 		} else {
 			try {
-				// Generate and save the PDF
 				generateInvoicePdf(invoice, pdfFile);
-
-				// Open the newly created PDF
 				openGeneratedPDF(pdfFile);
 			} catch (Exception e) {
 				Log.e("ViewInvoicesActivity", "Error generating PDF: " + e.getMessage(), e);
@@ -150,31 +151,19 @@ public class ViewInvoicesActivity extends AppCompatActivity implements InvoiceAd
 		}
 	}
 
-	// Method to generate the PDF
 	private void generateInvoicePdf(Invoice invoice, File pdfFile) throws DocumentException, IOException {
-		// Create a new Document
 		Document document = new Document();
-
-		// Create the PDF writer to write to the specified file
 		PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
-
-		// Open the document to start writing content
 		document.open();
-
-		// Add content to the document
 		document.add(new Paragraph("Invoice"));
 		document.add(new Paragraph("Invoice Number: " + invoice.getInvoiceNumber()));
 		document.add(new Paragraph("Customer Name: " + invoice.getCustomerName()));
 		document.add(new Paragraph("Total Amount: $" + invoice.getTotalAmount()));
 		document.add(new Paragraph("Date: " + invoice.getDate()));
-
-		// Close the document once done
 		document.close();
-
 		Log.d("ViewInvoicesActivity", "PDF created at: " + pdfFile.getAbsolutePath());
 	}
 
-	// Method to open the generated PDF file
 	private void openGeneratedPDF(File pdfFile) {
 		Uri pdfUri = FileProvider.getUriForFile(
 				this,
@@ -189,17 +178,14 @@ public class ViewInvoicesActivity extends AppCompatActivity implements InvoiceAd
 		startActivity(intent);
 	}
 
-
-	// Add search functionality in the menu
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_search, menu); // Inflate the search menu
+		inflater.inflate(R.menu.menu_search, menu);
 
 		MenuItem searchItem = menu.findItem(R.id.action_search);
 		SearchView searchView = (SearchView) searchItem.getActionView();
 
-		// Set up the search query listener
 		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextSubmit(String query) {
@@ -208,14 +194,13 @@ public class ViewInvoicesActivity extends AppCompatActivity implements InvoiceAd
 
 			@Override
 			public boolean onQueryTextChange(String newText) {
-				filterInvoices(newText); // Filter invoices as the user types
+				filterInvoices(newText);
 				return true;
 			}
 		});
 		return true;
 	}
 
-	// Filter invoices based on search query
 	private void filterInvoices(String query) {
 		List<Invoice> filteredInvoices = new ArrayList<>();
 		for (Invoice invoice : allInvoices) {
@@ -232,9 +217,11 @@ public class ViewInvoicesActivity extends AppCompatActivity implements InvoiceAd
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		if (requestCode == REQUEST_WRITE_STORAGE) {
 			if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-				setupViewModel(); // Reinitialize the ViewModel if permission is granted
+				setupViewModel();
 			} else {
 				Toast.makeText(this, "Storage permission is required to generate PDFs.", Toast.LENGTH_SHORT).show();
+				noInvoicesTextView.setVisibility(View.VISIBLE);
+				noInvoicesTextView.setText("Enable storage permission to view invoices.");
 			}
 		}
 	}
