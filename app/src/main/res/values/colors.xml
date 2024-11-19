@@ -12,6 +12,7 @@
     <color name="colorAccent">#03DAC5</color> <!-- Replace with your desired color hex code -->
     <color name="colorPrimaryDark">#FF5722</color>
     <color name="colorSecondary">#FF6200EE</color>
+    <color name="light_green">#E8F5E9</color>
 
 
     <!-- Define additional colors if needed -->
