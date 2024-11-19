@@ -1,122 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ViewInvoicesActivity">
-
-        <!-- Toolbar -->
-        <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_toolbar_background"
-                android:title="Invoices"
-                android:titleTextColor="@color/colorBlack"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Search Bar -->
-        <androidx.appcompat.widget.SearchView
-                android:id="@+id/searchView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:queryHint="Search by customer or invoice"
-                android:iconifiedByDefault="false"
-                android:background="@drawable/rounded_search_background"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="16dp">
 
         <!-- Total Sales TextView -->
         <TextView
                 android:id="@+id/total_sales_text_view"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total Sales: $0.00"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:padding="16dp"
-                android:background="@drawable/rounded_green_background"
-                app:layout_constraintTop_toBottomOf="@id/searchView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                android:textSize="18sp"
+                android:textColor="@android:color/holo_green_dark"
+                android:textStyle="bold" />
 
-        <!-- Date Range -->
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginHorizontal="16dp"
-                app:layout_constraintTop_toBottomOf="@id/total_sales_text_view"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <!-- From Date Picker -->
-                <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/from_date_layout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="8dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/from_date_edit_text"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="From Date"
-                                android:inputType="date"
-                                android:focusable="false" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <!-- To Date Picker -->
-                <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/to_date_layout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="8dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/to_date_edit_text"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="To Date"
-                                android:inputType="date"
-                                android:focusable="false" />
-                </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-        <!-- RecyclerView for displaying invoices -->
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/invoices_recycler_view"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_margin="16dp"
-                app:layout_constraintTop_toBottomOf="@id/from_date_layout"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:listitem="@layout/invoice_item" tools:ignore="NotSibling"/>
-
-        <!-- "No Invoices" TextView -->
+        <!-- No Invoices Found Message -->
         <TextView
                 android:id="@+id/no_invoices_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="No Invoices to View"
-                android:visibility="gone"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/from_date_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="20dp" tools:ignore="NotSibling"/>
+                android:visibility="gone" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- RecyclerView to display invoices -->
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/invoices_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+        <!-- TextView for business name display -->
+
+</LinearLayout>

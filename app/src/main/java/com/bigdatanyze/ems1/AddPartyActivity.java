@@ -14,6 +14,9 @@ public class AddPartyActivity extends AppCompatActivity {
 
 	private EditText nameEditText;
 	private EditText contactEditText;
+	private EditText gstinEditText;
+	private EditText BillingAddressEditText;
+	private EditText ShippingAddressEditText;
 	private Button saveButton;
 	private PartyDao partyDao;
 
@@ -24,6 +27,9 @@ public class AddPartyActivity extends AppCompatActivity {
 
 		nameEditText = findViewById(R.id.editTextName);
 		contactEditText = findViewById(R.id.editTextContact);
+		gstinEditText= findViewById(R.id.editTextGstin);
+		BillingAddressEditText=findViewById(R.id.editTextBillingAddress);
+		ShippingAddressEditText=findViewById(R.id.editTextShippingAddress);
 		saveButton = findViewById(R.id.buttonSave);
 
 		partyDao = AppDatabase.getDatabase(this).partyDao();
@@ -34,13 +40,16 @@ public class AddPartyActivity extends AppCompatActivity {
 	private void saveParty() {
 		String name = nameEditText.getText().toString().trim();
 		String contact = contactEditText.getText().toString().trim();
+		String gstin= gstinEditText.getText().toString().trim();
+		String billing_address= BillingAddressEditText.toString().trim();
+		String shipping_address=ShippingAddressEditText.toString().trim();
 
 		if (name.isEmpty() || contact.isEmpty()) {
 			Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
 			return;
 		}
 
-		Party party = new Party(name, contact);
+		Party party = new Party(name, contact,gstin,billing_address,shipping_address);
 		AppDatabase.databaseWriteExecutor.execute(() -> {
 			partyDao.insert(party);
 			runOnUiThread(() -> {

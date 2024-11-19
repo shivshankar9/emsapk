@@ -9,9 +9,9 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:src="@drawable/app_logo"
-    android:scaleType="centerCrop"
-    android:contentDescription="@string/business_logo"
-    android:layout_marginBottom="16dp" />
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/business_logo"
+            android:layout_marginBottom="16dp" />
 
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

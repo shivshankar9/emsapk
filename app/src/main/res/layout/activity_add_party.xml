@@ -22,6 +22,30 @@
             android:padding="10dp"
             android:background="@drawable/edit_text_background"
             android:layout_marginBottom="10dp" />
+    <EditText
+            android:id="@+id/editTextGstin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="GSTIN"
+            android:padding="10dp"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginBottom="10dp" />
+    <EditText
+            android:id="@+id/editTextBillingAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Billing Address"
+            android:padding="10dp"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginBottom="10dp" />
+    <EditText
+            android:id="@+id/editTextShippingAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Shipping Address"
+            android:padding="10dp"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginBottom="10dp" />
 
     <Button
             android:id="@+id/buttonSave"
