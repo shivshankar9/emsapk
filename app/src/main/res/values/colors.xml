@@ -5,6 +5,8 @@
     <color name="premium_color">#FFD700</color> <!-- Example: Gold color for premium -->
     <color name="background_color">#FFFFFF</color> <!-- Example: white background -->
     <color name="colorPrimary">#6200EE</color> <!-- Replace with your desired color hex code -->
+    <color name="green">#4CAF50</color>
+    <color name="light_gray">#D3D3D3</color>
 
     <!-- Define the accent color -->
     <color name="colorAccent">#03DAC5</color> <!-- Replace with your desired color hex code -->
