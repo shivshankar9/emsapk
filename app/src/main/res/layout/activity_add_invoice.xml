@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
+            xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/light_gray"
             android:padding="16dp">
@@ -188,6 +188,88 @@
                         android:contentDescription="Valid" app:tint="@color/green"/>
             </LinearLayout>
         </LinearLayout>
+        <!-- Name / Business Info -->
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="379dp"
+                    android:layout_height="105dp"
+                    android:padding="1dp">
+
+                <!-- From Section -->
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        tools:ignore="ExtraText">
+
+                    <TextView
+                            android:id="@+id/fromLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="From"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#000000"/>
+
+                    <TextView
+                            android:id="@+id/fromDescription"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Add Your Business Information"
+                            android:textSize="14sp"
+                            android:textColor="#757575"
+                            android:drawableRight="@drawable/ic_arrow_right"
+                    android:drawablePadding="8dp" />
+
+                </LinearLayout>
+
+                <!-- To Section -->
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="12dp">
+
+                    <TextView
+                            android:id="@+id/toLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="To"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#000000"/>
+
+                    <TextView
+                            android:id="@+id/toDescription"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Add Your Client Information"
+                            android:textSize="14sp"
+                            android:textColor="#757575"
+                            android:drawableRight="@drawable/ic_arrow_right"
+                    android:drawablePadding="8dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+
 
         <!-- Item Details -->
         <LinearLayout
