@@ -79,4 +79,10 @@ public class InvoiceItem {
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+
+	public void setPrice(double v) {
+	}
+
+	public void setDiscount(double discount) {
+	}
 }

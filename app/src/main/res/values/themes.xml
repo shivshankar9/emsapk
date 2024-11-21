@@ -3,7 +3,7 @@
     <style name="Base.Theme.Ems1" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimary">#9D73DA</item>
         <item name="colorSecondary">@color/light_gray</item>
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/black</item>
@@ -17,7 +17,7 @@
     <!-- Text Styles -->
     <!-- Button Style -->
     <style name="ButtonStyle.Ems1" parent="Widget.Material3.Button">
-        <item name="android:backgroundTint">@color/green</item>
+        <item name="android:backgroundTint">#9164E1</item>
         <item name="android:textColor">@color/white</item>
 
     </style>

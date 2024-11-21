@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Employee.class, Expense.class, Invoice.class, InvoiceItem.class, Party.class, Item.class, BusinessProfile.class}, version = 12, exportSchema = false)
+@Database(entities = {Employee.class, Expense.class, Invoice.class, InvoiceItem.class, Party.class, Item.class, BusinessProfile.class}, version = 13, exportSchema = false)
 @TypeConverters({Converters.class})  // Register the Converters class here
 public abstract class AppDatabase extends RoomDatabase {
 

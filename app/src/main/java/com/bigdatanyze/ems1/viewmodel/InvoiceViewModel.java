@@ -1,5 +1,5 @@
 package com.bigdatanyze.ems1.viewmodel;
-
+import java.util.Random;
 import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -67,4 +67,11 @@ public class InvoiceViewModel extends AndroidViewModel {
 	public LiveData<List<Item>> getAllItems() {
 		return repository.getAllItems();  // Fetch all items
 	}
+
+
+
+
+
+
+
 }
