@@ -1,0 +1,10 @@
+<!-- res/drawable/ic_youtube.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:height="24dp"
+        android:viewportHeight="24"
+        android:viewportWidth="24"
+        android:width="24dp">
+    <path
+            android:fillColor="#FF0000"
+            android:pathData="M23,12 L16,8 L16,16 L23,12 z M2,12 L9,8 L9,16 L2,12 z"/>
+</vector>

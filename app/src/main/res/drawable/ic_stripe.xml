@@ -1,0 +1,10 @@
+<!-- res/drawable/ic_stripe.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:height="24dp"
+        android:viewportHeight="24"
+        android:viewportWidth="24"
+        android:width="24dp">
+    <path
+            android:fillColor="#6772E5"
+            android:pathData="M3,3 L21,3 L21,21 L3,21 L3,3 z M6,6 L6,18 L18,18 L18,6 L6,6 z"/>
+</vector>

@@ -1,4 +1,4 @@
-package com.bigdatanyze.ems1;
+package com.bigdatanyze.ems1.MenuActivity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import com.bigdatanyze.ems1.MainActivity;
+import com.bigdatanyze.ems1.R;
 import com.bigdatanyze.ems1.adapter.RecentActivityAdapter;
 import com.bigdatanyze.ems1.model.Invoice;
 import com.bigdatanyze.ems1.viewmodel.InvoiceViewModel;
@@ -43,6 +45,14 @@ public class DashboardFragment extends Fragment {
 
 		return view;
 	}
+	@Override
+	public void onResume() {
+		super.onResume();
+		// Hide toolbar when HomeFragment is visible
+		((MainActivity) requireActivity()).hideToolbar();
+	}
+
+
 
 	// Method to calculate and update total revenue
 	private void updateTotalRevenue(List<Invoice> invoices) {

@@ -1,0 +1,10 @@
+<!-- res/drawable/ic_withdraw.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:height="24dp"
+        android:viewportHeight="24"
+        android:viewportWidth="24"
+        android:width="24dp">
+    <path
+            android:fillColor="#000000"
+            android:pathData="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 zM12,17 C10.9,17 10,16.1 10,15 L10,13 L7,13 C6.45,13 6,12.55 6,12 C6,11.45 6.45,11 7,11 L10,11 L10,9 C10,7.9 10.9,7 12,7 C13.1,7 14,7.9 14,9 L14,11 L17,11 C17.55,11 18,11.45 18,12 C18,12.55 17.55,13 17,13 L14,13 L14,15 C14,16.1 13.1,17 12,17 z"/>
+</vector>

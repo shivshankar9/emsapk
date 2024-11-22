@@ -1,7 +1,6 @@
-package com.bigdatanyze.ems1;
+package com.bigdatanyze.ems1.TransactionActivity;
 
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,18 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
+import com.bigdatanyze.ems1.AddItemInvoice;
+import com.bigdatanyze.ems1.InvoicePreviewActivity;
 import com.bigdatanyze.ems1.R;
-import com.bigdatanyze.ems1.model.Invoice;
-import com.bigdatanyze.ems1.model.InvoiceItem;
+import com.bigdatanyze.ems1.invoiceReadyPage;
 import com.bigdatanyze.ems1.model.Item;
-import com.bigdatanyze.ems1.viewmodel.InvoiceViewModel;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.Random;
 
 public class AddInvoiceActivity extends AppCompatActivity {
 

@@ -39,10 +39,40 @@
            android:layout_marginTop="4dp" />
 
    <TextView
+           android:id="@+id/addCreditNoteButton"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Add Credit Note"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
+   <TextView
+           android:id="@+id/addViewCreditNoteButton"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="View Credit Note"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
+   <TextView
            android:id="@+id/viewSalesButton"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:text="View Sales"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
+   <TextView
+           android:id="@+id/addPaymentInButton"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Payment In"
            android:padding="12dp"
            android:textSize="16sp"
            android:textColor="#4CAF50"
@@ -88,6 +118,36 @@
            android:background="@drawable/submenu_item_background"
            android:layout_marginTop="4dp" />
    <TextView
+           android:id="@+id/addDebitNoteButton"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Add Debit Note"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
+   <TextView
+           android:id="@+id/ViewDebitNoteButton"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="View Purchase Return"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
+   <TextView
+           android:id="@+id/addPaymentOutButton"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Payment Out"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
+   <TextView
            android:id="@+id/AddExpenseButton"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
@@ -97,6 +157,7 @@
            android:textColor="#4CAF50"
            android:background="@drawable/submenu_item_background"
            android:layout_marginTop="4dp" />
+
 
    <TextView
            android:id="@+id/viewExpenseButton"

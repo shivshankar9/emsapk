@@ -1,0 +1,139 @@
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#1C1C2D"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+
+
+<TextView
+        android:id="@+id/greeting_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Good Morning!"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:fontFamily="sans-serif-medium"
+        android:paddingBottom="8dp" />
+
+<TextView
+        android:id="@+id/username_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ask William AI"
+        android:textColor="#AAAAAA"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif-light" />
+
+<!-- Services Section -->
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+    <Button
+            android:id="@+id/more_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#3C3B4D"
+            android:text="More"
+            android:textColor="#FFFFFF"
+            android:layout_marginEnd="8dp" />
+
+    <Button
+            android:id="@+id/automation_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#4A47A8"
+            android:text="Automation"
+            android:textColor="#FFFFFF" />
+</LinearLayout>
+
+<!-- Automation Section -->
+<TextView
+        android:id="@+id/automation_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Automation"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginTop="16dp" />
+
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp">
+
+    <Button
+            android:id="@+id/task_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#523B91"
+            android:text="Today’s task"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="8dp" />
+
+    <Button
+            android:id="@+id/focus_task_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#634AB3"
+            android:text="Focus AI"
+            android:textColor="#FFFFFF" />
+</LinearLayout>
+
+<!-- Recent Chats Section -->
+<TextView
+        android:id="@+id/recent_chats_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recent Chats"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginTop="16dp" />
+
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp">
+
+    <Button
+            android:id="@+id/chat_button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#3A375A"
+            android:text="Chat 1"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="8dp" />
+
+    <Button
+            android:id="@+id/chat_button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#4A427C"
+            android:text="Chat 2"
+            android:textColor="#FFFFFF" />
+</LinearLayout>
+
+
+<Button
+        android:id="@+id/new_chat_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#7B6EB3"
+        android:text="New Chat"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="16dp" />
+</LinearLayout>
+        </ScrollView>

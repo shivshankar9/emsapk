@@ -1,0 +1,10 @@
+<!-- res/drawable/ic_invest.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:height="24dp"
+        android:viewportHeight="24"
+        android:viewportWidth="24"
+        android:width="24dp">
+    <path
+            android:fillColor="#000000"
+            android:pathData="M12,2 L22,12 L12,22 L2,12 L12,2 z M12,4.41 L4.41,12 L12,19.59 L19.59,12 L12,4.41 z"/>
+</vector>

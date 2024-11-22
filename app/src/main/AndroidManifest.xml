@@ -65,14 +65,14 @@
 
         <!-- AddExpenseActivity for adding expenses -->
         <activity
-                android:name=".AddExpenseActivity"
+                android:name=".TransactionActivity.AddExpenseActivity"
                 android:exported="true"
                 android:label="Add Expense"
                 android:theme="@style/Theme.Ems1" />
 
         <!-- AddInvoiceActivity for creating invoices -->
         <activity
-                android:name=".AddInvoiceActivity"
+                android:name=".TransactionActivity.AddInvoiceActivity"
                 android:exported="true"
                 android:label="Add Invoice"
                 android:theme="@style/Theme.Ems1" />

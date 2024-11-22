@@ -6,75 +6,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <!-- Header layout with icons and side heading -->
-        <LinearLayout
-                android:id="@+id/header_layout"
+        <!-- Toolbar (Top Bar) -->
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp"
+                android:background="?attr/colorPrimary"
+                android:elevation="4dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-            <!-- Logo ImageView -->
-            <ImageView
-                    android:id="@+id/logoImageView"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_logo"
-                    android:contentDescription="Logo"
-                    app:layout_constraintBottom_toBottomOf="@id/header_layout"
-                    app:layout_constraintTop_toTopOf="@id/header_layout"
-                    app:layout_constraintEnd_toStartOf="@id/tvHeading"/>
-
-            <!-- Side Heading -->
-            <TextView
-                    android:id="@+id/tvHeading"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Finverge"
-                    android:textColor="#000000"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:gravity="center_vertical" />
-
-            <!-- Settings Icon -->
-            <ImageView
-                    android:id="@+id/ivSettings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_settings"
-                    android:contentDescription="Settings"
-                    android:padding="8dp" />
-
-            <!-- Notifications Icon -->
-            <ImageView
-                    android:id="@+id/ivNotifications"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_notifications"
-                    android:contentDescription="Notifications"
-                    android:padding="8dp" />
-
-            <!-- Profile Icon -->
-            <ImageView
-                    android:id="@+id/ivProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_profile"
-                    android:contentDescription="Profile"
-                    android:padding="8dp" />
-        </LinearLayout>
-
-        <!-- Light underline below the header -->
-        <View
-                android:id="@+id/underline"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="#DDDDDD"
-                app:layout_constraintTop_toBottomOf="@id/header_layout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -83,7 +23,7 @@
                 android:id="@+id/fragment_container"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@id/underline"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

@@ -5,6 +5,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="top|center_horizontal"
+        android:background="#F4F4F4"
         android:padding="16dp">
 
     <!-- Key Metrics Cards at the Top -->
