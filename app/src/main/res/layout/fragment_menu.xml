@@ -1,52 +1,193 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="16dp"
-              android:gravity="center">
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F0F4FF"
+        android:padding="16dp">
 
- <!-- Sales Button -->
- <Button
-         android:id="@+id/buttonSales"
+ <LinearLayout
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         android:text="Sales"
-         android:textColor="@android:color/white"
-         android:background="@drawable/rounded_futuristic_button"
-         android:layout_marginBottom="16dp"
-         android:textSize="18sp" />
+         android:orientation="vertical">
 
- <!-- Items Button -->
- <Button
-         android:id="@+id/buttonItems"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:text="Items"
-         android:textColor="@android:color/white"
-         android:background="@drawable/rounded_futuristic_button"
-         android:layout_marginBottom="16dp"
-         android:textSize="18sp" />
+  <!-- Sales Section -->
+  <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:background="@drawable/menu_item_background"
+          android:padding="12dp"
+          android:layout_marginBottom="8dp">
 
- <!-- Party Button -->
- <Button
-         android:id="@+id/buttonParty"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:text="Party"
-         android:textColor="@android:color/white"
-         android:background="@drawable/rounded_futuristic_button"
-         android:layout_marginBottom="16dp"
-         android:textSize="18sp" />
+   <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Sales"
+           android:textSize="18sp"
+           android:textColor="#000"
+           android:paddingBottom="8dp" />
 
- <!-- Backup/Restore Button -->
- <Button
-         android:id="@+id/buttonBackupRestore"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:text="Backup/Restore"
-         android:textColor="@android:color/white"
-         android:background="@drawable/rounded_futuristic_button"
-         android:layout_marginBottom="16dp"
-         android:textSize="18sp" />
+   <TextView
+           android:id="@+id/addSalesButton"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Add Sales"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
 
-</LinearLayout>
+   <TextView
+           android:id="@+id/viewSalesButton"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="View Sales"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
+  </LinearLayout>
+  <!-- Purchase Section -->
+  <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:background="@drawable/menu_item_background"
+          android:padding="12dp"
+          android:layout_marginBottom="8dp">
+
+   <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Purchase"
+           android:textSize="18sp"
+           android:textColor="#000"
+           android:paddingBottom="8dp" />
+
+   <TextView
+           android:id="@+id/addPurchaseButton"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Add Purchase"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
+
+   <TextView
+           android:id="@+id/viewPurchaseButton"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="View Purchase"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
+   <TextView
+           android:id="@+id/AddExpenseButton"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Add Expense"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
+
+   <TextView
+           android:id="@+id/viewExpenseButton"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="View Expense"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
+
+  </LinearLayout>
+  <!-- Clients Section -->
+  <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:background="@drawable/menu_item_background"
+          android:padding="12dp"
+          android:layout_marginBottom="8dp">
+
+   <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Clients"
+           android:textSize="18sp"
+           android:textColor="#000"
+           android:paddingBottom="8dp" />
+
+   <TextView
+           android:id="@+id/addPartyButtons"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Add Clients"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
+
+   <TextView
+           android:id="@+id/viewClientButton"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="View Clents"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
+  </LinearLayout>
+
+  <!-- Items Section -->
+  <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:background="@drawable/menu_item_background"
+          android:padding="12dp"
+          android:layout_marginBottom="8dp">
+
+   <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Items"
+           android:textSize="18sp"
+           android:textColor="#000"
+           android:paddingBottom="8dp" />
+
+   <TextView
+           android:id="@+id/addItemsButton"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Add Item"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
+
+   <TextView
+           android:id="@+id/viewItemsButton"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="View Items"
+           android:padding="12dp"
+           android:textSize="16sp"
+           android:textColor="#4CAF50"
+           android:background="@drawable/submenu_item_background"
+           android:layout_marginTop="4dp" />
+  </LinearLayout>
+ </LinearLayout>
+</ScrollView>
