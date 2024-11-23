@@ -20,17 +20,17 @@ public class HomeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Hide toolbar when HomeFragment is visible
-        ((MainActivity) requireActivity()).hideToolbar();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        // Show toolbar when leaving HomeFragment
-        ((MainActivity) requireActivity()).showToolbar();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        // Hide toolbar when HomeFragment is visible
+//        ((MainActivity) requireActivity()).hideToolbar();
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        // Show toolbar when leaving HomeFragment
+//        ((MainActivity) requireActivity()).showToolbar();
+//    }
 }
